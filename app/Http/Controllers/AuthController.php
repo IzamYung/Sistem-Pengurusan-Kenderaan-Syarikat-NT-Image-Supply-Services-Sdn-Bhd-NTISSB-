@@ -10,10 +10,18 @@ use Illuminate\Support\Facades\Session;
 class AuthController extends Controller
 {
     /**
-     * Show the login page
+     * Show the login page (auto-redirect if already logged in)
      */
-    public function login()
+    public function login(Request $request)
     {
+        // Check if user already logged in
+        if ($request->session()->has('loginId')) {
+            $role = $request->session()->get('role');
+
+            return redirect($role === 'admin' ? 'admin/dashboard' : 'user/dashboard');
+        }
+
+        // If not logged in, show login view
         return view('auth.login');
     }
 
@@ -33,19 +41,14 @@ class AuthController extends Controller
             return back()->with('fail', 'Invalid credentials');
         }
 
-        // store session data
+        // Store session data
         $request->session()->put([
             'loginId' => $user->id_pekerja,
             'role'    => $user->role,
         ]);
-        $request->session()->save();
 
-        // redirect based on role
-        $redirectPath = $user->role === 'admin' 
-            ? 'admin/dashboard' 
-            : 'user/dashboard';
-
-        return redirect($redirectPath);
+        // Redirect based on role
+        return redirect($user->role === 'admin' ? 'admin/dashboard' : 'user/dashboard');
     }
 
     /**
@@ -53,8 +56,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        Session::forget('loginId');
-        Session::forget('role');
+        Session::forget(['loginId', 'role']);
 
         return redirect('login');
     }
