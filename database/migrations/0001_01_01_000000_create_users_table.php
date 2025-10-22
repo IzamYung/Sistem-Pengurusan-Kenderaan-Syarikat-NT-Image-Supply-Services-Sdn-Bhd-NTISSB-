@@ -15,8 +15,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('no_tel')->nullable();
-            $table->string('role')->default('user');
-            $table->string('status')->default('active');
+            $table->enum('role', ['admin', 'user'])->default('user');
             $table->rememberToken(); // needed for auth remember me
             $table->timestamps();
         });
