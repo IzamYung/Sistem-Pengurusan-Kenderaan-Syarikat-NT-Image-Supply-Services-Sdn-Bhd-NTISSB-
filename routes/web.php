@@ -40,11 +40,23 @@ Route::middleware(['authcheck'])->group(function () {
         })->name('tambah_pengguna');
     });
 
-    // User routes (optional)
+    // User routes 
     Route::prefix('user')->name('user_site.')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('user_site.dashboard');
-        })->name('dashboard');
+        Route::get('/halaman-utama', function () {
+            return view('user_site.halaman_utama');
+        })->name('halaman_utama');
+
+        Route::get('/status-permohonan', function () {
+            return view('user_site.status_permohonan');
+        })->name('status_permohonan');
+
+        Route::get('/status-perjalanan', function () {
+            return view('user_site.status_perjalanan');
+        })->name('status_perjalanan');
+
+        Route::get('/rekod-permohonan', function () {
+            return view('user_site.rekod_permohonan');
+        })->name('rekod_permohonan');
     });
 
     // Profile controller
