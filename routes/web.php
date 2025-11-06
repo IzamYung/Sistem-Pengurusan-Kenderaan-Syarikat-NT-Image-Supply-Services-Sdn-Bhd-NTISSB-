@@ -1,6 +1,7 @@
 <?php
 
 use  App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,4 +20,6 @@ Route::middleware(['authcheck'])->group(function () {
     Route::get('/user/dashboard', function () {
         return view('user_site.dashboard');
     })->name('user_site.dashboard');
+
+    Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile');
 });
