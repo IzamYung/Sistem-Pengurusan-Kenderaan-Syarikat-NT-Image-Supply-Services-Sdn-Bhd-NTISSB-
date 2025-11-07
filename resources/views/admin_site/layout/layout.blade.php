@@ -69,7 +69,21 @@
         class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center">
         
         <div data-modal-card id="profileCard" 
-            class="bg-white rounded-2xl shadow-lg w-[90%] max-w-md p-6 transform transition-all duration-200 scale-95 opacity-0">
+            class="relative bg-white rounded-2xl shadow-lg w-[90%] max-w-md p-6 transform transition-all duration-200 scale-95 opacity-0">
+
+            <!-- ❌ Close button (top right) -->
+            <button data-modal-close 
+                class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-all duration-150">
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                    fill="none" viewBox="0 0 24 24" 
+                    stroke-width="2" stroke="currentColor" 
+                    class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" 
+                        d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <!-- 🧑‍💼 Profile Info -->
             <h3 class="text-lg font-semibold text-gray-800 mb-4 text-center">Profil Pengguna</h3>
             @php $user = $user ?? Auth::user(); @endphp
             <div class="text-sm text-gray-700 mb-6">
@@ -79,11 +93,12 @@
                 <p><strong>No. Telefon :</strong> {{ $user->no_tel ?? 'Tiada No. Telefon' }}</p>
             </div>
 
+            <!-- 🔘 Action buttons -->
             <div class="flex justify-center gap-3">
                 <a href="{{ route('logout') }}" 
-                   class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">Log Keluar</a>
-                <button data-modal-close 
-                        class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition">Tutup</button>
+                    class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
+                    Log Keluar
+                </a>
             </div>
         </div>
     </div>
