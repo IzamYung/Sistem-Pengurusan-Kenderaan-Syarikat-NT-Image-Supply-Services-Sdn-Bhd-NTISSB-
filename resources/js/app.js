@@ -1,5 +1,27 @@
 import "./bootstrap";
 
+// password toggle functionality
+document.addEventListener("DOMContentLoaded", () => {
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+    const toggleIcon = document.getElementById("toggleIcon");
+
+    if (togglePassword && passwordInput && toggleIcon) {
+        togglePassword.addEventListener("click", () => {
+            const type =
+                passwordInput.type === "password" ? "text" : "password";
+            passwordInput.type = type;
+
+            // Switch icon
+            toggleIcon.src =
+                type === "password"
+                    ? "/images/view_password.png" // 👁‍🗨 closed eye
+                    : "/images/hide_password.png"; // 👁 open eye
+        });
+    }
+});
+
+// floating card functionality
 document.addEventListener("DOMContentLoaded", () => {
     const openButtons = document.querySelectorAll("[data-modal-open]");
     const closeButtons = document.querySelectorAll("[data-modal-close]");

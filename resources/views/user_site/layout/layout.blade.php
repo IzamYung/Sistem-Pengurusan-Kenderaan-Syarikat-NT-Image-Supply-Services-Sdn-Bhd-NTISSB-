@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Halaman Utama')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="icon" type="image/png" href="{{ asset('images/logo_syarikat.png') }}">
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
 
     {{-- Header --}}
     <header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50 flex justify-between items-center px-6 py-3 shadow-sm">
-        <a href="{{ route('user_site.halaman_utama') }}" class="text-xl font-semibold text-blue-600">
-            NT Image Supply & Services SDN BHD
+        <a href="{{ route('user_site.halaman_utama') }}" class="flex items-center gap-3">
+            <img src="{{ asset('images/logo_syarikat.png') }}" alt="Company Logo" class="w-10 h-10 object-contain">
+            <span class="text-sm font-semibold text-blue-600 leading-tight">
+                NT Image Supply & Services<br>SDN BHD
+            </span>
         </a>
         <button 
             data-modal-open="profileModal"
@@ -35,13 +39,14 @@
 
             @foreach ($menu as $item)
                 <a href="{{ route($item['route']) }}" 
-                   class="block px-5 py-2 rounded-lg transition-all 
-                   @if(request()->routeIs($item['route'])) 
-                        bg-blue-100 text-blue-700 font-medium border-l-4 border-blue-500 
-                   @else 
-                        hover:bg-blue-50 hover:text-blue-600 
-                   @endif">
-                   {{ $item['name'] }}
+                class="block py-2 rounded-lg transition-all
+                pl-[1.25rem] {{-- same base padding --}}
+                @if(request()->routeIs($item['route'])) 
+                        bg-blue-100 text-blue-700 font-medium border-l-4 border-blue-500 pl-[calc(1.25rem-4px)]
+                @else 
+                        hover:bg-blue-50 hover:text-blue-600
+                @endif">
+                {{ $item['name'] }}
                 </a>
             @endforeach
         </nav>
