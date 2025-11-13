@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>SPKS</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="icon" type="image/png" href="{{ asset('images/logo_syarikat.png') }}">
 </head>
 <body class="min-h-screen bg-white font-sans flex flex-col justify-center items-center">
 
     <!-- 🏢 Company name (top left corner) -->
-    <div class="fixed top-4 left-4 flex items-center gap-3 px-4 py-2 z-10">
+    <div class="fixed top-4 left-4 flex items-center gap-3 px-4 py-2 z-10 bg-white border border-gray-200 rounded-xl shadow">
         <img src="{{ asset('images/logo_syarikat.png') }}" alt="Company Logo" class="w-15 h-15 object-contain">
         <span class="font-semibold text-gray-800 leading-tight">
             NT Image Supply & Services<br>SDN BHD

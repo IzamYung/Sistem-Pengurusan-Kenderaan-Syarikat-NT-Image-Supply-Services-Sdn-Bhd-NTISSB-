@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -35,9 +36,20 @@ Route::middleware(['authcheck'])->group(function () {
             return view('admin_site.kerosakkan_kenderaan');
         })->name('kerosakkan_kenderaan');
 
-        Route::get('/tambah-pengguna', function () {
-            return view('admin_site.tambah_pengguna');
-        })->name('tambah_pengguna');
+        // senarai pengguna routes
+        Route::get('/senarai-pengguna', [UserController::class, 'index'])->name('senarai_pengguna');
+        Route::get('/senarai-pengguna/search', [UserController::class, 'search'])->name('senarai_pengguna.search');
+
+        // ADD
+        Route::get('/tambah-pengguna', [UserController::class, 'create'])->name('tambah_pengguna.create');
+        Route::post('/tambah-pengguna', [UserController::class, 'store'])->name('tambah_pengguna.store'); // remove /store
+
+        // EDIT
+        Route::get('/tambah-pengguna/{id}/edit', [UserController::class, 'edit'])->name('tambah_pengguna.edit');
+        Route::post('/tambah-pengguna/{id}/update', [UserController::class, 'update'])->name('tambah_pengguna.update'); // new route
+
+        Route::delete('/senarai-pengguna/delete', [UserController::class, 'destroy'])->name('senarai_pengguna.delete');
+
     });
 
     // User routes 

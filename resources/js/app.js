@@ -12,11 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 passwordInput.type === "password" ? "text" : "password";
             passwordInput.type = type;
 
-            // Switch icon
             toggleIcon.src =
                 type === "password"
-                    ? "/images/view_password.png" // 👁‍🗨 closed eye
-                    : "/images/hide_password.png"; // 👁 open eye
+                    ? "/images/view_password.png"
+                    : "/images/hide_password.png";
         });
     }
 });
@@ -34,11 +33,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const card = modal?.querySelector("[data-modal-card]");
             if (!modal || !card) return;
 
-            // disable scroll smoothly
             body.style.overflow = "hidden";
             body.style.paddingRight = `${
                 window.innerWidth - document.documentElement.clientWidth
-            }px`; // fix scrollbar jump
+            }px`;
 
             modal.classList.remove("hidden");
             setTimeout(() => {
@@ -52,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
         card.classList.add("scale-95", "opacity-0");
         setTimeout(() => {
             modal.classList.add("hidden");
-            // enable scroll again
             body.style.overflow = "";
             body.style.paddingRight = "";
         }, 200);
@@ -74,5 +71,103 @@ document.addEventListener("DOMContentLoaded", () => {
                 closeModal(modal, card);
             }
         });
+    });
+});
+
+// auto search functionality
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("searchUser");
+    const userCards = document.querySelectorAll(".user-card");
+    const noMatch = document.getElementById("noMatch");
+    const noUser = document.getElementById("noUser");
+
+    if (!searchInput) return;
+
+    searchInput.addEventListener("input", function () {
+        const query = searchInput.value.toLowerCase();
+        let anyVisible = false;
+
+        userCards.forEach((card) => {
+            const name = card.dataset.name.toLowerCase();
+            if (name.includes(query)) {
+                card.style.display = "";
+                anyVisible = true;
+            } else {
+                card.style.display = "none";
+            }
+        });
+
+        if (userCards.length === 0) {
+            noUser?.classList.remove("hidden");
+            noMatch?.classList.add("hidden");
+        } else if (!anyVisible) {
+            noMatch?.classList.remove("hidden");
+            noUser?.classList.add("hidden");
+        } else {
+            noMatch?.classList.add("hidden");
+            noUser?.classList.add("hidden");
+        }
+    });
+});
+
+// delete users functionality
+document.addEventListener("DOMContentLoaded", () => {
+    const deleteBtn = document.getElementById("deleteSelected");
+    const checkboxes = document.querySelectorAll(".userCheckbox");
+
+    if (!deleteBtn || checkboxes.length === 0) return;
+
+    checkboxes.forEach((cb) => {
+        cb.addEventListener("click", (e) => e.stopPropagation());
+
+        cb.addEventListener("change", () => {
+            const anyChecked = Array.from(checkboxes).some((c) => c.checked);
+            deleteBtn.disabled = !anyChecked;
+
+            deleteBtn.classList.toggle("opacity-50", !anyChecked);
+            deleteBtn.classList.toggle("cursor-not-allowed", !anyChecked);
+        });
+    });
+
+    deleteBtn.addEventListener("click", () => {
+        const selectedIds = Array.from(checkboxes)
+            .filter((c) => c.checked)
+            .map((c) => c.dataset.id);
+
+        if (!selectedIds.length) return;
+        if (!confirm("Adakah anda pasti mahu memadam pengguna yang dipilih?"))
+            return;
+
+        fetch("/admin/senarai-pengguna/delete", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content"),
+            },
+            body: JSON.stringify({ ids: selectedIds }),
+        })
+            .then(async (res) => {
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Gagal memadam pengguna!");
+                    return;
+                }
+
+                selectedIds.forEach((id) => {
+                    const cb = document.querySelector(
+                        `.userCheckbox[data-id="${id}"]`
+                    );
+                    cb?.closest(".user-card")?.remove();
+                });
+                deleteBtn.disabled = true;
+                deleteBtn.classList.add("opacity-50", "cursor-not-allowed");
+                alert(data.message || "Pengguna berjaya dipadam!");
+            })
+            .catch((err) => {
+                console.error(err);
+                alert("Gagal memadam pengguna!");
+            });
     });
 });
