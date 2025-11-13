@@ -1,12 +1,5 @@
 @import "tailwindcss";
 
-@source "../**/*.blade.php";
-@source "../**/*.js";
-
-@theme {
-    --font-sans: "Inter", sans-serif;
-}
-
 #userContainer::-webkit-scrollbar {
     width: 6px;
 }
