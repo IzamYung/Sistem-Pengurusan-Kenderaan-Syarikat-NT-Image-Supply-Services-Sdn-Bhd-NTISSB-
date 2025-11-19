@@ -12,15 +12,17 @@ class User extends Authenticatable
 
     protected $table = 'users'; 
     protected $primaryKey = 'id_pekerja'; 
-    public $incrementing = true;
-    protected $keyType = 'int';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
+        'id_pekerja', 
         'nama',
         'jawatan',
         'email',
         'password',
         'no_tel',
+        'gambar_profil',
         'role',
     ];
 
@@ -29,3 +31,4 @@ class User extends Authenticatable
         'remember_token',
     ];
 }
+

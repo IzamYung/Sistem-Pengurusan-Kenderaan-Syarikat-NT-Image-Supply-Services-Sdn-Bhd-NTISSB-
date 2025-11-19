@@ -26,7 +26,7 @@
                 cursor-pointer select-none group w-[200px] justify-start">
             
             <div class="w-8 h-8 rounded-full bg-gray-200 overflow-hidden flex-shrink-0 shadow-sm">
-                {{-- future: <img src="{{ asset('images/profile.jpg') }}" alt="Profile" class="w-full h-full object-cover"> --}}
+                <img src="{{ asset($user->gambar_profil ?? 'images/profile_picture/default-profile.png') }}" alt="Profile" class="w-full h-full object-cover">
             </div>
 
             <span class="font-medium text-gray-700 text-sm truncate group-hover:text-blue-600 transition-colors duration-200 flex-1 text-center">
@@ -76,19 +76,46 @@
     </div>
 
     {{-- PROFILE MODAL --}}
-    <div id="profileModal" data-modal class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] flex items-center justify-center">
-        <div data-modal-card id="profileCard" class="relative bg-white rounded-2xl shadow-xl w-[90%] max-w-md p-6 transform transition-all duration-200 scale-95 opacity-0 border border-gray-100">
-            <button data-modal-close class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 transition-all duration-150">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+    <div id="profileModal" data-modal 
+        class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center">
+
+        <div data-modal-card id="profileCard" 
+            class="relative bg-white rounded-2xl shadow-xl w-[90%] max-w-md p-8 transform transition-all duration-200 scale-95 opacity-0 border border-gray-100">
+
+            <!-- ❌ Close button -->
+            <button data-modal-close 
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-all duration-150">
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                    fill="none" viewBox="0 0 24 24" 
+                    stroke-width="2" stroke="currentColor" 
+                    class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" 
+                        d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
 
-            <h3 class="text-lg font-semibold text-gray-800 mb-4 text-center border-b border-gray-100 pb-2">Profil Pengguna</h3>
+            <!-- Avatar -->
             @php $user = $user ?? Auth::user(); @endphp
-            <div class="text-center">
-                <p class="text-gray-600">{{ $user->nama ?? 'Tiada Nama' }}</p>
-                <p class="text-gray-400 text-sm">{{ $user->email ?? 'Tiada Email' }}</p>
+            <div class="flex justify-center mb-4">
+                <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-blue-100 shadow-md">
+                    <img src="{{ asset($user->gambar_profil ?? 'images/profile_picture/default-profile.png') }}" alt="Profile Picture" class="w-full h-full object-cover">
+                </div>
+            </div>
+
+            <!-- User Info -->
+            <div class="text-sm text-center text-gray-700 mb-6">
+                <p><strong>Nama :</strong> {{ $user->nama ?? 'Tiada Nama' }}</p>
+                <p><strong>ID Pekerja :</strong> {{ $user->id_pekerja ?? 'Tiada ID' }}</p>
+                <p><strong>Jawatan :</strong> {{ $user->jawatan ?? 'Tiada Jawatan' }}</p>
+                <p><strong>No. Telefon :</strong> {{ $user->no_tel ?? 'Tiada No. Telefon' }}</p>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="flex justify-center gap-3">
+                <a href="{{ route('logout') }}" 
+                class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition shadow-sm">
+                Log Keluar
+                </a>
             </div>
         </div>
     </div>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\KenderaanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,15 +29,26 @@ Route::middleware(['authcheck'])->group(function () {
             return view('admin_site.rekod_permohonan');
         })->name('rekod_permohonan');
 
-        Route::get('/senarai-kenderaan', function () {
-            return view('admin_site.senarai_kenderaan');
-        })->name('senarai_kenderaan');
+        // Senarai kenderaan routes
+        Route::get('/senarai-kenderaan', [KenderaanController::class, 'index'])->name('senarai_kenderaan');
+        Route::get('/senarai-kenderaan/search', [KenderaanController::class, 'search'])->name('senarai_kenderaan.search');
+
+        // ADD
+        Route::get('/tambah-kenderaan', [KenderaanController::class, 'create'])->name('tambah_kenderaan.create');
+        Route::post('/tambah-kenderaan', [KenderaanController::class, 'store'])->name('tambah_kenderaan.store');
+
+        // EDIT
+        Route::get('/tambah-kenderaan/{no_pendaftaran}/edit', [KenderaanController::class, 'edit'])->name('tambah_kenderaan.edit');
+        Route::post('/tambah-kenderaan/{no_pendaftaran}/update', [KenderaanController::class, 'update'])->name('tambah_kenderaan.update');
+
+        // DELETE
+        Route::delete('/senarai-kenderaan/delete', [KenderaanController::class, 'destroy'])->name('senarai_kenderaan.delete');
 
         Route::get('/kerosakan-kenderaan', function () {
             return view('admin_site.kerosakkan_kenderaan');
         })->name('kerosakkan_kenderaan');
 
-        // senarai pengguna routes
+        // Senarai pengguna routes
         Route::get('/senarai-pengguna', [UserController::class, 'index'])->name('senarai_pengguna');
         Route::get('/senarai-pengguna/search', [UserController::class, 'search'])->name('senarai_pengguna.search');
 

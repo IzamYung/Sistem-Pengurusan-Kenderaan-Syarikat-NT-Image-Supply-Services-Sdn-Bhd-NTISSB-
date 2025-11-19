@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('kenderaan', function (Blueprint $table) {
             // PK: no_pendaftaran (Primary Key, based on ERD)
             $table->string('no_pendaftaran', 20)->primary();
-
+            $table->string('gambar_kenderaan')->nullable();
             $table->string('jenis_kenderaan', 50);
             $table->string('jenama', 50);
             $table->string('model', 50);
