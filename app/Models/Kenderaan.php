@@ -11,7 +11,7 @@ class Kenderaan extends Model
 
     protected $table = 'kenderaan';
     protected $primaryKey = 'no_pendaftaran';
-    public $incrementing = false; // because primary key is string
+    public $incrementing = false;
     protected $keyType = 'string';
 
     protected $fillable = [

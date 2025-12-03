@@ -170,7 +170,7 @@
 
     <div class="bg-white rounded-xl shadow-md p-4 max-h-[55vh] overflow-y-auto space-y-4" id="kendContainer">
         @forelse($kenderaan as $kend)
-            <div class="user-card group flex items-center justify-between p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-200" data-no_pendaftaran="{{ $kend->no_pendaftaran }}">
+            <div class="vehicle-card group flex items-center justify-between p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-200" data-no_pendaftaran="{{ $kend->no_pendaftaran }}">
                 
                 <button data-modal-open="preview-img-{{ $kend->no_pendaftaran }}">
                     <img src="{{ asset($kend->gambar_kenderaan ?? 'images/profile_picture/default-profile.png') }}"

@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KenderaanController;
+use App\Http\Controllers\PermohonanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -54,25 +55,30 @@ Route::middleware(['authcheck'])->group(function () {
 
         // ADD
         Route::get('/tambah-pengguna', [UserController::class, 'create'])->name('tambah_pengguna.create');
-        Route::post('/tambah-pengguna', [UserController::class, 'store'])->name('tambah_pengguna.store'); // remove /store
+        Route::post('/tambah-pengguna', [UserController::class, 'store'])->name('tambah_pengguna.store');
 
         // EDIT
         Route::get('/tambah-pengguna/{id}/edit', [UserController::class, 'edit'])->name('tambah_pengguna.edit');
-        Route::post('/tambah-pengguna/{id}/update', [UserController::class, 'update'])->name('tambah_pengguna.update'); // new route
+        Route::post('/tambah-pengguna/{id}/update', [UserController::class, 'update'])->name('tambah_pengguna.update');
 
         Route::delete('/senarai-pengguna/delete', [UserController::class, 'destroy'])->name('senarai_pengguna.delete');
 
     });
 
-    // User routes 
+    // User routes
     Route::prefix('user')->name('user_site.')->group(function () {
-        Route::get('/halaman-utama', function () {
-            return view('user_site.halaman_utama');
-        })->name('halaman_utama');
+        // ✅ ONLY controller route for halaman_utama
+        Route::get('/halaman_utama', [PermohonanController::class, 'index'])
+            ->name('permohonan.index');
 
-        Route::get('/status-permohonan', function () {
-            return view('user_site.status_permohonan');
-        })->name('status_permohonan');
+        Route::get('/borang/{no_pendaftaran}', [PermohonanController::class, 'borang'])
+            ->name('permohonan.borang');
+
+        Route::post('/borang/store', [PermohonanController::class, 'store'])
+            ->name('permohonan.store');
+
+        Route::get('/status-permohonan', [PermohonanController::class, 'status'])
+        ->name('status_permohonan');
 
         Route::get('/status-perjalanan', function () {
             return view('user_site.status_perjalanan');

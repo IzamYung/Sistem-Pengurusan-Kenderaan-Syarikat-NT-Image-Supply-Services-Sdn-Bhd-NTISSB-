@@ -140,7 +140,12 @@
     <div class="bg-white rounded-xl shadow-md p-4 max-h-[55vh] overflow-y-auto space-y-4" id="userContainer">
 
         @forelse($users as $user)
-            <div class="user-card group flex items-center justify-between p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-200">
+            <div class="user-card group flex items-center justify-between p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-200"
+            data-name="{{ strtolower($user->nama) }}"
+            data-id_pekerja="{{ strtolower($user->id_pekerja) }}"
+            data-email="{{ strtolower($user->email) }}"
+            data-jawatan="{{ strtolower($user->jawatan) }}"
+            data-no_tel="{{ strtolower($user->no_tel) }}">
 
                 {{-- PROFILE IMAGE --}}
                 <button data-modal-open="preview-img-{{ $user->id_pekerja }}">

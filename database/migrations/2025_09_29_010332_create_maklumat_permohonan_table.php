@@ -6,39 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('maklumat_permohonan', function (Blueprint $table) {
-            // PK: id_permohonan
-            $table->id('id_permohonan'); 
-
-            // Foreign Key placeholder to users.id_pekerja (which is an auto-incrementing big integer now)
-            $table->unsignedBigInteger('id_user'); 
-            // Foreign Key placeholder to vehicles.no_pendaftaran
-            $table->string('no_pendaftaran', 20); 
-
+            $table->id('id_permohonan');
+            $table->string('id_user'); // user's id_pekerja (string)
+            $table->string('no_pendaftaran', 20);
             $table->dateTime('tarikh_mohon');
-            $table->dateTime('tarikh_pelepasan')->nullable(); // Date/time vehicle was released/used
+            $table->dateTime('tarikh_pelepasan')->nullable();
             $table->string('lokasi', 150);
             $table->unsignedSmallInteger('bil_penumpang');
             $table->string('kod_projek', 50);
-            $table->string('lampiran')->nullable(); // Path/filename for attachment
-            $table->string('status_pengesahan', 30);
-            $table->unsignedInteger('speedometer_sebelum'); // Start mileage
-            $table->unsignedInteger('speedometer_selepas')->nullable(); // End mileage, nullable until returned
-
+            $table->string('hak_milik')->nullable();
+            $table->json('lampiran')->nullable(); // array of stored filenames/paths
+            $table->string('status_pengesahan', 30)->default('Buat Pemeriksaan');
+            $table->unsignedInteger('speedometer_sebelum')->nullable();
+            $table->unsignedInteger('speedometer_selepas')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('application_details');
+        Schema::dropIfExists('maklumat_permohonan');
     }
 };

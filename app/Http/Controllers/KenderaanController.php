@@ -76,6 +76,7 @@ class KenderaanController extends Controller
             'status_kenderaan' => 'required|string|max:20',
         ]);
 
+        // Upload gambar
         if ($request->hasFile('gambar_kenderaan')) {
             $file = $request->file('gambar_kenderaan');
             $filename = time().'_'.$file->getClientOriginalName();
@@ -108,9 +109,13 @@ class KenderaanController extends Controller
             'status_kenderaan' => 'required|string|max:20',
         ]);
 
+        // Tukar gambar baru
         if ($request->hasFile('gambar_kenderaan')) {
-            if ($kend->gambar_kenderaan && file_exists(public_path($kend->gambar_kenderaan)) &&
+            // buang gambar lama
+            if ($kend->gambar_kenderaan &&
+                file_exists(public_path($kend->gambar_kenderaan)) &&
                 $kend->gambar_kenderaan != 'images/kenderaan/default-vehicle.png') {
+
                 unlink(public_path($kend->gambar_kenderaan));
             }
 
@@ -120,10 +125,13 @@ class KenderaanController extends Controller
             $validated['gambar_kenderaan'] = 'images/kenderaan/' . $filename;
         }
 
+        // Handle tukar ID (no pendaftaran)
         $newId = $validated['no_pendaftaran'];
         unset($validated['no_pendaftaran']);
 
         $kend->update($validated);
+
+        // update primary key
         $kend->no_pendaftaran = $newId;
         $kend->save();
 
@@ -134,6 +142,7 @@ class KenderaanController extends Controller
     public function destroy(Request $request)
     {
         $ids = $request->ids;
+
         if (!$ids || !is_array($ids)) {
             return response()->json(['message' => 'Tiada kenderaan dipilih'], 400);
         }

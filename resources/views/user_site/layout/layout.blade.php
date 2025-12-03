@@ -12,7 +12,7 @@
 
     {{-- HEADER --}}
     <header class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 z-50 flex justify-between items-center px-8 py-2 shadow-sm">
-        <a href="{{ route('user_site.halaman_utama') }}" class="flex items-center gap-3">
+        <a href="{{ route('user_site.permohonan.index') }}" class="flex items-center gap-3">
             <img src="{{ asset('images/logo_syarikat.png') }}" alt="Company Logo" class="w-10 h-10 object-contain drop-shadow-sm">
             <span class="text-sm font-semibold text-blue-600 leading-tight">
                 NT Image Supply & Services<br>SDN BHD
@@ -42,7 +42,7 @@
         <nav class="sticky top-[64px] w-64 bg-white/95 backdrop-blur-sm border-r border-gray-100 shadow-sm p-3 space-y-1 h-[calc(100vh-64px)] overflow-y-auto">
             @php
                 $menu = [
-                    ['name' => 'Halaman Utama', 'route' => 'user_site.halaman_utama'],
+                    ['name' => 'Halaman Utama', 'route' => 'user_site.permohonan.index'],
                     ['name' => 'Status Permohonan', 'route' => 'user_site.status_permohonan'],
                     ['name' => 'Status Perjalanan', 'route' => 'user_site.status_perjalanan'],
                     ['name' => 'Rekod Permohonan', 'route' => 'user_site.rekod_permohonan'],

@@ -18,7 +18,7 @@ class AuthController extends Controller
         // Check if user already logged in via session
         if ($request->session()->has('loginId')) {
             $role = $request->session()->get('role');
-            return redirect()->route($role === 'admin' ? 'admin_site.halaman_utama' : 'user_site.halaman_utama');
+            return redirect()->route($role === 'admin' ? 'admin_site.halaman_utama' : 'user_site.permohonan.index');
         }
 
         // Check if remember_token cookie exists (auto-login)
@@ -33,7 +33,7 @@ class AuthController extends Controller
                     'role'    => $user->role,
                 ]);
 
-                return redirect()->route($user->role === 'admin' ? 'admin_site.halaman_utama' : 'user_site.halaman_utama');
+                return redirect()->route($user->role === 'admin' ? 'admin_site.halaman_utama' : 'user_site.permohonan.index');
             }
         }
 
@@ -76,7 +76,7 @@ class AuthController extends Controller
         config(['session.expire_on_close' => false]);
 
         // Redirect to the correct dashboard
-        return redirect()->route($user->role === 'admin' ? 'admin_site.halaman_utama' : 'user_site.halaman_utama');
+        return redirect()->route($user->role === 'admin' ? 'admin_site.halaman_utama' : 'user_site.permohonan.index');
     }
 
     /**
