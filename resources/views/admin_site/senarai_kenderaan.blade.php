@@ -43,11 +43,11 @@
             </div>
             <div>
                 <label class="block font-medium text-gray-700">Tarikh Mula Roadtax</label>
-                <input type="date" name="tarikh_mula_roadtax" class="w-full border rounded-lg p-2" value="{{ old('tarikh_mula_roadtax') }}" required>
+                <input type="text" id="tarikhMulaRoadtax" name="tarikh_mula_roadtax" class="w-full border rounded-lg p-2" value="{{ old('tarikh_mula_roadtax') }}" required>
             </div>
             <div>
                 <label class="block font-medium text-gray-700">Tarikh Tamat Roadtax</label>
-                <input type="date" name="tarikh_tamat_roadtax" class="w-full border rounded-lg p-2" value="{{ old('tarikh_tamat_roadtax') }}" required>
+                <input type="text" id="tarikhTamatRoadtax" name="tarikh_tamat_roadtax" class="w-full border rounded-lg p-2" value="{{ old('tarikh_tamat_roadtax') }}" required>
             </div>
             <div>
                 <label class="block font-medium text-gray-700">Status</label>
@@ -117,11 +117,11 @@
             </div>
             <div>
                 <label class="block font-medium text-gray-700">Tarikh Mula Roadtax</label>
-                <input type="date" name="tarikh_mula_roadtax" class="w-full border rounded-lg p-2" value="{{ old('tarikh_mula_roadtax', $editKenderaan->tarikh_mula_roadtax) }}" required>
+                <input type="text" id="tarikhMulaRoadtax" name="tarikh_mula_roadtax" class="w-full border rounded-lg p-2" value="{{ old('tarikh_mula_roadtax', $editKenderaan->tarikh_mula_roadtax) }}" required>
             </div>
             <div>
                 <label class="block font-medium text-gray-700">Tarikh Tamat Roadtax</label>
-                <input type="date" name="tarikh_tamat_roadtax" class="w-full border rounded-lg p-2" value="{{ old('tarikh_tamat_roadtax', $editKenderaan->tarikh_tamat_roadtax) }}" required>
+                <input type="text" id="tarikhTamatRoadtax" name="tarikh_tamat_roadtax" class="w-full border rounded-lg p-2" value="{{ old('tarikh_tamat_roadtax', $editKenderaan->tarikh_tamat_roadtax) }}" required>
             </div>
             <div>
                 <label class="block font-medium text-gray-700">Status</label>

@@ -17,8 +17,9 @@ class PermohonanController extends Controller
         $kategori      = $request->kategori;
         $search        = $request->search;
         $jenama        = $request->jenama;
-        $kapasitiMin   = $request->kapasiti_min;
-        $kapasitiMax   = $request->kapasiti_max;
+
+        // ❌ kapasiti_min & kapasiti_max removed (unused)
+        // ❌ filter kapasiti removed (incorrect column name and not used)
 
         // Fetch all jenama (unique, lowercase-insensitive)
         $jenamaList = Kenderaan::selectRaw("LOWER(jenama) as jenama")
@@ -43,14 +44,6 @@ class PermohonanController extends Controller
                 $q->whereRaw("LOWER(jenama) = ?", [strtolower($jenama)])
             )
 
-            ->when($kapasitiMin, fn($q) =>
-                $q->where('kapasiti', '>=', $kapasitiMin)
-            )
-
-            ->when($kapasitiMax, fn($q) =>
-                $q->where('kapasiti', '<=', $kapasitiMax)
-            )
-
             ->orderBy('model', 'asc')
             ->get();
 
@@ -58,7 +51,7 @@ class PermohonanController extends Controller
             'page'        => 'senarai',
             'kategori'    => $kategori,
             'search'      => $search,
-            'jenamaList'  => $jenamaList,   // send to blade
+            'jenamaList'  => $jenamaList,
             'kenderaan'   => $kenderaan,
         ]);
     }
@@ -69,11 +62,16 @@ class PermohonanController extends Controller
     public function borang($no_pendaftaran)
     {
         $kenderaan = Kenderaan::findOrFail($no_pendaftaran);
+        $bookedDates = MaklumatPermohonan::where('no_pendaftaran', $no_pendaftaran)
+            ->pluck('tarikh_pelepasan')
+            ->map(fn($d) => \Carbon\Carbon::parse($d)->format('Y-m-d'))
+            ->toArray();
 
         return view('user_site.halaman_utama', [
             'page'      => 'borang',
             'kenderaan' => $kenderaan,
             'user'      => Auth::user(),
+            'bookedDates' => $bookedDates,
         ]);
     }
 
@@ -92,9 +90,17 @@ class PermohonanController extends Controller
             'lampiran.*'      => 'nullable|file|max:4096',
         ]);
 
-        // =======================
-        // HANDLE MULTIPLE FILES
-        // =======================
+        $kenderaan = Kenderaan::findOrFail($request->no_pendaftaran);
+        $kapasiti = $kenderaan->kapasiti_penumpang ?? 0;
+
+        if ($request->bil_penumpang > $kapasiti) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'bil_penumpang' => "Bilangan penumpang melebihi kapasiti maksimum kenderaan ($kapasiti).",
+                ]);
+        }
+
         $files = [];
         if ($request->hasFile('lampiran')) {
             foreach ($request->file('lampiran') as $file) {
@@ -103,9 +109,17 @@ class PermohonanController extends Controller
             }
         }
 
-        // =======================
-        // SAVE TO DATABASE
-        // =======================
+        // Check if vehicle already booked for selected date
+        $exists = MaklumatPermohonan::where('no_pendaftaran', $request->no_pendaftaran)
+                    ->whereDate('tarikh_pelepasan', date('Y-m-d', strtotime($request->tarikh_pelepasan)))
+                    ->exists();
+
+        if ($exists) {
+            return back()->withInput()->withErrors([
+                'tarikh_pelepasan' => 'Kereta ini telah ditempah pada tarikh ini.',
+            ]);
+        }
+
         MaklumatPermohonan::create([
             'id_user'             => session('loginId'),
             'no_pendaftaran'      => $request->no_pendaftaran,

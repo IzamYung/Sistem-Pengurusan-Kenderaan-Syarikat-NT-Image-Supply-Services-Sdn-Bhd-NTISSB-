@@ -22,7 +22,7 @@ export default function initVehicleFilter({
     function filterCards() {
         const query = searchInput?.value.toLowerCase() || "";
         const jenamaVal = jenamaSelect?.value.toLowerCase() || "";
-        const kapasitiVal = parseInt(kapasitiInput?.value) || 0; // empty input = 0
+        const kapasitiVal = Number(kapasitiInput?.value) || 0;
 
         let anyVisible = false;
 
@@ -30,7 +30,7 @@ export default function initVehicleFilter({
             const name = card.dataset.name?.toLowerCase() || "";
             const plate = card.dataset.no_pendaftaran?.toLowerCase() || "";
             const brand = card.dataset.jenama?.toLowerCase() || "";
-            const seat = parseInt(card.dataset.kapasiti) || 0;
+            const seat = Number(card.dataset.kapasiti) || 0;
 
             let visible = true;
 

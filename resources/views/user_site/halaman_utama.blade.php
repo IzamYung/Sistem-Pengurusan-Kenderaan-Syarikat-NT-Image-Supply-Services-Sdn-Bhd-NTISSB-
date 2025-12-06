@@ -5,6 +5,10 @@
 @section('content')
 
 @if(isset($page) && $page === 'borang')
+    <script>
+        // Pass booked dates from controller to JS
+        window.bookedDates = @json($bookedDates ?? []);
+    </script>
     {{-- BORANG PERMOHONAN --}}
     <div class="max-w-3xl mx-auto mt-10 mb-20 bg-white rounded-2xl shadow p-8">
         <h2 class="text-3xl font-bold mb-6 text-[#1e3a8a] text-center">Borang Permohonan Kenderaan</h2>
@@ -22,38 +26,54 @@
 
             <div>
                 <label class="font-semibold">Tarikh & Masa Pelepasan</label>
-                <input type="datetime-local" name="tarikh_pelepasan" required
-                       class="w-full border rounded-lg px-3 py-2 mt-1">
+                <input type="text"
+                    name="tarikh_pelepasan"
+                    id="tarikhPelepasan"
+                    value="{{ old('tarikh_pelepasan') }}"
+                    class="w-full border rounded-lg px-3 py-2 mt-1"
+                    autocomplete="off"/>
             </div>
 
             <div>
                 <label class="font-semibold">Lokasi / Tujuan</label>
                 <input type="text" name="lokasi" required
-                       class="w-full border rounded-lg px-3 py-2 mt-1" />
+                    value="{{ old('lokasi') }}"
+                    class="w-full border rounded-lg px-3 py-2 mt-1" />
             </div>
 
             <div>
                 <label class="font-semibold">Bilangan Penumpang</label>
-                <input type="number" min="1" name="bil_penumpang" required
-                       class="w-full border rounded-lg px-3 py-2 mt-1" />
+                <input type="number"
+                    min="1"
+                    name="bil_penumpang"
+                    value="{{ old('bil_penumpang') }}"
+                    class="w-full border rounded-lg px-3 py-2 mt-1 @error('bil_penumpang') border-red-500 @enderror"
+                    required />
+
+                @error('bil_penumpang')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div>
                 <label class="font-semibold">Kod Projek</label>
                 <input type="text" name="kod_projek" required
-                       class="w-full border rounded-lg px-3 py-2 mt-1" />
+                    value="{{ old('kod_projek') }}"
+                    class="w-full border rounded-lg px-3 py-2 mt-1" />
             </div>
 
             <div>
                 <label class="font-semibold">Hak Milik</label>
                 <input type="text" name="hak_milik" required
-                       class="w-full border rounded-lg px-3 py-2 mt-1" />
+                    value="{{ old('hak_milik') }}"
+                    class="w-full border rounded-lg px-3 py-2 mt-1" />
             </div>
 
             <div>
                 <label class="font-semibold">Lampiran</label>
-                <input type="file" name="lampiran[]" multiple
-                       class="w-full border rounded-lg px-3 py-2 mt-1" />
+                <input type="file" name="lampiran[]" 
+                    value="{{ old('lampiran') }}"
+                    class="w-full border rounded-lg px-3 py-2 mt-1" />
             </div>
 
             <button class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold">
@@ -101,7 +121,7 @@
                    data-name="{{ strtolower($car->model) }}"
                    data-no_pendaftaran="{{ strtolower($car->no_pendaftaran) }}"
                    data-jenama="{{ strtolower($car->jenama) }}"
-                   data-kapasiti="{{ intval($car->kapasiti) }}"
+                   data-kapasiti="{{ $car->kapasiti_penumpang ?? 0 }}"
                    data-kategori="{{ strtolower($car->jenis_kenderaan) }}">
                     <div class="flex gap-4">
                         <img src="{{ asset($car->gambar_kenderaan) }}"
