@@ -10,7 +10,7 @@ class MaklumatPemeriksaan extends Model
     protected $primaryKey = 'id_pemeriksaan';
 
     protected $fillable = [
-        'no_pendaftaran',
+        'id_permohonan',
         'kategori',
         'nama_komponen',
         'status',
@@ -19,10 +19,6 @@ class MaklumatPemeriksaan extends Model
 
     public function permohonan()
     {
-        return $this->belongsTo(
-            MaklumatPermohonan::class,
-            'no_pendaftaran',
-            'no_pendaftaran'
-        );
+        return $this->belongsTo(MaklumatPermohonan::class, 'id_permohonan', 'id_permohonan');
     }
 }

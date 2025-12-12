@@ -18,12 +18,12 @@ class UserSeeder extends Seeder
 
         DB::table('users')->insert([
             [
-                // Admin user
+                // Admin user (unchanged)
                 'id_pekerja' => 'A1001',
-                'nama' => 'Admin Test',
+                'nama' => 'Admin',
                 'jawatan' => 'Administrator',
-                'email' => 'admin@example.test',
-                'password' => Hash::make('admin123'), // hashed
+                'email' => 'admin@ntissb.com',
+                'password' => Hash::make('admin123'),
                 'no_tel' => '0123456789',
                 'gambar_profil' => 'images/profile_picture/admin.jpeg',
                 'role' => 'admin',
@@ -31,15 +31,58 @@ class UserSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
+
+            // ==========================
+            // 4 REAL STAFF YOU REQUESTED
+            // ==========================
+
             [
-                // Regular user
-                'id_pekerja' => 'U1001',
-                'nama' => 'User Test',
-                'jawatan' => 'Staff',
-                'email' => 'user@example.test',
-                'password' => Hash::make('user123'), // hashed
-                'no_tel' => '0198765432',
-                'gambar_profil' => 'images/profile_picture/default-profile.png',
+                'id_pekerja' => 'PKR001',
+                'nama' => 'Muhammad Danish Haikal',
+                'jawatan' => 'Technician',
+                'email' => 'danish.haikal@ntissb.com',
+                'password' => Hash::make('Danish@123'),
+                'no_tel' => '0124589210',
+                'gambar_profil' => 'images/profile_picture/casual3.jpg',
+                'role' => 'user',
+                'remember_token' => null,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'id_pekerja' => 'PKR002',
+                'nama' => 'Ahmad Firdaus Ramli',
+                'jawatan' => 'Driver',
+                'email' => 'firdaus.ramli@ntissb.com',
+                'password' => Hash::make('Firdaus@123'),
+                'no_tel' => '0137786402',
+                'gambar_profil' => 'images/profile_picture/casual1.jpg',
+                'role' => 'user',
+                'remember_token' => null,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'id_pekerja' => 'PKR003',
+                'nama' => 'Nur Aina Batrisyia',
+                'jawatan' => 'Admin Executive',
+                'email' => 'aina.batrisyia@ntissb.com',
+                'password' => Hash::make('Aina@123'),
+                'no_tel' => '0179543321',
+                'gambar_profil' => 'images/profile_picture/casual2.jpg',
+                'role' => 'user',
+                'remember_token' => null,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+            [
+                'id_pekerja' => 'PKR004',
+                'nama' => 'Siti Farah Nasuha',
+                'jawatan' => 'HR Assistant',
+                'email' => 'farah.nasuha@ntissb.com',
+                'password' => Hash::make('Farah@123'),
+                'no_tel' => '01162034459',
+                'gambar_profil' => 'images/profile_picture/casual4.jpg',
                 'role' => 'user',
                 'remember_token' => null,
                 'created_at' => $now,

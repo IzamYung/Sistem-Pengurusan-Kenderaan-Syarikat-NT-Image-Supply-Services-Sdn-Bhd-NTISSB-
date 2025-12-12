@@ -6,13 +6,15 @@ import initLiveSearch from "./liveSearch";
 import initVehicleFilter from "./filter";
 import initDelete from "./deleteSelected";
 import initVehicleBooking from "./vehicleBooking";
+import initPemeriksaanToggle from "./vehicleInspection";
 import flatpickr from "flatpickr";
-import "flatpickr/dist/flatpickr.min.css"; // for styling
+import "flatpickr/dist/flatpickr.min.css";
 
 document.addEventListener("DOMContentLoaded", () => {
     initPasswordToggle();
     initFilePreview();
     initModal();
+    initPemeriksaanToggle();
 
     // USERS
     if (document.querySelector("#searchUser")) {

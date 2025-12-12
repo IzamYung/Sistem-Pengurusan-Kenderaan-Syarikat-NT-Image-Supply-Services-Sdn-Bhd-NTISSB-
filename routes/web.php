@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KenderaanController;
 use App\Http\Controllers\PermohonanController;
+use App\Http\Controllers\KelulusanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,9 +19,14 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['authcheck'])->group(function () {
     // Admin routes
     Route::prefix('admin')->name('admin_site.')->group(function () {
-        Route::get('/halaman-utama', function () {
-            return view('admin_site.halaman_utama');
-        })->name('halaman_utama');
+        Route::get('/halaman-utama', [KelulusanController::class, 'halamanUtama'])
+            ->name('halaman_utama');
+
+        Route::post('/lulus/{id_permohonan}', [KelulusanController::class, 'lulus'])
+            ->name('permohonan.lulus');
+
+        Route::post('/tidak-lulus/{id_permohonan}', [KelulusanController::class, 'tidakLulus'])
+            ->name('permohonan.tidak_lulus');
 
         Route::get('/status-perjalanan', function () {
             return view('admin_site.status_perjalanan');
@@ -79,6 +85,12 @@ Route::middleware(['authcheck'])->group(function () {
 
         Route::get('/status-permohonan', [PermohonanController::class, 'status'])
         ->name('status_permohonan');
+
+        Route::get('/pemeriksaan/{id_permohonan}', [PermohonanController::class, 'pemeriksaan'])
+            ->name('permohonan.pemeriksaan');
+            
+        Route::post('/pemeriksaan/simpan', [PermohonanController::class, 'simpanPemeriksaan'])
+            ->name('permohonan.simpan_pemeriksaan');
 
         Route::get('/status-perjalanan', function () {
             return view('user_site.status_perjalanan');

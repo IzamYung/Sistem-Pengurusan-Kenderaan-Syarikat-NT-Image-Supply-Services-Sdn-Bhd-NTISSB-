@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kenderaan;
 use App\Models\MaklumatPermohonan;
+use App\Models\MaklumatPemeriksaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -152,6 +153,110 @@ class PermohonanController extends Controller
         return view('user_site.status_permohonan', [
             'permohonan' => $permohonan
         ]);
+    }
+
+    // Dalam app/Http/Controllers/PermohonanController.php
+
+    // Tambah method untuk memaparkan Borang Pemeriksaan
+    public function pemeriksaan($id_permohonan)
+    {
+        // Cari permohonan berdasarkan ID dan pengguna yang sedang log masuk
+        $permohonan = MaklumatPermohonan::where('id_permohonan', $id_permohonan)
+            ->where('id_user', session('loginId'))
+            ->firstOrFail();
+        
+        // Pastikan status adalah 'Buat Pemeriksaan' sebelum membenarkan pemeriksaan
+        if ($permohonan->status_pengesahan !== 'Buat Pemeriksaan') {
+            // Redirect atau berikan mesej ralat jika tidak boleh diperiksa
+            return redirect()->route('user_site.status_permohonan')
+                ->with('error', 'Permohonan ini tidak memerlukan pemeriksaan kenderaan lagi.');
+        }
+
+        return view('user_site.status_permohonan', [
+            'page' => 'pemeriksaan', // Pembolehubah untuk switch view
+            'permohonan' => $permohonan,
+        ]);
+    }
+
+    // Tambah method untuk menyimpan Borang Pemeriksaan
+    public function simpanPemeriksaan(Request $request)
+    {
+        // 1. Validation (Anda boleh tambah lebih banyak validation)
+        $request->validate([
+            'id_permohonan'       => 'required|exists:maklumat_permohonan,id_permohonan',
+            'mileage'             => 'required|numeric|min:0',
+            'pemeriksaan.*.status' => 'required|in:1,2,3',
+            'pemeriksaan.*.ulasan' => 'nullable|string|max:500', // Hanya diperlukan jika status 2/3
+        ]);
+
+        $id_permohonan = $request->id_permohonan;
+
+        // 2. Fetch Permohonan
+        $permohonan = MaklumatPermohonan::where('id_permohonan', $id_permohonan)
+            ->where('id_user', session('loginId'))
+            ->firstOrFail();
+
+        // 3. Simpan Mileage
+        $permohonan->speedometer_sebelum = $request->mileage;
+        $permohonan->status_pengesahan = 'Menunggu Kelulusan'; // Kemaskini status selepas pemeriksaan
+        $permohonan->save();
+        
+        // 4. Simpan Butiran Pemeriksaan
+        // Hapus rekod pemeriksaan lama berdasarkan id_permohonan
+        MaklumatPemeriksaan::where('id_permohonan', $id_permohonan)->delete();
+
+        // Simpan data pemeriksaan
+        $pemeriksaanData = [];
+        $failedCheck = false;
+        $componentList = [
+            'badan_luaran' => 'Badan Luaran Kenderaan',
+            'cermin_hadapan' => 'Cermin Hadapan / Sisi',
+            'pengelap_cermin' => 'Pengelap Cermin',
+            'brek' => 'Brek (Pad / Kasut Brek)',
+            'salur_hos_brek' => 'Salur & Hos Brek',
+            'sistem_stereng' => 'Sistem Stereng',
+        ];
+        
+        foreach ($request->pemeriksaan as $key => $data) {
+            $status = $data['status'];
+            $ulasan = $data['ulasan'] ?? null;
+            
+            // Cek jika status 2 atau 3, wajib ada ulasan (penjelasan)
+            if (in_array($status, ['2', '3']) && empty($ulasan)) {
+                return back()->withInput()->withErrors([
+                    "pemeriksaan.$key.ulasan" => "Penjelasan diperlukan jika status adalah 2 atau 3 untuk " . ($componentList[$key] ?? $key) . "."
+                ]);
+            }
+
+            if (in_array($status, ['2', '3'])) {
+                $failedCheck = true; // Set flag jika ada kerosakan
+            }
+            
+            $pemeriksaanData[] = [
+                // PERUBAHAN UTAMA: Gunakan id_permohonan di sini
+                'id_permohonan'  => $id_permohonan, 
+                // Lajur 'no_pendaftaran' telah DIBUANG dari array data kerana ia dikeluarkan dari migration
+                'kategori'       => 'Pemeriksaan Sebelum', 
+                'nama_komponen'  => $componentList[$key] ?? $key,
+                'status'         => $status,
+                'ulasan'         => $ulasan,
+                'created_at'     => now(),
+                'updated_at'     => now(),
+            ];
+        }
+        
+        // Simpan semua rekod pemeriksaan dalam satu masa
+        if (!empty($pemeriksaanData)) {
+            MaklumatPemeriksaan::insert($pemeriksaanData);
+        }
+        
+        // Tentukan mesej berdasarkan status pemeriksaan
+        $message = $failedCheck ? 
+            'Pemeriksaan berjaya dihantar. Terdapat isu yang memerlukan perhatian. Permohonan anda kini Menunggu Kelulusan.' :
+            'Pemeriksaan kenderaan berjaya dihantar. Permohonan anda kini Menunggu Kelulusan.';
+
+        return redirect()->route('user_site.status_permohonan')
+            ->with('success', $message);
     }
 
 }

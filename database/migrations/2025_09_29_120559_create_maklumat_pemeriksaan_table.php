@@ -6,32 +6,36 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-            Schema::create('maklumat_pemeriksaan', function (Blueprint $table) {
+        Schema::create('maklumat_pemeriksaan', function (Blueprint $table) {
             // PK: id_pemeriksaan
             $table->id('id_pemeriksaan'); 
 
-            // Foreign Key placeholder to vehicles.no_pendaftaran
-            $table->string('no_pendaftaran', 20);
-
+            // Foreign Key: Link ke maklumat_permohonan
+            $table->unsignedBigInteger('id_permohonan'); 
+            
+            // Kolum Pemeriksaan
             $table->string('kategori', 50);
             $table->string('nama_komponen', 100);
             $table->string('status', 20);
             $table->text('ulasan')->nullable();
 
             $table->timestamps();
+
+            // --- DEFINISI FOREIGN KEY CONSTRAINT ---
+            
+            // Link ke Permohonan (Wajib untuk integriti data)
+            $table->foreign('id_permohonan')
+                  ->references('id_permohonan')->on('maklumat_permohonan')
+                  ->onDelete('cascade'); 
+                  
+            // NOTA: Lajur dan Foreign Key 'no_pendaftaran' telah dikeluarkan.
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('inspection_details');
+        Schema::dropIfExists('maklumat_pemeriksaan');
     }
 };

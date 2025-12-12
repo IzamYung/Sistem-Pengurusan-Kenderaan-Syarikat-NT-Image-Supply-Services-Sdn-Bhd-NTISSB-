@@ -88,49 +88,66 @@
         <h2 class="text-3xl font-bold text-center mb-6 text-[#1e3a8a]">Senarai Kenderaan</h2>
 
         {{-- FILTER + SEARCH --}}
-        <form method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
-            <select name="jenama" class="border rounded-lg px-3 py-2">
-                <option value="">Semua Jenama</option>
-                @foreach($jenamaList as $brand)
-                    <option value="{{ $brand }}" {{ strtolower(request('jenama')) == strtolower($brand) ? 'selected' : '' }}>
-                        {{ ucfirst($brand) }}
-                    </option>
-                @endforeach
-            </select>
+        <form method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-2">
 
-            <input type="number"
-                   name="kapasiti"
-                   placeholder="Kapasiti"
-                   min="1"
-                   value="{{ request('kapasiti') ?? '' }}"
-                   class="border rounded-lg px-3 py-2" />
+            {{-- LABEL JENAMA --}}
+            <div class="flex flex-col">
+                <label class="text-sm font-semibold text-gray-600 mb-1">Pilih Jenama</label>
+                <select name="jenama"
+                    class="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 transition">
+                    <option value="">Semua Jenama</option>
+                    @foreach($jenamaList as $brand)
+                        <option value="{{ $brand }}" {{ strtolower(request('jenama')) == strtolower($brand) ? 'selected' : '' }}>
+                            {{ ucfirst($brand) }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-            <input type="text"
-                   id="searchKenderaan"
-                   name="search"
-                   placeholder="Cari model / no pendaftaran…"
-                   value="{{ request('search') }}"
-                   class="border px-3 py-2 rounded-lg" />
+            {{-- LABEL KAPASITI --}}
+            <div class="flex flex-col">
+                <label class="text-sm font-semibold text-gray-600 mb-1">Kapasiti Penumpang</label>
+                <input type="number"
+                    name="kapasiti"
+                    placeholder="cth: 4, 7, 10..."
+                    min="1"
+                    value="{{ request('kapasiti') ?? '' }}"
+                    class="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 transition" />
+            </div>
+
+            {{-- LABEL SEARCH --}}
+            <div class="flex flex-col">
+                <label class="text-sm font-semibold text-gray-600 mb-1">Carian Kenderaan</label>
+                <input type="text"
+                    id="searchKenderaan"
+                    name="search"
+                    placeholder="Model, no. pendaftaran, jenis..."
+                    value="{{ request('search') }}"
+                    class="border px-3 py-2 rounded-lg focus:ring-2 focus:ring-blue-500 transition" />
+                <p class="text-xs text-gray-400 mt-1">Contoh: Proton X70, WXY1234, SUV…</p>
+            </div>
+
         </form>
 
         {{-- LIST --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="vehicleList">
             @forelse ($kenderaan ?? [] as $car)
                 <a href="{{ route('user_site.permohonan.borang', ['no_pendaftaran' => $car->no_pendaftaran]) }}"
-                   class="vehicle-card block bg-white p-4 rounded-xl shadow hover:shadow-lg transition"
-                   data-name="{{ strtolower($car->model) }}"
-                   data-no_pendaftaran="{{ strtolower($car->no_pendaftaran) }}"
-                   data-jenama="{{ strtolower($car->jenama) }}"
-                   data-kapasiti="{{ $car->kapasiti_penumpang ?? 0 }}"
-                   data-kategori="{{ strtolower($car->jenis_kenderaan) }}">
+                class="vehicle-card block bg-white p-4 rounded-xl shadow hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
+                data-name="{{ strtolower($car->model) }}"
+                data-no_pendaftaran="{{ strtolower($car->no_pendaftaran) }}"
+                data-jenama="{{ strtolower($car->jenama) }}"
+                data-kapasiti="{{ $car->kapasiti_penumpang ?? 0 }}"
+                data-kategori="{{ strtolower($car->jenis_kenderaan) }}">
                     <div class="flex gap-4">
                         <img src="{{ asset($car->gambar_kenderaan) }}"
-                        class="w-32 h-20 object-cover rounded-lg border" />
+                            class="w-32 h-20 object-cover rounded-lg border" />
 
                         <div>
                             <p class="text-lg font-bold text-[#1e3a8a]">{{ $car->model }}</p>
-                            <p class="text-gray-600">{{ $car->no_pendaftaran }}</p>
-                            <p class="text-sm text-gray-500">{{ $car->jenis_kenderaan }}</p>
+                            <p class="text-gray-600 font-medium">No. Pendaftaran: <span class="text-blue-600">{{ $car->no_pendaftaran }}</span></p>
+                            <p class="text-sm text-gray-500">Jenis: <span class="text-indigo-500">{{ $car->jenis_kenderaan }}</span></p>
+                            <p class="text-sm text-gray-500">Kapasiti: <span class="text-green-600">{{ $car->kapasiti_penumpang ?? 0 }}</span> orang</p>
                         </div>
                     </div>
                 </a>
@@ -139,8 +156,13 @@
             @endforelse
         </div>
 
-        <p id="noMatchVehicle" class="hidden text-center text-gray-500 mt-5">Tiada padanan ditemui.</p>
-        <p id="noVehicle" class="hidden text-center text-gray-500 mt-5">Tiada kenderaan ditemui.</p>
+        {{-- EMPTY / NO MATCH --}}
+        <p id="noMatchVehicle" class="hidden text-center text-gray-500 mt-5">
+            😔 Tiada padanan ditemui. Cuba tukar kata kunci lain!
+        </p>
+        <p id="noVehicle" class="hidden text-center text-gray-500 mt-5">
+            🚗 Tiada kenderaan dalam sistem buat masa ini.
+        </p>
     </div>
 @endif
 
