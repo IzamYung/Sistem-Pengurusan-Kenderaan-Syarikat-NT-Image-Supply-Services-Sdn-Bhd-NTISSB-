@@ -22,6 +22,7 @@ class MaklumatPermohonan extends Model
         'status_pengesahan',
         'speedometer_sebelum',
         'speedometer_selepas',
+        'ulasan',
     ];
 
     protected $casts = [

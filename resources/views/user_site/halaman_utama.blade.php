@@ -71,7 +71,7 @@
 
             <div>
                 <label class="font-semibold">Lampiran</label>
-                <input type="file" name="lampiran[]" 
+                <input type="file" name="lampiran[]" multiple 
                     value="{{ old('lampiran') }}"
                     class="w-full border rounded-lg px-3 py-2 mt-1" />
             </div>

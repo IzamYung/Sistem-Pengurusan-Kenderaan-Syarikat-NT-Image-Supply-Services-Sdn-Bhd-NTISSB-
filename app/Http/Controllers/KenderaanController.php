@@ -98,7 +98,7 @@ class KenderaanController extends Controller
 
         $validated = $request->validate([
             'no_pendaftaran' => 'required|unique:kenderaan,no_pendaftaran,' . $no_pendaftaran . ',no_pendaftaran',
-            'gambar_kenderaan' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'gambar_kenderaan' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:20480',
             'jenis_kenderaan' => 'required|string|max:50',
             'jenama' => 'required|string|max:50',
             'model' => 'required|string|max:50',

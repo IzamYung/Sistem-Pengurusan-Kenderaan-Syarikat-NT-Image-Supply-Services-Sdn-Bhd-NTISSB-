@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MaklumatPermohonan;
 use App\Models\MaklumatPemeriksaan;
+use Illuminate\Support\Facades\Storage;
 
 class KelulusanController extends Controller
 {
@@ -49,6 +50,16 @@ class KelulusanController extends Controller
     public function lulus($id_permohonan)
     {
         $permohonan = MaklumatPermohonan::findOrFail($id_permohonan);
+
+        // 🔥 Hapus file speedometer_sebelum kalau ada
+        if ($permohonan->speedometer_sebelum && Storage::disk('public')->exists($permohonan->speedometer_sebelum)) {
+            Storage::disk('public')->delete($permohonan->speedometer_sebelum);
+        }
+
+        // Kosongkan column supaya blade tak preview
+        $permohonan->speedometer_sebelum = null;
+
+        // Tukar status
         $permohonan->status_pengesahan = 'Lulus';
         $permohonan->save();
 

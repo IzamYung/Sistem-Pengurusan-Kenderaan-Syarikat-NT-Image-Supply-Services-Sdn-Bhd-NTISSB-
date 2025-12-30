@@ -92,13 +92,16 @@ Route::middleware(['authcheck'])->group(function () {
         Route::post('/pemeriksaan/simpan', [PermohonanController::class, 'simpanPemeriksaan'])
             ->name('permohonan.simpan_pemeriksaan');
 
-        Route::get('/status-perjalanan', function () {
-            return view('user_site.status_perjalanan');
-        })->name('status_perjalanan');
+        Route::get('/status-perjalanan', [\App\Http\Controllers\StatusPerjalananController::class, 'index'])
+            ->name('status_perjalanan');
 
-        Route::get('/rekod-permohonan', function () {
-            return view('user_site.rekod_permohonan');
-        })->name('rekod_permohonan');
+        Route::post('/status-perjalanan/simpan', [\App\Http\Controllers\StatusPerjalananController::class, 'simpan'])
+            ->name('status_perjalanan.simpan');
+
+        Route::get('/rekod-permohonan', [
+        \App\Http\Controllers\RekodPermohonanController::class,'index'])
+            ->name('rekod_permohonan');
+
     });
 
     // Profile controller

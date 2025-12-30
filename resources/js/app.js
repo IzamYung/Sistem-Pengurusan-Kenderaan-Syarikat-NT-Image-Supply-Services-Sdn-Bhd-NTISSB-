@@ -7,6 +7,7 @@ import initVehicleFilter from "./filter";
 import initDelete from "./deleteSelected";
 import initVehicleBooking from "./vehicleBooking";
 import initPemeriksaanToggle from "./vehicleInspection";
+import initPermohonanModal from "./permohonanModal";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
@@ -15,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initFilePreview();
     initModal();
     initPemeriksaanToggle();
+    initPermohonanModal();
 
     // USERS
     if (document.querySelector("#searchUser")) {
@@ -130,4 +132,11 @@ document.addEventListener("DOMContentLoaded", () => {
             },
         });
     }
+
+    document.querySelectorAll(".speedometer-preview").forEach((img) => {
+        img.addEventListener("click", () => {
+            const modalImg = document.getElementById("modalSpeedometerImg");
+            modalImg.src = img.dataset.modalImg;
+        });
+    });
 });

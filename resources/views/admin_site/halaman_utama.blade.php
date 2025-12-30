@@ -35,8 +35,73 @@
                 <p><span class="font-semibold">Hak Milik:</span> {{ $permohonan->hak_milik ?? '-' }}</p>
                 <p><span class="font-semibold">Status Pengesahan:</span> {{ $permohonan->status_pengesahan }}</p>
 
-                <p><span class="font-semibold">Speedometer Sebelum:</span> {{ $permohonan->speedometer_sebelum ?? '-' }}</p>
-                <p><span class="font-semibold">Speedometer Selepas:</span> {{ $permohonan->speedometer_selepas ?? '-' }}</p>
+                {{-- Speedometer Sebelum --}}
+                <div class="col-span-2">
+                    <p class="font-semibold text-gray-800 mb-2">
+                        Speedometer Sebelum
+                    </p>
+
+                    @if($permohonan->speedometer_sebelum)
+                        <img
+                            src="{{ asset('storage/' . $permohonan->speedometer_sebelum) }}"
+                            alt="Speedometer Sebelum"
+                            class="cursor-pointer speedometer-preview rounded-lg border shadow"
+                            style="max-height: 150px; width: auto;"
+                            data-modal-open="modalSpeedometer"
+                            data-modal-img="{{ asset('storage/' . $permohonan->speedometer_sebelum) }}"
+                        >
+                    @else
+                        <p class="text-gray-500 italic">
+                            Tiada gambar speedometer direkodkan.
+                        </p>
+                    @endif
+                </div>
+
+                {{-- Modal Speedometer --}}
+                <div id="modalSpeedometer"
+                    data-modal
+                    class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center">
+
+                    <div data-modal-card
+                        class="bg-white rounded-xl shadow-lg
+                                transform scale-95 opacity-0 transition-all duration-200
+                                p-5 max-w-3xl w-full">
+
+                        {{-- IMAGE --}}
+                        <div class="flex justify-center mb-4">
+                            <img id="modalSpeedometerImg"
+                                src=""
+                                alt="Speedometer"
+                                class="rounded-lg max-h-[80vh] w-auto">
+                        </div>
+
+                        {{-- CLOSE BUTTON --}}
+                        <div class="flex justify-center mt-3">
+                            <button data-modal-close class="px-5 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Lampiran --}}
+                <div class="col-span-2">
+                    <p class="font-semibold text-gray-800 mb-2">Lampiran</p>
+
+                    @if(!empty($permohonan->lampiran) && count($permohonan->lampiran) > 0)
+                        <ul class="list-disc list-inside space-y-1">
+                            @foreach($permohonan->lampiran as $file)
+                                <li>
+                                    <a href="{{ asset('storage/' . $file) }}"
+                                    target="_blank"
+                                    class="text-blue-600 hover:underline">
+                                        {{ basename($file) }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p class="text-gray-500 italic">Tiada lampiran</p>
+                    @endif
+                </div>
 
             </div>
         </div>
@@ -48,6 +113,7 @@
 
             @php
                 $sections = [
+
                     'Bahagian Dalaman / Luaran' => [
                         'Badan Luaran Kenderaan',
                         'Cermin Hadapan / Kaca',
@@ -56,7 +122,7 @@
                         'Lampu Dalaman',
                         'Operasi Penghawa Dingin',
                         'Pemanasan',
-                        'Lain-lain (Dalaman/Luaran)',
+                        'Lain-lain',
                     ],
 
                     'Bahagian Bawah Kenderaan' => [
@@ -66,68 +132,129 @@
                         'Penyerap Kejutan & Topang',
                         'Sistem Ekzos',
                         'Salur & Hos Bahan Api',
-                        'Lain-lain (Bawah)',
+                        'Lain-lain',
+                    ],
+
+                    'Bahagian Bawah Bonet' => [
+                        'Minyak Enjin',
+                        'Bendalir Brek',
+                        'Bendalir Stereng Kuasa',
+                        'Bendalir Pencuci Cermin',
+                        'Tali Sawat & Hos',
+                        'Anti-Beku / Penyejuk',
+                        'Penapis Udara',
+                        'Penapis Kabin',
+                        'Penapis Bahan Api',
+                        'Palam Pencucuh / Wayar',
+                        'Bendalir Transmisi dan Perumah',
+                        'Sistem Gantung / Ampaian',
+                    ],
+
+                    'Bateri' => [
+                        'Caj Bateri',
+                        'Bendalir Bateri',
+                        'Kabel & Sambungan',
+                    ],
+
+                    'Tayar - Kedalaman Bunga Tayar' => [
+                        'Kiri Hadapan',
+                        'Kiri Belakang',
+                        'Kanan Hadapan',
+                        'Kanan Belakang',
+                    ],
+
+                    'Tayar - Corak Hausan / Kerosakan' => [
+                        'Kiri Hadapan',
+                        'Kiri Belakang',
+                        'Kanan Hadapan',
+                        'Kanan Belakang',
+                    ],
+
+                    'Tayar - Tekanan Udara' => [
+                        'Kiri Hadapan',
+                        'Kiri Belakang',
+                        'Kanan Hadapan',
+                        'Kanan Belakang',
+                    ],
+
+                    'Tayar - Semakan / Cadangan Selang OE' => [
+                        'Penjajaran',
+                        'Pengimbangan',
+                        'Putaran',
+                        'Tayar Baru (Ganti)',
                     ],
                 ];
             @endphp
 
             @foreach($sections as $sectionName => $components)
 
-                {{-- Section Title --}}
-                <div class="bg-blue-50 p-3 rounded-lg border border-blue-200 mb-4">
-                    <p class="text-blue-700 font-semibold text-lg">{{ $sectionName }}</p>
-                </div>
+            {{-- Section Title --}}
+            <div class="bg-blue-50 p-3 rounded-lg border border-blue-200 mb-4">
+                <p class="text-blue-700 font-semibold text-lg">{{ $sectionName }}</p>
+            </div>
 
-                @foreach($components as $label)
+            @php
+                $adaMasalah = false;
+            @endphp
 
-                    @php
-                        $pmItem = $pemeriksaan->firstWhere('nama_komponen', $label);
-                        $status = $pmItem->status ?? null;
-                        $ulasan = $pmItem->ulasan ?? '-';
-                    @endphp
+            @foreach($components as $label)
 
-                    {{-- Only show status 2 & 3 --}}
-                    @if($status == 2 || $status == 3)
+                @php
+                    $pmItem = $pemeriksaan->firstWhere('nama_komponen', $label);
+                    $status = $pmItem->status ?? null;
+                    $ulasan = $pmItem->ulasan ?? '-';
 
-                        <div class="border border-gray-300 rounded-lg p-4 mb-4 bg-white shadow-sm">
+                    if ($status == 2 || $status == 3) {
+                        $adaMasalah = true;
+                    }
+                @endphp
 
-                            {{-- Komponen --}}
-                            <p class="font-semibold text-gray-800 mb-2">{{ $label }}</p>
+                @if($status == 2 || $status == 3)
 
-                            {{-- Radio Buttons SAME DESIGN --}}
-                            <div class="flex items-center gap-6 mb-3">
+                    <div class="border border-gray-300 rounded-lg p-4 mb-4 bg-white shadow-sm">
 
-                                <label class="flex items-center gap-2">
-                                    <input type="radio" disabled {{ $status == 1 ? 'checked' : '' }}>
-                                    <span>Baik (1)</span>
-                                </label>
+                        <p class="font-semibold text-gray-800 mb-2">{{ $label }}</p>
 
-                                <label class="flex items-center gap-2">
-                                    <input type="radio" disabled {{ $status == 2 ? 'checked' : '' }}>
-                                    <span>Perlu Perhatian (2)</span>
-                                </label>
+                        <div class="flex items-center gap-6 mb-3">
+                            <label class="flex items-center gap-2">
+                                <input type="radio" disabled {{ $status == 1 ? 'checked' : '' }}>
+                                <span>Baik (1)</span>
+                            </label>
 
-                                <label class="flex items-center gap-2">
-                                    <input type="radio" disabled {{ $status == 3 ? 'checked' : '' }}>
-                                    <span>Rosak / Tidak OK (3)</span>
-                                </label>
-                            </div>
+                            <label class="flex items-center gap-2">
+                                <input type="radio" disabled {{ $status == 2 ? 'checked' : '' }}>
+                                <span>Perlu Perhatian (2)</span>
+                            </label>
 
-                            {{-- Ulasan SAME LIKE FORM but PLAIN TEXT --}}
-                            <div class="mt-3">
-                                <label class="block font-semibold mb-1">Ulasan</label>
-                                <p class="text-gray-700 leading-relaxed">
-                                    {{ $ulasan }}
-                                </p>
-                            </div>
-
+                            <label class="flex items-center gap-2">
+                                <input type="radio" disabled {{ $status == 3 ? 'checked' : '' }}>
+                                <span>Rosak / Tidak OK (3)</span>
+                            </label>
                         </div>
 
-                    @endif
+                        <div class="mt-3">
+                            <label class="block font-semibold mb-1">Ulasan</label>
+                            <p class="text-gray-700 leading-relaxed">
+                                {{ $ulasan }}
+                            </p>
+                        </div>
 
-                @endforeach
+                    </div>
+
+                @endif
 
             @endforeach
+
+            {{-- ✅ FALLBACK IF NO ISSUE --}}
+            @if(!$adaMasalah)
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+                    <p class="text-green-700 italic">
+                        Tiada sebarang masalah dikesan bagi bahagian ini.
+                    </p>
+                </div>
+            @endif
+
+        @endforeach
 
         </div>
 

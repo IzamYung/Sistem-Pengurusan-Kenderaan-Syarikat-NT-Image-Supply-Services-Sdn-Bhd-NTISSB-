@@ -106,7 +106,7 @@ class UserController extends Controller
             'jawatan'    => 'nullable|string|max:255',
             'no_tel'     => 'nullable|string|max:20',
             'password'   => 'nullable|min:6',
-            'gambar_profil' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'gambar_profil' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:20480',
         ]);
 
         // Handle password change

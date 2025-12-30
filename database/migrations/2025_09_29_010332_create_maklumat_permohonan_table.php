@@ -10,18 +10,32 @@ return new class extends Migration
     {
         Schema::create('maklumat_permohonan', function (Blueprint $table) {
             $table->id('id_permohonan');
-            $table->string('id_user'); // user's id_pekerja (string)
+
+            $table->string('id_user'); // id_pekerja
             $table->string('no_pendaftaran', 20);
+
             $table->dateTime('tarikh_mohon');
             $table->dateTime('tarikh_pelepasan')->nullable();
+
             $table->string('lokasi', 150);
             $table->unsignedSmallInteger('bil_penumpang');
+
             $table->string('kod_projek', 50);
             $table->string('hak_milik')->nullable();
-            $table->json('lampiran')->nullable(); // array of stored filenames/paths
-            $table->string('status_pengesahan', 30)->default('Buat Pemeriksaan');
-            $table->unsignedInteger('speedometer_sebelum')->nullable();
-            $table->unsignedInteger('speedometer_selepas')->nullable();
+
+            // Lampiran lain (lesen, surat, etc)
+            $table->json('lampiran')->nullable();
+
+            // Gambar speedometer
+            $table->string('speedometer_sebelum')->nullable();
+            $table->string('speedometer_selepas')->nullable();
+
+            // Ulasan pegawai
+            $table->text('ulasan')->nullable();
+
+            $table->string('status_pengesahan', 30)
+                  ->default('Buat Pemeriksaan');
+
             $table->timestamps();
         });
     }

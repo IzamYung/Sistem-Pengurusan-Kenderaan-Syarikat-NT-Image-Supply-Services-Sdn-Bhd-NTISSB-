@@ -13,7 +13,7 @@
             </div>
 
             <div class="p-6">
-                <form action="{{ route('user_site.permohonan.simpan_pemeriksaan') }}" method="POST">
+                <form action="{{ route('user_site.permohonan.simpan_pemeriksaan') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id_permohonan" value="{{ $permohonan->id_permohonan }}">
 
@@ -23,13 +23,12 @@
                             Mileage Semasa
                         </label>
 
-                        <input type="number"
-                            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 @error('mileage') border-red-500 @enderror"
-                            id="mileage"
-                            name="mileage"
-                            value="{{ old('mileage') }}"
-                            required
-                            min="0">
+                        <input type="file"
+                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 @error('mileage') border-red-500 @enderror"
+                        id="mileage"
+                        name="mileage"
+                        accept=".jpg,.jpeg,.png,.webp"
+                        required>
 
                         @error('mileage')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -55,10 +54,7 @@
                             <tbody>
 
                                 @php
-                                    // 🌟 MASTER ARRAY - ALL SECTIONS + ITEMS
                                     $sections = [
-
-                                        // 1. DALAMAN / LUARAN
                                         'Bahagian Dalaman / Luaran' => [
                                             'badan_luaran' => 'Badan Luaran Kenderaan',
                                             'cermin_hadapan' => 'Cermin Hadapan / Kaca',
@@ -69,8 +65,6 @@
                                             'pemanasan' => 'Pemanasan',
                                             'lain_dalaman_luaran' => 'Lain-lain',
                                         ],
-
-                                        // 2. BAWAH KENDERAAN
                                         'Bahagian Bawah Kenderaan' => [
                                             'brek' => 'Brek (Pad / Kasut Brek)',
                                             'salur_hos_brek' => 'Salur & Hos Brek',
@@ -80,8 +74,6 @@
                                             'salur_hos_bahan_api' => 'Salur & Hos Bahan Api',
                                             'lain_bawah' => 'Lain-lain',
                                         ],
-
-                                        // 3. BAWAH BONET
                                         'Bahagian Bawah Bonet' => [
                                             'minyak_enjin' => 'Minyak Enjin',
                                             'bendalir_brek' => 'Bendalir Brek',
@@ -96,36 +88,29 @@
                                             'bendalir_transmisi' => 'Bendalir Transmisi dan Perumah',
                                             'sistem_gantung' => 'Sistem Gantung / Ampaian',
                                         ],
-
-                                        // 4. BATERI
                                         'Bateri' => [
                                             'caj_bateri' => 'Caj Bateri',
                                             'bendalir_bateri' => 'Bendalir Bateri',
                                             'kabel_sambungan' => 'Kabel & Sambungan',
                                         ],
-
-                                        // 5. TAYAR
                                         'Tayar - Kedalaman Bunga Tayar' => [
                                             'bunga_kiri_hadapan' => 'Kiri Hadapan',
                                             'bunga_kiri_belakang' => 'Kiri Belakang',
                                             'bunga_kanan_hadapan' => 'Kanan Hadapan',
                                             'bunga_kanan_belakang' => 'Kanan Belakang',
                                         ],
-
                                         'Tayar - Corak Hausan / Kerosakan' => [
                                             'haus_kiri_hadapan' => 'Kiri Hadapan',
                                             'haus_kiri_belakang' => 'Kiri Belakang',
                                             'haus_kanan_hadapan' => 'Kanan Hadapan',
                                             'haus_kanan_belakang' => 'Kanan Belakang',
                                         ],
-
                                         'Tayar - Tekanan Udara' => [
                                             'udara_kiri_hadapan' => 'Kiri Hadapan',
                                             'udara_kiri_belakang' => 'Kiri Belakang',
                                             'udara_kanan_hadapan' => 'Kanan Hadapan',
                                             'udara_kanan_belakang' => 'Kanan Belakang',
                                         ],
-
                                         'Tayar - Semakan / Cadangan Selang OE' => [
                                             'penjajaran' => 'Penjajaran',
                                             'pengimbangan' => 'Pengimbangan',
@@ -135,7 +120,6 @@
                                     ];
                                 @endphp
 
-                                {{-- 🌟 UNIVERSAL LOOP  --}}
                                 @foreach($sections as $sectionName => $items)
                                     <tr>
                                         <td colspan="4" class="bg-blue-50 text-blue-700 font-semibold p-2">
@@ -163,7 +147,6 @@
                                             @endfor
                                         </tr>
 
-                                        {{-- ULASAN FIELD --}}
                                         <tr id="ulasan-row-{{ $key }}" class="hidden bg-gray-50 border-b">
                                             <td colspan="4" class="p-3">
                                                 <label class="font-medium text-gray-700 block mb-1">
@@ -270,13 +253,27 @@
 
                         <td class="border border-gray-300 p-0 align-top">
                             <div class="h-full w-full flex items-center justify-center
-                                {{ $bg_color }} text-white font-semibold text-center py-4 
-                                cursor-pointer hover:brightness-110"
-                                onclick="{{ $onclick_action }}">
-                                
-                                {{ ucfirst($status_raw) }}
-                                
-                            </div>
+    {{ $bg_color }} text-white font-semibold text-center py-4
+    cursor-pointer hover:brightness-110"
+
+    @if(strtolower($status_raw) !== 'buat pemeriksaan')
+        data-modal-open="modalPermohonan"
+        data-no="{{ $item->no_pendaftaran }}"
+        data-model="{{ $item->kenderaan->model ?? '-' }}"
+        data-nama="{{ $item->user->name ?? '-' }}"
+        data-tarikh="{{ optional($item->tarikh_pelepasan)->format('d/m/Y') }}"
+        data-lokasi="{{ $item->lokasi }}"
+        data-bil="{{ $item->bil_penumpang }}"
+        data-kod="{{ $item->kod_projek }}"
+        data-hak="{{ $item->hak_milik }}"
+        data-lampiran='@json($item->lampiran)'
+    @else
+        onclick="window.location='{{ $pemeriksaan_url }}'"
+    @endif
+>
+    {{ ucfirst($status_raw) }}
+</div>
+
                         </td>
                     </tr>
                 @empty
@@ -286,6 +283,65 @@
                 @endforelse
             </tbody>
         </table>
+
+        {{-- MODAL MAKLUMAT PERMOHONAN --}}
+        <div id="modalPermohonan"
+             data-modal
+             class="fixed inset-0 z-50 hidden bg-black/50 flex items-center justify-center">
+
+            <div data-modal-card
+                 class="bg-white w-full max-w-3xl rounded-xl shadow-lg
+                        transform scale-95 opacity-0 transition-all duration-200 p-8">
+
+                <h2 class="text-xl font-bold text-center mb-6">
+                    MAKLUMAT PERMOHONAN KENDERAAN
+                </h2>
+
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <p class="font-semibold">No Pendaftaran</p>
+                    <p id="m-no"></p>
+
+                    <p class="font-semibold">Model</p>
+                    <p id="m-model"></p>
+
+                    <p class="font-semibold">Tarikh Pelepasan</p>
+                    <p id="m-tarikh"></p>
+
+                    <p class="font-semibold">Lokasi</p>
+                    <p id="m-lokasi"></p>
+
+                    <p class="font-semibold">Bil Penumpang</p>
+                    <p id="m-bil"></p>
+
+                    <p class="font-semibold">Kod Projek</p>
+                    <p id="m-kod"></p>
+
+                    <p class="font-semibold">Hak Milik</p>
+                    <p id="m-hak"></p>
+                </div>
+
+                <div class="mt-6">
+                    <p class="font-semibold mb-3">Lampiran</p>
+
+                    <div id="m-lampiran"
+                        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                    </div>
+
+                    <p id="m-no-lampiran"
+                    class="text-sm text-gray-500 hidden">
+                        Tiada lampiran.
+                    </p>
+                </div>
+
+                <div class="mt-8 text-right">
+                    <button data-modal-close
+                        class="px-6 py-2 bg-gray-200 rounded-lg hover:bg-gray-300">
+                        Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endif
 
