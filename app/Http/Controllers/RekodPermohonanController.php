@@ -8,11 +8,23 @@ class RekodPermohonanController extends Controller
 {
     public function index()
     {
-        $senarai = MaklumatPermohonan::with(['kenderaan'])
-            ->where('id_user', session('loginId'))
-            ->where('status_pengesahan', 'Selesai Perjalanan')
-            ->orderBy('tarikh_mohon', 'desc')
-            ->get();
+        $query = MaklumatPermohonan::with(['kenderaan', 'user'])
+            ->whereIn('status_pengesahan', [
+                'Selesai Perjalanan',
+                'Tidak Lulus'
+            ])
+            ->orderBy('tarikh_mohon', 'desc');
+
+        // Kalau bukan admin → filter ikut user login
+        if (session('role') !== 'admin') {
+            $query->where('id_user', session('loginId'));
+        }
+
+        $senarai = $query->get();
+
+        if (session('role') === 'admin') {
+            return view('admin_site.rekod_permohonan', compact('senarai'));
+        }
 
         return view('user_site.rekod_permohonan', compact('senarai'));
     }

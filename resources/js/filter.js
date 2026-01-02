@@ -61,3 +61,19 @@ export default function initVehicleFilter({
 
     filterCards(); // initial run
 }
+
+export function initPermohonanFilter() {
+    const filter = document.getElementById("filterPermohonan");
+    const cards = document.querySelectorAll(".permohonan-card");
+
+    if (!filter || !cards.length) return;
+
+    filter.addEventListener("change", () => {
+        const val = filter.value;
+
+        cards.forEach((card) => {
+            const status = card.dataset.status;
+            card.style.display = !val || status === val ? "" : "none";
+        });
+    });
+}

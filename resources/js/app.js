@@ -3,7 +3,7 @@ import initPasswordToggle from "./passwordToggle";
 import initFilePreview from "./filePreview";
 import initModal from "./modal";
 import initLiveSearch from "./liveSearch";
-import initVehicleFilter from "./filter";
+import initVehicleFilter, { initPermohonanFilter } from "./filter";
 import initDelete from "./deleteSelected";
 import initVehicleBooking from "./vehicleBooking";
 import initPemeriksaanToggle from "./vehicleInspection";
@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initModal();
     initPemeriksaanToggle();
     initPermohonanModal();
+    initPermohonanFilter();
 
     // USERS
     if (document.querySelector("#searchUser")) {

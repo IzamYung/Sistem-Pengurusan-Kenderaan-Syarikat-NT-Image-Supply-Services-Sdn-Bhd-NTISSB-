@@ -33,25 +33,35 @@ class StatusPerjalananController extends Controller
             ->where('id_user', session('loginId'))
             ->firstOrFail();
 
+        $adaUpload = false;
+
         // 🔥 upload only if user choose file
         if ($request->hasFile('speedometer_sebelum')) {
             $permohonan->speedometer_sebelum = $request->file('speedometer_sebelum')
                 ->store('speedometer/sebelum', 'public');
+            $adaUpload = true;
         }
 
         if ($request->hasFile('speedometer_selepas')) {
             $permohonan->speedometer_selepas = $request->file('speedometer_selepas')
                 ->store('speedometer/selepas', 'public');
+            $adaUpload = true;
         }
 
         $permohonan->ulasan = $request->ulasan;
 
-        // 🔥 CHANGED: STATUS LOGIC (NO ELSE)
+        // 🔥 status permohonan (kekal logic asal)
         if (
             $permohonan->speedometer_sebelum &&
             $permohonan->speedometer_selepas
         ) {
             $permohonan->status_pengesahan = 'Selesai Perjalanan';
+        }
+
+        // 🔥 NEW: bila ada upload → status kenderaan jadi In Use
+        if ($adaUpload && $permohonan->kenderaan) {
+            $permohonan->kenderaan->status_kenderaan = 'In Use';
+            $permohonan->kenderaan->save();
         }
 
         $permohonan->save();

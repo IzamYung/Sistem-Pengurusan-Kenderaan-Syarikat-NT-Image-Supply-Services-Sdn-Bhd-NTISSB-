@@ -7,10 +7,20 @@
     Rekod Permohonan
 </h1>
 
+{{-- FILTER STATUS --}}
+<div class="flex justify-end mb-4 w-full max-w-5xl mx-auto">
+    <select id="filterPermohonan" class="border rounded-lg px-3 py-2 text-sm">
+        <option value="">Semua Rekod</option>
+        <option value="selesai">Lulus</option>
+        <option value="tidak_lulus">Tidak Lulus</option>
+    </select>
+</div>
+
 <div class="flex flex-col items-center max-w-5xl mx-auto">
 
     @foreach ($senarai as $item)
     <div
+        data-status="{{ $item->status_pengesahan === 'Selesai Perjalanan' ? 'selesai' : 'tidak_lulus' }}"
         data-modal-open="modalPermohonan"
         data-no="{{ $item->no_pendaftaran }}"
         data-model="{{ $item->kenderaan->model ?? '-' }}"

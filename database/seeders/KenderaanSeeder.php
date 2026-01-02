@@ -17,7 +17,7 @@ class KenderaanSeeder extends Seeder
 
         DB::table('kenderaan')->insert([
             [
-                'no_pendaftaran' => 'JJY 4381',
+                'no_pendaftaran' => 'JJY4381',
                 'gambar_kenderaan' => 'images/kenderaan/hilux_white.jpg',
                 'jenis_kenderaan' => 'Pickup Truck',
                 'jenama' => 'Toyota',
@@ -29,7 +29,7 @@ class KenderaanSeeder extends Seeder
                 'status_kenderaan' => 'Available',
             ],
             [
-                'no_pendaftaran' => 'BKE 1002',
+                'no_pendaftaran' => 'BKE1002',
                 'gambar_kenderaan' => 'images/kenderaan/navara_white.png',
                 'jenis_kenderaan' => 'Pickup Truck',
                 'jenama' => 'Nissan',
@@ -41,7 +41,7 @@ class KenderaanSeeder extends Seeder
                 'status_kenderaan' => 'Available',
             ],
             [
-                'no_pendaftaran' => 'DEA 9673',
+                'no_pendaftaran' => 'DEA9673',
                 'gambar_kenderaan' => 'images/kenderaan/triton_white.jpg',
                 'jenis_kenderaan' => 'Pickup Truck',
                 'jenama' => 'Mitsubishi',
@@ -53,7 +53,7 @@ class KenderaanSeeder extends Seeder
                 'status_kenderaan' => 'Available',
             ],
             [
-                'no_pendaftaran' => 'MDL 9673',
+                'no_pendaftaran' => 'MDL9673',
                 'gambar_kenderaan' => 'images/kenderaan/isuzuLorry.jpg',
                 'jenis_kenderaan' => 'Lorry',
                 'jenama' => 'Isuzu',
@@ -65,7 +65,7 @@ class KenderaanSeeder extends Seeder
                 'status_kenderaan' => 'Available',
             ],
             [
-                'no_pendaftaran' => 'MDQ 9673',
+                'no_pendaftaran' => 'MDQ9673',
                 'gambar_kenderaan' => 'images/kenderaan/hiace.jpg',
                 'jenis_kenderaan' => 'Van',
                 'jenama' => 'Toyota',
@@ -77,7 +77,7 @@ class KenderaanSeeder extends Seeder
                 'status_kenderaan' => 'Available',
             ],
             [
-                'no_pendaftaran' => 'JQR 9673',
+                'no_pendaftaran' => 'JQR9673',
                 'gambar_kenderaan' => 'images/kenderaan/crv_white.jpg',
                 'jenis_kenderaan' => 'SUV',
                 'jenama' => 'Honda',
@@ -89,7 +89,7 @@ class KenderaanSeeder extends Seeder
                 'status_kenderaan' => 'Available',
             ],
             [
-                'no_pendaftaran' => 'JPA 9673',
+                'no_pendaftaran' => 'JPA9673',
                 'gambar_kenderaan' => 'images/kenderaan/hilux_silver.jpg',
                 'jenis_kenderaan' => 'Pickup Truck',
                 'jenama' => 'Toyota',
@@ -101,7 +101,7 @@ class KenderaanSeeder extends Seeder
                 'status_kenderaan' => 'Available',
             ],
             [
-                'no_pendaftaran' => 'JRH 9673',
+                'no_pendaftaran' => 'JRH9673',
                 'gambar_kenderaan' => 'images/kenderaan/triton_white.jpg',
                 'jenis_kenderaan' => 'Pickup Truck',
                 'jenama' => 'Mitsubishi',
@@ -113,7 +113,7 @@ class KenderaanSeeder extends Seeder
                 'status_kenderaan' => 'Available',
             ],
             [
-                'no_pendaftaran' => 'JTT 9673',
+                'no_pendaftaran' => 'JTT9673',
                 'gambar_kenderaan' => 'images/kenderaan/triton_white.jpg',
                 'jenis_kenderaan' => 'Pickup Truck',
                 'jenama' => 'Mitsubishi',
@@ -125,7 +125,7 @@ class KenderaanSeeder extends Seeder
                 'status_kenderaan' => 'Available',
             ],
             [
-                'no_pendaftaran' => 'MCT 9673',
+                'no_pendaftaran' => 'MCT9673',
                 'gambar_kenderaan' => 'images/kenderaan/triton_silver.jpg',
                 'jenis_kenderaan' => 'Pickup Truck',
                 'jenama' => 'Mitsubishi',
@@ -137,7 +137,7 @@ class KenderaanSeeder extends Seeder
                 'status_kenderaan' => 'Available',
             ],
             [
-                'no_pendaftaran' => 'BKE 1059',
+                'no_pendaftaran' => 'BKE1059',
                 'gambar_kenderaan' => 'images/kenderaan/navara_white.png',
                 'jenis_kenderaan' => 'Pickup Truck',
                 'jenama' => 'Nissan',

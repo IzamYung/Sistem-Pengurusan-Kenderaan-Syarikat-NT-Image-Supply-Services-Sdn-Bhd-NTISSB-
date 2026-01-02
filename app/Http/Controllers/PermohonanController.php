@@ -7,6 +7,7 @@ use App\Models\MaklumatPermohonan;
 use App\Models\MaklumatPemeriksaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class PermohonanController extends Controller
 {
@@ -135,8 +136,21 @@ class PermohonanController extends Controller
     // ============================================
     public function status()
     {
+        $hideAfterDays = 2;
+
         $permohonan = MaklumatPermohonan::where('id_user', session('loginId'))
-            ->orderBy('tarikh_mohon', 'desc')
+            ->where(function ($query) use ($hideAfterDays) {
+
+                // Show all except old "Tidak Lulus / Tolak"
+                $query->whereNotIn('status_pengesahan', ['Tidak Lulus', 'Tolak', 'Selesai Perjalanan'])
+
+                    // OR still show if within 2 days after admin update
+                    ->orWhere(function ($q) use ($hideAfterDays) {
+                        $q->whereIn('status_pengesahan', ['Tidak Lulus', 'Tolak'])
+                        ->where('updated_at', '>=', Carbon::now()->subDays($hideAfterDays));
+                    });
+            })
+            ->orderBy('updated_at', 'desc')
             ->get();
 
         return view('user_site.status_permohonan', [

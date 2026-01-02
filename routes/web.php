@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KenderaanController;
 use App\Http\Controllers\PermohonanController;
+use App\Http\Controllers\RekodPermohonanController;
 use App\Http\Controllers\KelulusanController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,9 +33,8 @@ Route::middleware(['authcheck'])->group(function () {
             return view('admin_site.status_perjalanan');
         })->name('status_perjalanan');
 
-        Route::get('/rekod-permohonan', function () {
-            return view('admin_site.rekod_permohonan');
-        })->name('rekod_permohonan');
+        Route::get('/rekod-permohonan', [RekodPermohonanController::class, 'index'])
+        ->name('rekod_permohonan');
 
         // Senarai kenderaan routes
         Route::get('/senarai-kenderaan', [KenderaanController::class, 'index'])->name('senarai_kenderaan');
