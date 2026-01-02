@@ -1,6 +1,5 @@
 import "./bootstrap";
 import initPasswordToggle from "./passwordToggle";
-import initFilePreview from "./filePreview";
 import initModal from "./modal";
 import initLiveSearch from "./liveSearch";
 import initVehicleFilter, { initPermohonanFilter } from "./filter";
@@ -13,7 +12,6 @@ import "flatpickr/dist/flatpickr.min.css";
 
 document.addEventListener("DOMContentLoaded", () => {
     initPasswordToggle();
-    initFilePreview();
     initModal();
     initPemeriksaanToggle();
     initPermohonanModal();

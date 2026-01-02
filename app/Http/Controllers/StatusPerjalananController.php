@@ -58,9 +58,22 @@ class StatusPerjalananController extends Controller
             $permohonan->status_pengesahan = 'Selesai Perjalanan';
         }
 
-        // 🔥 NEW: bila ada upload → status kenderaan jadi In Use
-        if ($adaUpload && $permohonan->kenderaan) {
-            $permohonan->kenderaan->status_kenderaan = 'In Use';
+        // 🔥 status kenderaan (EDIT SIKIT JE)
+        if ($permohonan->kenderaan) {
+
+            // dua-dua speedometer dah ada → Available
+            if (
+                $permohonan->speedometer_sebelum &&
+                $permohonan->speedometer_selepas
+            ) {
+                $permohonan->kenderaan->status_kenderaan = 'Available';
+            }
+
+            // upload salah satu je → In Use
+            elseif ($adaUpload) {
+                $permohonan->kenderaan->status_kenderaan = 'In Use';
+            }
+
             $permohonan->kenderaan->save();
         }
 

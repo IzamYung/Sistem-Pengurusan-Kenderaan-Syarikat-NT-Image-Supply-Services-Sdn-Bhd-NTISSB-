@@ -29,7 +29,7 @@
         data-bil="{{ $item->bil_penumpang }}"
         data-kod="{{ $item->kod_projek }}"
         data-hak="{{ $item->hak_milik }}"
-        data-lampiran='@json($item->lampiran ?? [])'
+        data-lampiran="{{ json_encode($item->lampiran ?? []) }}"
         class="permohonan-card bg-white shadow-md rounded-xl p-5 mb-4 border hover:shadow-lg transition cursor-pointer w-full"
     >
         <div class="flex justify-between mb-3">

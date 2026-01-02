@@ -5,7 +5,7 @@ export default function initPermohonanModal() {
     const lampiranContainer = document.getElementById("m-lampiran");
     const noLampiranText = document.getElementById("m-no-lampiran");
 
-    // speedometer section (admin only)
+    // speedometer section
     const speedoSection = document.getElementById("m-speedometer-section");
     const speedoSebelum = document.getElementById("m-speedometer-sebelum");
     const speedoSelepas = document.getElementById("m-speedometer-selepas");
@@ -17,43 +17,34 @@ export default function initPermohonanModal() {
         .querySelectorAll("[data-modal-open='modalPermohonan']")
         .forEach((btn) => {
             btn.addEventListener("click", () => {
-                // ===== BASIC INFO (safe check) =====
-                const mUser = document.getElementById("m-user");
-                if (mUser) mUser.innerText = btn.dataset.user || "-";
-
-                const mId = document.getElementById("m-idpekerja");
-                if (mId) mId.innerText = btn.dataset.idpekerja || "-";
-
-                const mNo = document.getElementById("m-no");
-                if (mNo) mNo.innerText = btn.dataset.no || "-";
-
-                const mModel = document.getElementById("m-model");
-                if (mModel) mModel.innerText = btn.dataset.model || "-";
-
-                const mTarikh = document.getElementById("m-tarikh");
-                if (mTarikh) mTarikh.innerText = btn.dataset.tarikh || "-";
-
-                const mLokasi = document.getElementById("m-lokasi");
-                if (mLokasi) mLokasi.innerText = btn.dataset.lokasi || "-";
-
-                const mBil = document.getElementById("m-bil");
-                if (mBil) mBil.innerText = btn.dataset.bil || "-";
-
-                const mKod = document.getElementById("m-kod");
-                if (mKod) mKod.innerText = btn.dataset.kod || "-";
-
-                const mHak = document.getElementById("m-hak");
-                if (mHak) mHak.innerText = btn.dataset.hak || "-";
+                // ===== BASIC INFO =====
+                document.getElementById("m-user").innerText =
+                    btn.dataset.user || "-";
+                document.getElementById("m-idpekerja").innerText =
+                    btn.dataset.idpekerja || "-";
+                document.getElementById("m-no").innerText =
+                    btn.dataset.no || "-";
+                document.getElementById("m-model").innerText =
+                    btn.dataset.model || "-";
+                document.getElementById("m-tarikh").innerText =
+                    btn.dataset.tarikh || "-";
+                document.getElementById("m-lokasi").innerText =
+                    btn.dataset.lokasi || "-";
+                document.getElementById("m-bil").innerText =
+                    btn.dataset.bil || "-";
+                document.getElementById("m-kod").innerText =
+                    btn.dataset.kod || "-";
+                document.getElementById("m-hak").innerText =
+                    btn.dataset.hak || "-";
 
                 // ===== LAMPIRAN =====
-                lampiranContainer.innerHTML = "";
                 const files = JSON.parse(btn.dataset.lampiran || "[]");
+                lampiranContainer.innerHTML = "";
 
                 if (!files.length) {
-                    if (noLampiranText)
-                        noLampiranText.classList.remove("hidden");
+                    noLampiranText.classList.remove("hidden");
                 } else {
-                    if (noLampiranText) noLampiranText.classList.add("hidden");
+                    noLampiranText.classList.add("hidden");
 
                     files.forEach((file) => {
                         const url = `/storage/${file}`;
@@ -96,23 +87,20 @@ export default function initPermohonanModal() {
                     });
                 }
 
-                // ===== SPEEDOMETER (ADMIN ONLY, SELESAI) =====
-                if (speedoSection && btn.dataset.status === "selesai") {
+                // ===== SPEEDOMETER (SELESAI ONLY) =====
+                if (btn.dataset.status === "selesai") {
                     speedoSection.classList.remove("hidden");
 
-                    if (speedoSebelum)
-                        speedoSebelum.src = btn.dataset.speedometerSebelum
-                            ? `/storage/${btn.dataset.speedometerSebelum}`
-                            : "/img/no-image.png";
+                    speedoSebelum.src = btn.dataset.speedometerSebelum
+                        ? `/storage/${btn.dataset.speedometerSebelum}`
+                        : "/img/no-image.png";
 
-                    if (speedoSelepas)
-                        speedoSelepas.src = btn.dataset.speedometerSelepas
-                            ? `/storage/${btn.dataset.speedometerSelepas}`
-                            : "/img/no-image.png";
+                    speedoSelepas.src = btn.dataset.speedometerSelepas
+                        ? `/storage/${btn.dataset.speedometerSelepas}`
+                        : "/img/no-image.png";
 
-                    if (ulasanText)
-                        ulasanText.innerText = btn.dataset.ulasan || "-";
-                } else if (speedoSection) {
+                    ulasanText.innerText = btn.dataset.ulasan || "-";
+                } else {
                     speedoSection.classList.add("hidden");
                 }
 

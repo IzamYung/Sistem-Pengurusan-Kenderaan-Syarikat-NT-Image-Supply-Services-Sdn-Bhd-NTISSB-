@@ -33,7 +33,7 @@
     data-bil="{{ $item->bil_penumpang }}"
     data-kod="{{ $item->kod_projek }}"
     data-hak="{{ $item->hak_milik }}"
-    data-lampiran='@json($item->lampiran ?? [])'
+    data-lampiran="{{ json_encode($item->lampiran ?? []) }}"
     data-speedometer-sebelum="{{ $item->speedometer_sebelum }}"
     data-speedometer-selepas="{{ $item->speedometer_selepas }}"
     data-ulasan="{{ $item->ulasan }}"
