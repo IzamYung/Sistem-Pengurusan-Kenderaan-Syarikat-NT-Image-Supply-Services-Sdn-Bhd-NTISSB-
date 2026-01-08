@@ -9,6 +9,7 @@ import initPemeriksaanToggle from "./vehicleInspection";
 import initPermohonanModal from "./permohonanModal";
 import { initKerosakanModal } from "./kerosakanModal";
 import initMultiFilePicker from "./multiFilePicker";
+import initSpeedometerPreview from "./speedometerPreview";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
@@ -19,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initPermohonanModal();
     initPermohonanFilter();
     initKerosakanModal();
+    initSpeedometerPreview();
 
     if (document.querySelector("#lampiranInput")) {
         initMultiFilePicker({
@@ -146,6 +148,14 @@ document.addEventListener("DOMContentLoaded", () => {
         img.addEventListener("click", () => {
             const modalImg = document.getElementById("modalSpeedometerImg");
             modalImg.src = img.dataset.modalImg;
+        });
+    });
+    document.querySelectorAll(".speedometer-preview").forEach((img) => {
+        img.addEventListener("click", () => {
+            const modalImg = document.getElementById("modalSpeedometerImg");
+            if (modalImg) {
+                modalImg.src = img.dataset.modalImg;
+            }
         });
     });
 });
