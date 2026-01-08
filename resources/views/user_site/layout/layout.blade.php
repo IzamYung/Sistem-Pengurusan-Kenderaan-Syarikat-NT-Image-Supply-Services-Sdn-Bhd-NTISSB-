@@ -71,7 +71,7 @@
 
             <!-- 🌫 Fade effect above footer -->
             <div
-                class="pointer-events-none fixed bottom-0 left-0 right-0 h-[100px] z-40"
+                class="pointer-events-none fixed bottom-0 left-0 right-0 h-[100px] z-1"
                 style="
                     background: linear-gradient(
                         to top,
@@ -83,7 +83,7 @@
             </div>
 
             {{-- FOOTER (STATIC) --}}
-            <footer class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 text-center py-3 text-sm text-gray-500 shadow-inner z-50">
+            <footer class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 text-center py-3 text-sm text-gray-500 shadow-inner z-1">
                 © {{ date('Y') }} NTISSB Vehicle Management System
             </footer>
 
