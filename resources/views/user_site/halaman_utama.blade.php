@@ -133,13 +133,25 @@
         {{-- LIST --}}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="vehicleList">
             @forelse ($kenderaan ?? [] as $car)
-                <a href="{{ route('user_site.permohonan.borang', ['no_pendaftaran' => $car->no_pendaftaran]) }}"
-                class="vehicle-card block bg-white p-4 rounded-xl shadow hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
-                data-name="{{ strtolower($car->model) }}"
-                data-no_pendaftaran="{{ strtolower($car->no_pendaftaran) }}"
-                data-jenama="{{ strtolower($car->jenama) }}"
-                data-kapasiti="{{ $car->kapasiti_penumpang ?? 0 }}"
-                data-kategori="{{ strtolower($car->jenis_kenderaan) }}">
+                @php
+                    $isAvailable = strtolower($car->status_kenderaan) === 'available';
+                    $cardClasses = $isAvailable
+                        ? 'vehicle-card block bg-white p-4 rounded-xl shadow hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300'
+                        : 'block bg-gray-200 p-4 rounded-xl cursor-not-allowed opacity-70';
+                @endphp
+
+                @if($isAvailable)
+                    <a href="{{ route('user_site.permohonan.borang', ['no_pendaftaran' => $car->no_pendaftaran]) }}"
+                    class="{{ $cardClasses }}"
+                    data-name="{{ strtolower($car->model) }}"
+                    data-no_pendaftaran="{{ strtolower($car->no_pendaftaran) }}"
+                    data-jenama="{{ strtolower($car->jenama) }}"
+                    data-kapasiti="{{ $car->kapasiti_penumpang ?? 0 }}"
+                    data-kategori="{{ strtolower($car->jenis_kenderaan) }}">
+                @else
+                    <div class="{{ $cardClasses }}">
+                @endif
+
                     <div class="flex gap-4">
                         <img src="{{ asset($car->gambar_kenderaan) }}"
                             class="w-32 h-20 object-cover rounded-lg border" />
@@ -149,9 +161,18 @@
                             <p class="text-gray-600 font-medium">No. Pendaftaran: <span class="text-blue-600">{{ $car->no_pendaftaran }}</span></p>
                             <p class="text-sm text-gray-500">Jenis: <span class="text-indigo-500">{{ $car->jenis_kenderaan }}</span></p>
                             <p class="text-sm text-gray-500">Kapasiti: <span class="text-green-600">{{ $car->kapasiti_penumpang ?? 0 }}</span> orang</p>
+                            <p class="text-sm text-gray-500">Tarikh Tamat Roadtax: <span class="text-red-600">{{ \Carbon\Carbon::parse($car->tarikh_tamat_roadtax)->format('d/m/Y') }}</span></p>
+                            @if(!$isAvailable)
+                                <p class="text-sm text-gray-700 font-semibold mt-1">Status: {{ $car->status_kenderaan }}</p>
+                            @endif
                         </div>
                     </div>
-                </a>
+
+                @if($isAvailable)
+                    </a>
+                @else
+                    </div>
+                @endif
             @empty
                 <p class="text-center text-gray-500 mt-5">Tiada kenderaan ditemui.</p>
             @endforelse

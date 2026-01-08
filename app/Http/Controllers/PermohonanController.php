@@ -19,6 +19,7 @@ class PermohonanController extends Controller
         $kategori = $request->kategori;
         $search   = $request->search;
         $jenama   = $request->jenama;
+        $kapasiti = $request->kapasiti;
 
         $jenamaList = Kenderaan::selectRaw("LOWER(jenama) as jenama")
             ->groupBy('jenama')
@@ -32,11 +33,15 @@ class PermohonanController extends Controller
             ->when($search, fn($q) =>
                 $q->where(function ($x) use ($search) {
                     $x->where('model', 'LIKE', "%$search%")
-                      ->orWhere('no_pendaftaran', 'LIKE', "%$search%");
+                    ->orWhere('no_pendaftaran', 'LIKE', "%$search%")
+                    ->orWhere('jenis_kenderaan', 'LIKE', "%$search%");
                 })
             )
             ->when($jenama, fn($q) =>
                 $q->whereRaw("LOWER(jenama) = ?", [strtolower($jenama)])
+            )
+            ->when($kapasiti, fn($q) =>
+                $q->where('kapasiti_penumpang', '>=', $kapasiti)
             )
             ->orderBy('model', 'asc')
             ->get();
