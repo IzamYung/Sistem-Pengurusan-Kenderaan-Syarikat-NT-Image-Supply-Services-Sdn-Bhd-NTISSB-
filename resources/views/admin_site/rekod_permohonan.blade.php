@@ -23,7 +23,7 @@
 @forelse ($senarai as $item)
 <div
     data-modal-open="modalPermohonan"
-    data-status="{{ $item->status_pengesahan === 'Selesai Perjalanan' ? 'selesai' : 'tidak_lulus' }}"
+    data-status="{{ $item->status_pengesahan === 'Tidak Lulus' ? 'tidak_lulus' : 'selesai' }}"
     data-user="{{ $item->user->nama ?? '-' }}"
     data-idpekerja="{{ $item->user->id_pekerja ?? '-' }}"
     data-no="{{ $item->no_pendaftaran }}"

@@ -20,7 +20,7 @@
 
     @foreach ($senarai as $item)
     <div
-        data-status="{{ $item->status_pengesahan === 'Selesai Perjalanan' ? 'selesai' : 'tidak_lulus' }}"
+        data-status="{{ $item->status_pengesahan === 'Tidak Lulus' ? 'tidak_lulus' : 'selesai' }}"
         data-modal-open="modalPermohonan"
         data-no="{{ $item->no_pendaftaran }}"
         data-model="{{ $item->kenderaan->model ?? '-' }}"

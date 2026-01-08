@@ -26,4 +26,9 @@ class Kenderaan extends Model
         'tarikh_tamat_roadtax',
         'status_kenderaan',
     ];
+
+    public function permohonan()
+    {
+        return $this->hasMany(\App\Models\MaklumatPermohonan::class, 'no_pendaftaran', 'no_pendaftaran');
+    }
 }

@@ -5,16 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MaklumatPermohonan;
 use App\Models\MaklumatPemeriksaan;
+use App\Models\LaporanKerosakan;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class KelulusanController extends Controller
 {
-    // ============================
-    // 1. PAPAR SENARAI + MAKLUMAT
-    // ============================
     public function halamanUtama(Request $request)
     {
-        // Kalau admin klik satu permohonan → show detail
         if ($request->has('id_permohonan')) {
 
             $permohonan = MaklumatPermohonan::find($request->id_permohonan);
@@ -32,7 +30,6 @@ class KelulusanController extends Controller
             ]);
         }
 
-        // Else → papar senarai permohonan
         $senarai = MaklumatPermohonan::where('status_pengesahan', 'Menunggu Kelulusan')
             ->orderBy('id_permohonan', 'DESC')
             ->get();
@@ -44,22 +41,16 @@ class KelulusanController extends Controller
         ]);
     }
 
-    // ============================
-    // 2. LULUS PERMOHONAN
-    // ============================
     public function lulus($id_permohonan)
     {
         $permohonan = MaklumatPermohonan::findOrFail($id_permohonan);
 
-        // 🔥 Hapus file speedometer_sebelum kalau ada
-        if ($permohonan->speedometer_sebelum && Storage::disk('public')->exists($permohonan->speedometer_sebelum)) {
+        if ($permohonan->speedometer_sebelum &&
+            Storage::disk('public')->exists($permohonan->speedometer_sebelum)) {
             Storage::disk('public')->delete($permohonan->speedometer_sebelum);
         }
 
-        // Kosongkan column supaya blade tak preview
         $permohonan->speedometer_sebelum = null;
-
-        // Tukar status
         $permohonan->status_pengesahan = 'Lulus';
         $permohonan->save();
 
@@ -67,9 +58,6 @@ class KelulusanController extends Controller
             ->with('success', 'Permohonan diluluskan.');
     }
 
-    // ============================
-    // 3. TIDAK LULUS PERMOHONAN
-    // ============================
     public function tidakLulus($id_permohonan)
     {
         $permohonan = MaklumatPermohonan::findOrFail($id_permohonan);
@@ -78,5 +66,31 @@ class KelulusanController extends Controller
 
         return redirect()->route('admin_site.halaman_utama')
             ->with('success', 'Permohonan ditolak.');
+    }
+
+    public function tidakLulusRosak($id_permohonan)
+    {
+        $permohonan = MaklumatPermohonan::findOrFail($id_permohonan);
+
+        $permohonan->status_pengesahan = 'Tidak Lulus';
+        $permohonan->save();
+
+        // Ambik pemeriksaan
+        $pemeriksaan = MaklumatPemeriksaan::where('id_permohonan', $id_permohonan)->get();
+
+        $ulasanRingkas = $pemeriksaan->map(function($item) {
+            if ($item->status == 2) return $item->nama_komponen . " memerlukan pemerhatian";
+            if ($item->status == 3) return $item->nama_komponen . " memerlukan pemerhatian segera";
+        })->filter()->implode(', '); // join semua ayat jadi satu string
+
+        LaporanKerosakan::create([
+            'no_pendaftaran' => $permohonan->no_pendaftaran,
+            'tarikh_laporan' => Carbon::today(),
+            'jenis_kerosakan' => 'Kerosakan pada bahagian kenderaan',
+            'ulasan' => $ulasanRingkas,
+        ]);
+
+        return redirect()->route('admin_site.halaman_utama')
+            ->with('success', 'Permohonan ditolak & laporan kerosakan direkodkan.');
     }
 }

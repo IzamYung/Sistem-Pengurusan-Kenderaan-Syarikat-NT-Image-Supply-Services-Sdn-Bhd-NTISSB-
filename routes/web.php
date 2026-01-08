@@ -7,6 +7,7 @@ use App\Http\Controllers\KenderaanController;
 use App\Http\Controllers\PermohonanController;
 use App\Http\Controllers\RekodPermohonanController;
 use App\Http\Controllers\KelulusanController;
+use App\Http\Controllers\LaporanKerosakanController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,6 +29,10 @@ Route::middleware(['authcheck'])->group(function () {
 
         Route::post('/tidak-lulus/{id_permohonan}', [KelulusanController::class, 'tidakLulus'])
             ->name('permohonan.tidak_lulus');
+
+        Route::post('/tidak-lulus-kerosakan/{id_permohonan}',
+        [KelulusanController::class, 'tidakLulusRosak'])
+            ->name('permohonan.tidak_lulus_rosak');
 
         Route::get('/status-perjalanan', function () {
             return view('admin_site.status_perjalanan');
@@ -51,9 +56,14 @@ Route::middleware(['authcheck'])->group(function () {
         // DELETE
         Route::delete('/senarai-kenderaan/delete', [KenderaanController::class, 'destroy'])->name('senarai_kenderaan.delete');
 
-        Route::get('/kerosakan-kenderaan', function () {
-            return view('admin_site.kerosakkan_kenderaan');
-        })->name('kerosakkan_kenderaan');
+        Route::get('/kerosakan', [LaporanKerosakanController::class, 'index'])
+            ->name('kerosakkan_kenderaan');
+
+        Route::post('/kerosakan/store', [LaporanKerosakanController::class, 'store'])
+            ->name('kerosakkan_kenderaan.store');
+
+        Route::post('/kerosakan/selesai/{id}', [LaporanKerosakanController::class, 'selesai'])
+            ->name('kerosakkan_kenderaan.selesai');
 
         // Senarai pengguna routes
         Route::get('/senarai-pengguna', [UserController::class, 'index'])->name('senarai_pengguna');

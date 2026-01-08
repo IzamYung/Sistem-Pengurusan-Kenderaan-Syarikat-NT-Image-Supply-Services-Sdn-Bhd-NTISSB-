@@ -71,9 +71,10 @@
 
             <div>
                 <label class="font-semibold">Lampiran</label>
-                <input type="file" name="lampiran[]" multiple 
-                    value="{{ old('lampiran') }}"
+                <input type="file" id="lampiranInput" name="lampiran[]" multiple
                     class="w-full border rounded-lg px-3 py-2 mt-1" />
+
+                <div id="lampiranList" class="mt-3 space-y-1"></div>
             </div>
 
             <button class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold">

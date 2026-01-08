@@ -11,7 +11,7 @@ class RekodPermohonanController extends Controller
         $query = MaklumatPermohonan::with(['kenderaan', 'user'])
             ->whereIn('status_pengesahan', [
                 'Selesai Perjalanan',
-                'Tidak Lulus'
+                'Tidak Lulus',
             ])
             ->orderBy('tarikh_mohon', 'desc');
 

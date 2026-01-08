@@ -7,6 +7,8 @@ import initDelete from "./deleteSelected";
 import initVehicleBooking from "./vehicleBooking";
 import initPemeriksaanToggle from "./vehicleInspection";
 import initPermohonanModal from "./permohonanModal";
+import { initKerosakanModal } from "./kerosakanModal";
+import initMultiFilePicker from "./multiFilePicker";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
@@ -16,6 +18,14 @@ document.addEventListener("DOMContentLoaded", () => {
     initPemeriksaanToggle();
     initPermohonanModal();
     initPermohonanFilter();
+    initKerosakanModal();
+
+    if (document.querySelector("#lampiranInput")) {
+        initMultiFilePicker({
+            inputId: "lampiranInput",
+            listId: "lampiranList",
+        });
+    }
 
     // USERS
     if (document.querySelector("#searchUser")) {

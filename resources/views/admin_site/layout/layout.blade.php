@@ -8,6 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="icon" type="image/png" href="{{ asset('images/logo_syarikat.png') }}">
 </head>
+
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
 
     {{-- HEADER --}}
@@ -64,14 +65,30 @@
         </nav>
 
         {{-- MAIN CONTENT --}}
-        <div class="flex-1 flex flex-col overflow-hidden">
-            <main class="flex-1 p-6 overflow-y-auto bg-gray-50">
+        <div class="flex-1 flex flex-col overflow-hidden relative">
+
+            <main class="flex-1 p-6 overflow-y-auto bg-gray-50 pb-[72px]">
                 @yield('content')
             </main>
 
-            <footer class="bg-white border-t border-gray-200 text-center py-3 text-sm text-gray-500 shadow-inner">
+            <!-- 🌫 Fade effect above footer -->
+            <div
+                class="pointer-events-none fixed bottom-0 left-0 right-0 h-[100px] z-40"
+                style="
+                    background: linear-gradient(
+                        to top,
+                        white 0%,
+                        white 50%,
+                        transparent 100%
+                    );
+                ">
+            </div>
+
+            {{-- FOOTER (STATIC) --}}
+            <footer class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 text-center py-3 text-sm text-gray-500 shadow-inner z-50">
                 © {{ date('Y') }} NTISSB Vehicle Management System
             </footer>
+
         </div>
     </div>
 
@@ -82,27 +99,23 @@
         <div data-modal-card id="profileCard" 
             class="relative bg-white rounded-2xl shadow-xl w-[90%] max-w-md p-8 transform transition-all duration-200 scale-95 opacity-0 border border-gray-100">
 
-            <!-- ❌ Close button -->
             <button data-modal-close 
                 class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-all duration-150">
-                <svg xmlns="http://www.w3.org/2000/svg" 
-                    fill="none" viewBox="0 0 24 24" 
-                    stroke-width="2" stroke="currentColor" 
-                    class="w-6 h-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" 
+                    stroke-width="2" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" 
                         d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
 
-            <!-- Avatar -->
             @php $user = $user ?? Auth::user(); @endphp
             <div class="flex justify-center mb-4">
                 <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-blue-100 shadow-md">
-                    <img src="{{ asset($user->gambar_profil ?? 'images/profile_picture/default-profile.png') }}" alt="Profile Picture" class="w-full h-full object-cover">
+                    <img src="{{ asset($user->gambar_profil ?? 'images/profile_picture/default-profile.png') }}" 
+                        alt="Profile Picture" class="w-full h-full object-cover">
                 </div>
             </div>
 
-            <!-- User Info -->
             <div class="text-sm text-center text-gray-700 mb-6">
                 <p><strong>Nama :</strong> {{ $user->nama ?? 'Tiada Nama' }}</p>
                 <p><strong>ID Pekerja :</strong> {{ $user->id_pekerja ?? 'Tiada ID' }}</p>
@@ -110,11 +123,10 @@
                 <p><strong>No. Telefon :</strong> {{ $user->no_tel ?? 'Tiada No. Telefon' }}</p>
             </div>
 
-            <!-- Action buttons -->
             <div class="flex justify-center gap-3">
                 <a href="{{ route('logout') }}" 
-                class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition shadow-sm">
-                Log Keluar
+                    class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition shadow-sm">
+                    Log Keluar
                 </a>
             </div>
         </div>

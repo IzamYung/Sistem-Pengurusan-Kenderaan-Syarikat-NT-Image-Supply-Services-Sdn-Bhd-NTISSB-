@@ -5,7 +5,7 @@ export default function initPermohonanModal() {
     const lampiranContainer = document.getElementById("m-lampiran");
     const noLampiranText = document.getElementById("m-no-lampiran");
 
-    // speedometer section
+    // speedometer section elements
     const speedoSection = document.getElementById("m-speedometer-section");
     const speedoSebelum = document.getElementById("m-speedometer-sebelum");
     const speedoSelepas = document.getElementById("m-speedometer-selepas");
@@ -13,29 +13,26 @@ export default function initPermohonanModal() {
 
     if (!modal || !modalCard) return;
 
+    // open modal when any trigger is clicked
     document
         .querySelectorAll("[data-modal-open='modalPermohonan']")
         .forEach((btn) => {
             btn.addEventListener("click", () => {
                 // ===== BASIC INFO =====
-                document.getElementById("m-user").innerText =
-                    btn.dataset.user || "-";
-                document.getElementById("m-idpekerja").innerText =
-                    btn.dataset.idpekerja || "-";
-                document.getElementById("m-no").innerText =
-                    btn.dataset.no || "-";
-                document.getElementById("m-model").innerText =
-                    btn.dataset.model || "-";
-                document.getElementById("m-tarikh").innerText =
-                    btn.dataset.tarikh || "-";
-                document.getElementById("m-lokasi").innerText =
-                    btn.dataset.lokasi || "-";
-                document.getElementById("m-bil").innerText =
-                    btn.dataset.bil || "-";
-                document.getElementById("m-kod").innerText =
-                    btn.dataset.kod || "-";
-                document.getElementById("m-hak").innerText =
-                    btn.dataset.hak || "-";
+                [
+                    "user",
+                    "idpekerja",
+                    "no",
+                    "model",
+                    "tarikh",
+                    "lokasi",
+                    "bil",
+                    "kod",
+                    "hak",
+                ].forEach((key) => {
+                    const el = document.getElementById(`m-${key}`);
+                    if (el) el.innerText = btn.dataset[key] || "-";
+                });
 
                 // ===== LAMPIRAN =====
                 const files = JSON.parse(btn.dataset.lampiran || "[]");
@@ -51,44 +48,68 @@ export default function initPermohonanModal() {
                         const filename = file.split("/").pop();
                         const ext = filename.split(".").pop().toLowerCase();
 
+                        const iconMap = {
+                            pdf: "pdf.png",
+                            doc: "doc.png",
+                            docx: "doc.png",
+                            xls: "excel.png",
+                            xlsx: "excel.png",
+                            csv: "excel.png",
+                            ppt: "ppt.png",
+                            pptx: "ppt.png",
+                            jpg: "image.png",
+                            jpeg: "image.png",
+                            png: "image.png",
+                            webp: "image.png",
+                            gif: "image.png",
+                            zip: "zip.png",
+                            rar: "zip.png",
+                        };
+
+                        const icon =
+                            "/images/icons/" + (iconMap[ext] || "file.png");
+
                         const card = document.createElement("div");
                         card.className =
-                            "border rounded-lg bg-white hover:bg-gray-50 cursor-pointer overflow-hidden";
+                            "flex items-center gap-3 p-3 border rounded-lg bg-white hover:bg-gray-50 cursor-pointer transition";
                         card.onclick = () => window.open(url, "_blank");
 
-                        const preview = document.createElement("div");
-                        preview.className =
-                            "h-28 w-full bg-gray-100 overflow-hidden";
+                        // icon kiri
+                        const iconBox = document.createElement("div");
+                        iconBox.className =
+                            "w-12 h-12 flex-shrink-0 rounded-md bg-gray-100 border flex items-center justify-center";
 
                         const img = document.createElement("img");
-                        img.className = "w-full h-full object-cover object-top";
+                        img.src = icon;
+                        img.className = "w-7 h-7";
 
-                        if (["jpg", "jpeg", "png", "webp", "gif"].includes(ext))
-                            img.src = url;
-                        else if (ext === "pdf") img.src = "/img/thumb-pdf.png";
-                        else if (["doc", "docx"].includes(ext))
-                            img.src = "/img/thumb-doc.png";
-                        else if (["xls", "xlsx", "csv"].includes(ext))
-                            img.src = "/img/thumb-excel.png";
-                        else if (["ppt", "pptx"].includes(ext))
-                            img.src = "/img/thumb-ppt.png";
-                        else img.src = "/img/thumb-file.png";
+                        iconBox.appendChild(img);
 
-                        preview.appendChild(img);
+                        // text kanan
+                        const textBox = document.createElement("div");
+                        textBox.className = "min-w-0 flex-1";
 
                         const name = document.createElement("p");
                         name.className =
-                            "text-xs text-gray-700 text-center truncate px-2 py-2";
+                            "text-sm font-medium text-gray-800 truncate";
                         name.innerText = filename;
 
-                        card.appendChild(preview);
-                        card.appendChild(name);
+                        const type = document.createElement("p");
+                        type.className = "text-xs text-gray-500 uppercase";
+                        type.innerText = `.${ext}`;
+
+                        textBox.appendChild(name);
+                        textBox.appendChild(type);
+
+                        card.appendChild(iconBox);
+                        card.appendChild(textBox);
+
                         lampiranContainer.appendChild(card);
                     });
                 }
 
-                // ===== SPEEDOMETER (SELESAI ONLY) =====
-                if (btn.dataset.status === "selesai") {
+                // ===== SPEEDOMETER SECTION =====
+                if (btn.dataset.status === "selesai" && speedoSection) {
                     speedoSection.classList.remove("hidden");
 
                     speedoSebelum.src = btn.dataset.speedometerSebelum
@@ -100,7 +121,7 @@ export default function initPermohonanModal() {
                         : "/img/no-image.png";
 
                     ulasanText.innerText = btn.dataset.ulasan || "-";
-                } else {
+                } else if (speedoSection) {
                     speedoSection.classList.add("hidden");
                 }
 
@@ -112,7 +133,7 @@ export default function initPermohonanModal() {
             });
         });
 
-    // ===== CLOSE MODAL =====
+    // ===== CLOSE MODAL BUTTONS =====
     modal.querySelectorAll("[data-modal-close]").forEach((btn) => {
         btn.addEventListener("click", () => {
             modalCard.classList.remove("scale-100", "opacity-100");
@@ -120,6 +141,7 @@ export default function initPermohonanModal() {
         });
     });
 
+    // ===== CLOSE WHEN CLICK OUTSIDE =====
     modal.addEventListener("click", (e) => {
         if (e.target === modal) {
             modalCard.classList.remove("scale-100", "opacity-100");

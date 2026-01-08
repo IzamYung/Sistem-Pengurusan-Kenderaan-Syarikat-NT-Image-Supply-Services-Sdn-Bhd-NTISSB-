@@ -204,7 +204,7 @@
                             $bg_color = 'bg-yellow-400';
                         } elseif ($status === 'lulus') {
                             $bg_color = 'bg-green-500';
-                        } elseif ($status === 'tolak' || $status === 'tidak lulus') {
+                        } elseif ($status === 'tolak' || $status === 'tidak lulus' || $status === 'tidak lulus - kerosakan') {
                             $bg_color = 'bg-red-500';
                         } elseif ($status === 'buat pemeriksaan') {
                             $bg_color = 'bg-blue-600';
@@ -271,7 +271,7 @@
         onclick="window.location='{{ $pemeriksaan_url }}'"
     @endif
 >
-    {{ ucfirst($status_raw) }}
+    {{ strtolower($status_raw) === 'tidak lulus - kerosakan' ? 'Tidak Lulus' : ucfirst($status_raw) }}
 </div>
 
                         </td>

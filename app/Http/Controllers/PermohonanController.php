@@ -142,7 +142,7 @@ class PermohonanController extends Controller
             ->where(function ($query) use ($hideAfterDays) {
 
                 // Show all except old "Tidak Lulus / Tolak"
-                $query->whereNotIn('status_pengesahan', ['Tidak Lulus', 'Tolak', 'Selesai Perjalanan'])
+                $query->whereNotIn('status_pengesahan', ['Tidak Lulus', 'Selesai Perjalanan'])
 
                     // OR still show if within 2 days after admin update
                     ->orWhere(function ($q) use ($hideAfterDays) {

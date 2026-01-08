@@ -27,6 +27,7 @@ class MaklumatPermohonan extends Model
 
     protected $casts = [
         'lampiran' => 'array',
+        'tarikh_mohon' => 'datetime',
         'tarikh_pelepasan' => 'datetime',
     ];
 

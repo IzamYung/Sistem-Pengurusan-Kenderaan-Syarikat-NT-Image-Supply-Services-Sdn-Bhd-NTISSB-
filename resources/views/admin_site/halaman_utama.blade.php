@@ -273,6 +273,14 @@
                     Tidak Lulus
                 </button>
             </form>
+
+            {{-- ❌ TIDAK LULUS & KEROSAKAN --}}
+            <form action="{{ route('admin_site.permohonan.tidak_lulus_rosak', $permohonan->id_permohonan) }}" method="POST">
+                @csrf
+                <button class="px-5 py-2 bg-orange-600 text-white rounded-lg shadow hover:bg-orange-700">
+                    Tidak Lulus & Kerosakan
+                </button>
+            </form>
         </div>
 
         {{-- Back --}}
