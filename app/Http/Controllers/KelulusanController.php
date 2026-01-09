@@ -68,26 +68,22 @@ class KelulusanController extends Controller
             ->with('success', 'Permohonan ditolak.');
     }
 
-    public function tidakLulusRosak($id_permohonan)
+    public function tidakLulusRosak(Request $request, $id_permohonan) // Tambah Request $request
     {
         $permohonan = MaklumatPermohonan::findOrFail($id_permohonan);
 
         $permohonan->status_pengesahan = 'Tidak Lulus';
         $permohonan->save();
 
-        // Ambik pemeriksaan
-        $pemeriksaan = MaklumatPemeriksaan::where('id_permohonan', $id_permohonan)->get();
-
-        $ulasanRingkas = $pemeriksaan->map(function($item) {
-            if ($item->status == 2) return $item->nama_komponen . " memerlukan pemerhatian";
-            if ($item->status == 3) return $item->nama_komponen . " memerlukan pemerhatian segera";
-        })->filter()->implode(', '); // join semua ayat jadi satu string
+        // Terima ayat yang dah siap dibuat oleh JS tadi
+        // Kalau JS tak hantar (misalnya admin tak klik apa-apa), kita letak default
+        $ulasanDariJS = $request->input('ulasan_auto') ?: 'Terdapat kerosakan pada komponen kenderaan.';
 
         LaporanKerosakan::create([
             'no_pendaftaran' => $permohonan->no_pendaftaran,
             'tarikh_laporan' => Carbon::today(),
             'jenis_kerosakan' => 'Kerosakan pada bahagian kenderaan',
-            'ulasan' => $ulasanRingkas,
+            'ulasan' => $ulasanDariJS, // Simpan ayat penuh dari JS
         ]);
 
         return redirect()->route('admin_site.halaman_utama')

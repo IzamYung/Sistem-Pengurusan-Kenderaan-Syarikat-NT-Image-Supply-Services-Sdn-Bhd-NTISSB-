@@ -4,16 +4,76 @@
 
 @section('content')
 
+<style>
+    /* Kontena utama yang menyatukan tempat upload & list */
+    .upload-container {
+        background: #f8fafc;
+        border: 2px solid #f1f5f9;
+        border-radius: 2rem;
+        padding: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    /* Design untuk setiap baris fail yang dipilih */
+    .file-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: white;
+        padding: 0.75rem 1rem;
+        border-radius: 1.25rem;
+        margin-top: 0.5rem;
+        border: 1px solid #edf2f7;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    /* Memastikan nama fail tidak lebih kotak & nampak extension */
+    .file-name-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        min-width: 0; /* Penting untuk truncate berfungsi */
+        flex: 1;
+    }
+
+    .file-name-text {
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: #334155;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; /* Akan jadi nama_fail... */
+    }
+
+    .file-ext-text {
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: #1e3a8a; /* Warna biru untuk highlight extension */
+    }
+
+    .remove-btn {
+        margin-left: 0.75rem;
+        color: #ef4444;
+        background: #fef2f2;
+        padding: 0.4rem;
+        border-radius: 0.75rem;
+        transition: all 0.2s;
+        flex-shrink: 0;
+    }
+
+    .remove-btn:hover {
+        background: #ef4444;
+        color: white;
+    }
+</style>
+
 @if(isset($page) && $page === 'borang')
     <script>
-        // Pass booked dates from controller to JS
         window.bookedDates = @json($bookedDates ?? []);
     </script>
 
-    {{-- ================= BORANG PERMOHONAN (PREMIUM REDESIGN) ================= --}}
     <div class="max-w-4xl mx-auto mt-10 mb-20 px-4">
         <div class="bg-white rounded-[3rem] shadow-2xl overflow-hidden border border-gray-100">
-            {{-- Header --}}
             <div class="bg-[#1e3a8a] py-12 px-8 relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32"></div>
                 <h2 class="text-3xl font-black text-white text-center tracking-[0.2em] uppercase relative z-10">Borang Permohonan</h2>
@@ -24,7 +84,6 @@
                   enctype="multipart/form-data" class="p-8 md:p-14 space-y-10">
                 @csrf
 
-                {{-- Section: Maklumat Ringkas (Read-Only) --}}
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-50 p-8 rounded-[2.5rem] border border-gray-100">
                     <div class="space-y-1">
                         <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest">No. Pendaftaran</label>
@@ -42,7 +101,6 @@
 
                 <input type="hidden" name="no_pendaftaran" value="{{ $kenderaan->no_pendaftaran ?? '' }}">
 
-                {{-- Section: Input Form --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
                     <div class="md:col-span-2">
                         <label class="block text-xs font-black text-gray-700 mb-3 ml-2 uppercase tracking-widest">Tarikh & Masa Pelepasan <span class="text-red-500">*</span></label>
@@ -63,9 +121,6 @@
                         <input type="number" min="1" name="bil_penumpang" value="{{ old('bil_penumpang') }}"
                                class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-6 py-4 focus:ring-4 focus:ring-blue-50 focus:border-[#1e3a8a] focus:bg-white @error('bil_penumpang') border-red-500 @enderror transition-all outline-none font-bold text-gray-700"
                                required placeholder="0" />
-                        @error('bil_penumpang')
-                            <p class="text-red-500 text-[10px] mt-2 font-black uppercase ml-2 tracking-tighter">{{ $message }}</p>
-                        @enderror
                     </div>
 
                     <div>
@@ -82,18 +137,31 @@
                                placeholder="Nama pemilik/jabatan" />
                     </div>
 
+                    {{-- BAGIAN LAMPIRAN TERPADU --}}
                     <div>
                         <label class="block text-xs font-black text-gray-700 mb-3 ml-2 uppercase tracking-widest">Lampiran Dokumen</label>
-                        <div class="relative">
+                        
+                        <div class="upload-container">
                             <input type="file" id="lampiranInput" name="lampiran[]" multiple class="hidden" />
-                            <label for="lampiranInput" class="flex items-center justify-between w-full px-6 py-4 border-2 border-dashed border-gray-200 rounded-2xl cursor-pointer hover:border-[#1e3a8a] hover:bg-blue-50 transition-all group">
-                                <span class="text-gray-400 group-hover:text-[#1e3a8a] font-bold text-sm">Muat naik fail</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-300 group-hover:text-[#1e3a8a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                                </svg>
+                            
+                            {{-- Area Klik Muat Naik --}}
+                            <label for="lampiranInput" class="flex items-center gap-4 p-4 border-2 border-dashed border-gray-200 rounded-[1.5rem] cursor-pointer hover:border-[#1e3a8a] hover:bg-white transition-all group">
+                                <div class="bg-blue-50 group-hover:bg-[#1e3a8a] p-3 rounded-xl transition-all">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#1e3a8a] group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-[11px] font-black text-[#1e3a8a] uppercase tracking-widest">Muat Naik Fail</p>
+                                    <p class="text-[9px] text-gray-400 font-bold uppercase">Klik untuk pilih dokumen</p>
+                                </div>
                             </label>
+
+                            {{-- Senarai fail yang dipilih (di dalam kotak yang sama) --}}
+                            <div id="lampiranList" class="mt-2 empty:hidden">
+                                {{-- Fail akan muncul di sini via JS --}}
+                            </div>
                         </div>
-                        <div id="lampiranList" class="mt-4 space-y-2 px-2"></div>
                     </div>
                 </div>
 

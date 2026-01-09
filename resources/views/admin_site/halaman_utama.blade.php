@@ -120,66 +120,120 @@
             <div class="h-[2px] flex-1 bg-gray-100"></div>
         </div>
 
-        <div class="space-y-8">
-            @php
-                $sections = [
-                    'Bahagian Dalaman / Luaran' => [
-                        'badan_luaran' => 'Badan Luaran Kenderaan',
-                        'cermin_hadapan' => 'Cermin Hadapan / Kaca',
-                        'pengelap_cermin' => 'Pengelap Cermin',
-                        'lampu' => 'Lampu (Hadapan, Brek, Isyarat Belok)',
-                        'lampu_dalaman' => 'Lampu Dalaman',
-                        'penghawa_dingin' => 'Operasi Penghawa Dingin',
-                        'pemanasan' => 'Pemanasan',
-                        'lain_dalaman_luaran' => 'Lain-lain',
-                    ],
-                    'Bahagian Bawah Kenderaan' => [
-                        'brek' => 'Brek (Pad / Kasut Brek)',
-                        'salur_hos_brek' => 'Salur & Hos Brek',
-                        'sistem_stereng' => 'Sistem Stereng',
-                        'penyerap_kejutan' => 'Penyerap Kejutan & Topang',
-                        'sistem_ekzos' => 'Sistem Ekzos',
-                        'salur_hos_bahan_api' => 'Salur & Hos Bahan Api',
-                        'lain_bawah' => 'Lain-lain',
-                    ],
-                    'Bahagian Bawah Bonet' => [
-                        'minyak_enjin' => 'Minyak Enjin',
-                        'bendalir_brek' => 'Bendalir Brek',
-                        'bendalir_stereng' => 'Bendalir Stereng Kuasa',
-                        'bendalir_pencuci' => 'Bendalir Pencuci Cermin',
-                        'tali_sawat_hos' => 'Tali Sawat & Hos',
-                        'antibeku_penyejuk' => 'Anti-Beku / Penyejuk',
-                        'penapis_udara' => 'Penapis Udara',
-                        'penapis_kabin' => 'Penapis Kabin',
-                        'penapis_bahan_api' => 'Penapis Bahan Api',
-                        'palam_pencucuh' => 'Palam Pencucuh / Wayar',
-                        'bendalir_transmisi' => 'Bendalir Transmisi dan Perumah',
-                        'sistem_gantung' => 'Sistem Gantung / Ampaian',
-                    ],
-                    'Bateri' => [
-                        'caj_bateri' => 'Caj Bateri',
-                        'bendalir_bateri' => 'Bendalir Bateri',
-                        'kabel_sambungan' => 'Kabel & Sambungan',
-                    ],
-                    'Tayar - Kondisi & Tekanan' => [
-                        'bunga_kiri_hadapan' => 'Kedalaman Bunga (Kiri Hadapan)',
-                        'bunga_kiri_belakang' => 'Kedalaman Bunga (Kiri Belakang)',
-                        'bunga_kanan_hadapan' => 'Kedalaman Bunga (Kanan Hadapan)',
-                        'bunga_kanan_belakang' => 'Kedalaman Bunga (Kanan Belakang)',
-                        'udara_kiri_hadapan' => 'Tekanan Udara (Kiri Hadapan)',
-                        'udara_kiri_belakang' => 'Tekanan Udara (Kiri Belakang)',
-                        'udara_kanan_hadapan' => 'Tekanan Udara (Kanan Hadapan)',
-                        'udara_kanan_belakang' => 'Tekanan Udara (Kanan Belakang)',
-                    ],
-                    'Penyelenggaraan Tayar' => [
-                        'penjajaran' => 'Penjajaran (Alignment)',
-                        'pengimbangan' => 'Pengimbangan (Balancing)',
-                        'putaran' => 'Putaran (Rotation)',
-                        'tayar_baru' => 'Tayar Baru (Ganti)',
-                    ],
-                ];
-            @endphp
+        @php
+            // "Kamus" yang sama dengan JS untuk konsistensi ayat
+            $kamusLabels = [
+                'badan_luaran' => 'Badan Luaran Kenderaan',
+                'cermin_hadapan' => 'Cermin Hadapan / Kaca',
+                'pengelap_cermin' => 'Pengelap Cermin',
+                'lampu' => 'Lampu (Hadapan, Brek, Isyarat Belok)',
+                'lampu_dalaman' => 'Lampu Dalaman',
+                'penghawa_dingin' => 'Operasi Penghawa Dingin',
+                'pemanasan' => 'Pemanasan',
+                'brek' => 'Brek (Pad / Kasut Brek)',
+                'salur_hos_brek' => 'Salur & Hos Brek',
+                'sistem_stereng' => 'Sistem Stereng',
+                'penyerap_kejutan' => 'Penyerap Kejutan & Topang',
+                'sistem_ekzos' => 'Sistem Ekzos',
+                'salur_hos_bahan_api' => 'Salur & Hos Bahan Api',
+                'minyak_enjin' => 'Minyak Enjin',
+                'bendalir_brek' => 'Bendalir Brek',
+                'bendalir_stereng' => 'Bendalir Stereng Kuasa',
+                'bendalir_pencuci' => 'Bendalir Pencuci Cermin',
+                'tali_sawat_hos' => 'Tali Sawat & Hos',
+                'antibeku_penyejuk' => 'Anti-Beku / Penyejuk',
+                'penapis_udara' => 'Penapis Udara',
+                'penapis_kabin' => 'Penapis Kabin',
+                'penapis_bahan_api' => 'Penapis Bahan Api',
+                'palam_pencucuh' => 'Palam Pencucuh / Wayar',
+                'bendalir_transmisi' => 'Bendalir Transmisi dan Perumah',
+                'sistem_gantung' => 'Sistem Gantung / Ampaian',
+                'caj_bateri' => 'Caj Bateri',
+                'bendalir_bateri' => 'Bendalir Bateri',
+                'kabel_sambungan' => 'Kabel & Sambungan',
+                'bunga_kiri_hadapan' => 'Kedalaman Bunga (Kiri Hadapan)',
+                'bunga_kiri_belakang' => 'Kedalaman Bunga (Kiri Belakang)',
+                'bunga_kanan_hadapan' => 'Kedalaman Bunga (Kanan Hadapan)',
+                'bunga_kanan_belakang' => 'Kedalaman Bunga (Kanan Belakang)',
+                'udara_kiri_hadapan' => 'Tekanan Udara (Kiri Hadapan)',
+                'udara_kiri_belakang' => 'Tekanan Udara (Kiri Belakang)',
+                'udara_kanan_hadapan' => 'Tekanan Udara (Kanan Hadapan)',
+                'udara_kanan_belakang' => 'Tekanan Udara (Kanan Belakang)',
+                'penjajaran' => 'Penjajaran (Alignment)',
+                'pengimbangan' => 'Pengimbangan (Balancing)',
+                'putaran' => 'Putaran (Rotation)',
+                'tayar_baru' => 'Tayar Baru (Ganti)',
+            ];
 
+            $sections = [
+                'Bahagian Dalaman / Luaran' => [
+                    'badan_luaran' => $kamusLabels['badan_luaran'],
+                    'cermin_hadapan' => $kamusLabels['cermin_hadapan'],
+                    'pengelap_cermin' => $kamusLabels['pengelap_cermin'],
+                    'lampu' => $kamusLabels['lampu'],
+                    'lampu_dalaman' => $kamusLabels['lampu_dalaman'],
+                    'penghawa_dingin' => $kamusLabels['penghawa_dingin'],
+                    'pemanasan' => $kamusLabels['pemanasan'],
+                ],
+                'Bahagian Bawah Kenderaan' => [
+                    'brek' => $kamusLabels['brek'],
+                    'salur_hos_brek' => $kamusLabels['salur_hos_brek'],
+                    'sistem_stereng' => $kamusLabels['sistem_stereng'],
+                    'penyerap_kejutan' => $kamusLabels['penyerap_kejutan'],
+                    'sistem_ekzos' => $kamusLabels['sistem_ekzos'],
+                    'salur_hos_bahan_api' => $kamusLabels['salur_hos_bahan_api'],
+                ],
+                'Bahagian Bawah Bonet' => [
+                    'minyak_enjin' => $kamusLabels['minyak_enjin'],
+                    'bendalir_brek' => $kamusLabels['bendalir_brek'],
+                    'bendalir_stereng' => $kamusLabels['bendalir_stereng'],
+                    'bendalir_pencuci' => $kamusLabels['bendalir_pencuci'],
+                    'tali_sawat_hos' => $kamusLabels['tali_sawat_hos'],
+                    'antibeku_penyejuk' => $kamusLabels['antibeku_penyejuk'],
+                    'penapis_udara' => $kamusLabels['penapis_udara'],
+                    'penapis_kabin' => $kamusLabels['penapis_kabin'],
+                    'penapis_bahan_api' => $kamusLabels['penapis_bahan_api'],
+                    'palam_pencucuh' => $kamusLabels['palam_pencucuh'],
+                    'bendalir_transmisi' => $kamusLabels['bendalir_transmisi'],
+                    'sistem_gantung' => $kamusLabels['sistem_gantung'],
+                ],
+                'Bateri' => [
+                    'caj_bateri' => $kamusLabels['caj_bateri'],
+                    'bendalir_bateri' => $kamusLabels['bendalir_bateri'],
+                    'kabel_sambungan' => $kamusLabels['kabel_sambungan'],
+                ],
+                'Tayar - Kondisi & Tekanan' => [
+                    'bunga_kiri_hadapan' => $kamusLabels['bunga_kiri_hadapan'],
+                    'bunga_kiri_belakang' => $kamusLabels['bunga_kiri_belakang'],
+                    'bunga_kanan_hadapan' => $kamusLabels['bunga_kanan_hadapan'],
+                    'bunga_kanan_belakang' => $kamusLabels['bunga_kanan_belakang'],
+                    'udara_kiri_hadapan' => $kamusLabels['udara_kiri_hadapan'],
+                    'udara_kiri_belakang' => $kamusLabels['udara_kiri_belakang'],
+                    'udara_kanan_hadapan' => $kamusLabels['udara_kanan_hadapan'],
+                    'udara_kanan_belakang' => $kamusLabels['udara_kanan_belakang'],
+                ],
+                'Penyelenggaraan Tayar' => [
+                    'penjajaran' => $kamusLabels['penjajaran'],
+                    'pengimbangan' => $kamusLabels['pengimbangan'],
+                    'putaran' => $kamusLabels['putaran'],
+                    'tayar_baru' => $kamusLabels['tayar_baru'],
+                ],
+            ];
+
+            // LOGIK BINA AYAT AUTO UNTUK ADMIN
+            $rosakArr = [];
+            $perhatianArr = [];
+            foreach($pemeriksaan as $p) {
+                $labelPenuh = $kamusLabels[$p->nama_komponen] ?? $p->nama_komponen;
+                if($p->status == 3) $rosakArr[] = $labelPenuh;
+                if($p->status == 2) $perhatianArr[] = $labelPenuh;
+            }
+            $ayatFinalAuto = "";
+            if(count($rosakArr) > 0) $ayatFinalAuto .= "Kerosakan kritikal pada: " . implode(", ", $rosakArr) . ". ";
+            if(count($perhatianArr) > 0) $ayatFinalAuto .= "Perlu perhatian segera bagi: " . implode(", ", $perhatianArr) . ".";
+        @endphp
+
+        <div class="space-y-8">
             @foreach($sections as $sectionName => $components)
                 <div class="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm">
                     <div class="bg-gray-50 px-6 py-3 border-b border-gray-100">
@@ -243,6 +297,9 @@
 
             <form action="{{ route('admin_site.permohonan.tidak_lulus_rosak', $permohonan->id_permohonan) }}" method="POST">
                 @csrf
+                {{-- VALUE DISINI TELAH DI PRE-FILL MENGGUNAKAN LOGIK PHP DI ATAS --}}
+                <input type="hidden" name="ulasan_auto" id="ulasan_kerosakan_auto" value="{{ $ayatFinalAuto }}">
+                
                 <button class="px-8 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] transition-all shadow-lg shadow-orange-100 active:scale-95">
                     Kerosakan & Gagal
                 </button>

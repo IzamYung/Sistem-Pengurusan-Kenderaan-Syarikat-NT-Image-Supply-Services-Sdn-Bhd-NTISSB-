@@ -170,7 +170,7 @@
                 @csrf
                 <button class="w-full px-10 py-4 bg-green-600 text-white rounded-2xl font-black shadow-lg hover:bg-green-700 transition-all active:scale-95 text-sm uppercase tracking-wider flex items-center justify-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                    Selesai / Baiki
+                    Selesai
                 </button>
             </form>
             <button data-modal-close class="w-full sm:w-auto px-10 py-4 bg-gray-200 text-gray-600 rounded-2xl font-black hover:bg-gray-300 transition-all text-sm uppercase tracking-wider">

@@ -55,7 +55,7 @@
                         <span class="font-mono font-bold text-blue-700 text-lg group-hover:text-blue-800 transition-colors">{{ $item->no_pendaftaran }}</span>
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Model & Lokasi</span>
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Model & Tujuan</span>
                         <span class="font-bold text-gray-800">{{ $item->kenderaan->model ?? '-' }}</span>
                         <span class="text-sm text-gray-600 truncate">{{ $item->lokasi ?? '-' }}</span>
                     </div>
@@ -114,7 +114,7 @@
                     <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">No Pendaftaran</p><p id="m-no" class="text-base font-bold text-gray-800"></p></div>
                     <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Model Kenderaan</p><p id="m-model" class="text-base font-bold text-gray-800"></p></div>
                     <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Tarikh Pelepasan</p><p id="m-tarikh" class="text-base font-bold text-blue-700"></p></div>
-                    <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Lokasi</p><p id="m-lokasi" class="text-base font-bold text-gray-800"></p></div>
+                    <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Lokasi / Tujuan</p><p id="m-lokasi" class="text-base font-bold text-gray-800"></p></div>
                     <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Bil Penumpang</p><p id="m-bil" class="text-base font-bold text-gray-800"></p></div>
                     <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Kod Projek</p><p id="m-kod" class="text-base font-bold text-gray-800"></p></div>
                     <div class="border-b border-gray-100 pb-2 col-span-full"><p class="font-bold text-gray-400 uppercase text-[10px]">Hak Milik</p><p id="m-hak" class="text-base font-bold text-gray-800"></p></div>

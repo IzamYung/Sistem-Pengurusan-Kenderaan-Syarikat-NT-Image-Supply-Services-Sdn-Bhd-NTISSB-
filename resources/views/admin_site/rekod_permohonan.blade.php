@@ -59,7 +59,7 @@
                         <span class="text-[10px] font-mono text-gray-500">ID: {{ $item->user->id_pekerja ?? '-' }}</span>
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Kenderaan & Lokasi</span>
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Kenderaan & Tujuan</span>
                         <span class="font-bold text-gray-700 text-sm">{{ $item->no_pendaftaran }} ({{ $item->kenderaan->model ?? '-' }})</span>
                         <span class="text-xs text-gray-500 truncate">{{ $item->lokasi ?? '-' }}</span>
                     </div>
@@ -67,7 +67,7 @@
                         <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Status Akhir</span>
                         <div class="flex items-center gap-2 mt-1">
                             @if($isLulus)
-                                <span class="bg-green-100 text-green-700 text-[10px] px-2 py-1 rounded-full font-extrabold uppercase italic">Selesai / Lulus</span>
+                                <span class="bg-green-100 text-green-700 text-[10px] px-2 py-1 rounded-full font-extrabold uppercase italic">Lulus</span>
                             @else
                                 <span class="bg-red-100 text-red-700 text-[10px] px-2 py-1 rounded-full font-extrabold uppercase italic">Tidak Lulus</span>
                             @endif
@@ -120,7 +120,7 @@
                     <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">No Pendaftaran</p><p id="m-no" class="text-base font-bold text-gray-800"></p></div>
                     <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Model Kenderaan</p><p id="m-model" class="text-base font-bold text-gray-800"></p></div>
                     <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Tarikh Pelepasan</p><p id="m-tarikh" class="text-base font-bold text-blue-700"></p></div>
-                    <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Lokasi</p><p id="m-lokasi" class="text-base font-bold text-gray-800"></p></div>
+                    <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Lokasi / Tujuan</p><p id="m-lokasi" class="text-base font-bold text-gray-800"></p></div>
                     <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Bil Penumpang</p><p id="m-bil" class="text-base font-bold text-gray-800"></p></div>
                     <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Kod Projek</p><p id="m-kod" class="text-base font-bold text-gray-800"></p></div>
                     <div class="border-b border-gray-100 pb-2 col-span-full"><p class="font-bold text-gray-400 uppercase text-[10px]">Hak Milik</p><p id="m-hak" class="text-base font-bold text-gray-800"></p></div>

@@ -71,13 +71,13 @@ export default function initPermohonanModal() {
 
                         const card = document.createElement("div");
                         card.className =
-                            "flex items-center gap-3 p-3 border rounded-lg bg-white hover:bg-gray-50 cursor-pointer transition";
+                            "flex items-center gap-3 p-3 rounded-lg bg-white hover:bg-gray-50 cursor-pointer transition shadow-sm hover:shadow-md border border-gray-100";
                         card.onclick = () => window.open(url, "_blank");
 
                         // icon kiri
                         const iconBox = document.createElement("div");
                         iconBox.className =
-                            "w-12 h-12 flex-shrink-0 rounded-md bg-gray-100 border flex items-center justify-center";
+                            "w-12 h-12 flex-shrink-0 rounded-md bg-gray-100 flex items-center justify-center";
 
                         const img = document.createElement("img");
                         img.src = icon;

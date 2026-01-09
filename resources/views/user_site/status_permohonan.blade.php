@@ -32,7 +32,7 @@
                             name="mileage" 
                             accept=".jpg,.jpeg,.png,.webp" 
                             required>
-                        <p class="text-[11px] text-gray-500 mt-2 italic font-medium">*Sila muat naik gambar paparan odometer (jarak perbatuan) kenderaan.</p>
+                        <p class="text-[11px] text-gray-500 mt-2 italic font-medium">*Sila muat naik gambar paparan speedometer (jarak perbatuan) kenderaan.</p>
                         @error('mileage')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -116,7 +116,7 @@
                                     ];
                                 @endphp
 
-                                @foreach($sections as $sectionName => $components)
+                                @foreach($sections as $sectionName => $items)
                                     <tr>
                                         <td colspan="4" class="bg-blue-50 text-[#1e3a8a] font-bold p-3 text-sm border-y border-blue-100">
                                             {{ $sectionName }}
@@ -236,7 +236,7 @@
                                         <span class="font-bold text-gray-800 text-base">{{ $item->no_pendaftaran }}</span>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Lokasi Destinasi</span>
+                                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Lokasi / Tujuan</span>
                                         <span class="text-gray-700 font-medium">{{ $item->lokasi }}</span>
                                     </div>
                                     <div class="flex flex-col">
@@ -320,7 +320,7 @@
                         <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">No Pendaftaran</p><p id="m-no" class="text-base font-bold text-gray-800"></p></div>
                         <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Model Kenderaan</p><p id="m-model" class="text-base font-bold text-gray-800"></p></div>
                         <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Tarikh Pelepasan</p><p id="m-tarikh" class="text-base font-bold text-blue-700"></p></div>
-                        <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Lokasi</p><p id="m-lokasi" class="text-base font-bold text-gray-800"></p></div>
+                        <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Lokasi / Tujuan</p><p id="m-lokasi" class="text-base font-bold text-gray-800"></p></div>
                         <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Bil Penumpang</p><p id="m-bil" class="text-base font-bold text-gray-800"></p></div>
                         <div class="border-b border-gray-100 pb-2"><p class="font-bold text-gray-400 uppercase text-[10px]">Kod Projek</p><p id="m-kod" class="text-base font-bold text-gray-800"></p></div>
                         <div class="border-b border-gray-100 pb-2 col-span-full"><p class="font-bold text-gray-400 uppercase text-[10px]">Hak Milik</p><p id="m-hak" class="text-base font-bold text-gray-800"></p></div>
