@@ -187,56 +187,48 @@ class PermohonanController extends Controller
     // SIMPAN PEMERIKSAAN (✅ MILEAGE = SEBELUM)
     // ============================================
     public function simpanPemeriksaan(Request $request)
-    {
-        $request->validate([
-            'id_permohonan'         => 'required|exists:maklumat_permohonan,id_permohonan',
-            'mileage'               => 'required|image|mimes:jpg,jpeg,png,webp|max:20480',
-            'pemeriksaan.*.status'  => 'required|in:1,2,3',
-            'pemeriksaan.*.ulasan'  => 'nullable|string|max:500',
-        ]);
+{
+    $request->validate([
+        'id_permohonan'         => 'required|exists:maklumat_permohonan,id_permohonan',
+        'mileage'               => 'required|image|mimes:jpg,jpeg,png,webp|max:20480',
+        'pemeriksaan.*.status'  => 'required|in:1,2,3',
+        'pemeriksaan.*.ulasan'  => 'nullable|string|max:500',
+    ]);
 
-        $permohonan = MaklumatPermohonan::where('id_permohonan', $request->id_permohonan)
-            ->where('id_user', session('loginId'))
-            ->firstOrFail();
+    $permohonan = MaklumatPermohonan::where('id_permohonan', $request->id_permohonan)
+        ->where('id_user', session('loginId'))
+        ->firstOrFail();
 
-        $pathSebelum = null;
-        if ($request->hasFile('mileage')) {
-            $pathSebelum = $request->file('mileage')
-                ->store('speedometer/sebelum', 'public');
-        }
-
-        $permohonan->speedometer_sebelum = $pathSebelum;
-        $permohonan->status_pengesahan   = 'Menunggu Kelulusan';
-        $permohonan->save();
-
-        MaklumatPemeriksaan::where('id_permohonan', $request->id_permohonan)->delete();
-
-        $componentList = [
-            'badan_luaran'    => 'Badan Luaran Kenderaan',
-            'cermin_hadapan'  => 'Cermin Hadapan / Sisi',
-            'pengelap_cermin' => 'Pengelap Cermin',
-            'brek'            => 'Brek (Pad / Kasut Brek)',
-            'salur_hos_brek'  => 'Salur & Hos Brek',
-            'sistem_stereng'  => 'Sistem Stereng',
-        ];
-
-        $dataInsert = [];
-
-        foreach ($request->pemeriksaan as $key => $data) {
-            $dataInsert[] = [
-                'id_permohonan' => $request->id_permohonan,
-                'kategori'      => 'Pemeriksaan Sebelum',
-                'nama_komponen' => $componentList[$key] ?? $key,
-                'status'        => $data['status'],
-                'ulasan'        => $data['ulasan'] ?? null,
-                'created_at'    => now(),
-                'updated_at'    => now(),
-            ];
-        }
-
-        MaklumatPemeriksaan::insert($dataInsert);
-
-        return redirect()->route('user_site.status_permohonan')
-            ->with('success', 'Pemeriksaan berjaya dihantar. Permohonan kini Menunggu Kelulusan.');
+    $pathSebelum = null;
+    if ($request->hasFile('mileage')) {
+        $pathSebelum = $request->file('mileage')
+            ->store('speedometer/sebelum', 'public');
     }
+
+    $permohonan->speedometer_sebelum = $pathSebelum;
+    $permohonan->status_pengesahan   = 'Menunggu Kelulusan';
+    $permohonan->save();
+
+    // Clear old pemeriksaan
+    MaklumatPemeriksaan::where('id_permohonan', $request->id_permohonan)->delete();
+
+    $dataInsert = [];
+
+    foreach ($request->pemeriksaan as $key => $data) {
+        $dataInsert[] = [
+            'id_permohonan' => $request->id_permohonan,
+            'kategori'      => 'Pemeriksaan Sebelum',
+            'nama_komponen' => $key, // just use the key directly
+            'status'        => $data['status'],
+            'ulasan'        => $data['ulasan'] ?? null,
+            'created_at'    => now(),
+            'updated_at'    => now(),
+        ];
+    }
+
+    MaklumatPemeriksaan::insert($dataInsert);
+
+    return redirect()->route('user_site.status_permohonan')
+        ->with('success', 'Pemeriksaan berjaya dihantar. Permohonan kini Menunggu Kelulusan.');
+}
 }

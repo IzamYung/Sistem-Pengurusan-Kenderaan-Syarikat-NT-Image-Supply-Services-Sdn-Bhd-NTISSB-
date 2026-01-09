@@ -116,7 +116,7 @@
                                     ];
                                 @endphp
 
-                                @foreach($sections as $sectionName => $items)
+                                @foreach($sections as $sectionName => $components)
                                     <tr>
                                         <td colspan="4" class="bg-blue-50 text-[#1e3a8a] font-bold p-3 text-sm border-y border-blue-100">
                                             {{ $sectionName }}

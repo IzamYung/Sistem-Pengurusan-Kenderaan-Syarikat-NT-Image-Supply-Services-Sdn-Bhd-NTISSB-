@@ -113,77 +113,61 @@
 
             @php
                 $sections = [
-
-                    'Bahagian Dalaman / Luaran' => [
-                        'Badan Luaran Kenderaan',
-                        'Cermin Hadapan / Kaca',
-                        'Pengelap Cermin',
-                        'Lampu (Hadapan, Brek, Isyarat Belok)',
-                        'Lampu Dalaman',
-                        'Operasi Penghawa Dingin',
-                        'Pemanasan',
-                        'Lain-lain',
-                    ],
-
-                    'Bahagian Bawah Kenderaan' => [
-                        'Brek (Pad / Kasut Brek)',
-                        'Salur & Hos Brek',
-                        'Sistem Stereng',
-                        'Penyerap Kejutan & Topang',
-                        'Sistem Ekzos',
-                        'Salur & Hos Bahan Api',
-                        'Lain-lain',
-                    ],
-
-                    'Bahagian Bawah Bonet' => [
-                        'Minyak Enjin',
-                        'Bendalir Brek',
-                        'Bendalir Stereng Kuasa',
-                        'Bendalir Pencuci Cermin',
-                        'Tali Sawat & Hos',
-                        'Anti-Beku / Penyejuk',
-                        'Penapis Udara',
-                        'Penapis Kabin',
-                        'Penapis Bahan Api',
-                        'Palam Pencucuh / Wayar',
-                        'Bendalir Transmisi dan Perumah',
-                        'Sistem Gantung / Ampaian',
-                    ],
-
-                    'Bateri' => [
-                        'Caj Bateri',
-                        'Bendalir Bateri',
-                        'Kabel & Sambungan',
-                    ],
-
-                    'Tayar - Kedalaman Bunga Tayar' => [
-                        'Kiri Hadapan',
-                        'Kiri Belakang',
-                        'Kanan Hadapan',
-                        'Kanan Belakang',
-                    ],
-
-                    'Tayar - Corak Hausan / Kerosakan' => [
-                        'Kiri Hadapan',
-                        'Kiri Belakang',
-                        'Kanan Hadapan',
-                        'Kanan Belakang',
-                    ],
-
-                    'Tayar - Tekanan Udara' => [
-                        'Kiri Hadapan',
-                        'Kiri Belakang',
-                        'Kanan Hadapan',
-                        'Kanan Belakang',
-                    ],
-
-                    'Tayar - Semakan / Cadangan Selang OE' => [
-                        'Penjajaran',
-                        'Pengimbangan',
-                        'Putaran',
-                        'Tayar Baru (Ganti)',
-                    ],
-                ];
+                                        'Bahagian Dalaman / Luaran' => [
+                                            'badan_luaran' => 'Badan Luaran Kenderaan',
+                                            'cermin_hadapan' => 'Cermin Hadapan / Kaca',
+                                            'pengelap_cermin' => 'Pengelap Cermin',
+                                            'lampu' => 'Lampu (Hadapan, Brek, Isyarat Belok)',
+                                            'lampu_dalaman' => 'Lampu Dalaman',
+                                            'penghawa_dingin' => 'Operasi Penghawa Dingin',
+                                            'pemanasan' => 'Pemanasan',
+                                            'lain_dalaman_luaran' => 'Lain-lain',
+                                        ],
+                                        'Bahagian Bawah Kenderaan' => [
+                                            'brek' => 'Brek (Pad / Kasut Brek)',
+                                            'salur_hos_brek' => 'Salur & Hos Brek',
+                                            'sistem_stereng' => 'Sistem Stereng',
+                                            'penyerap_kejutan' => 'Penyerap Kejutan & Topang',
+                                            'sistem_ekzos' => 'Sistem Ekzos',
+                                            'salur_hos_bahan_api' => 'Salur & Hos Bahan Api',
+                                            'lain_bawah' => 'Lain-lain',
+                                        ],
+                                        'Bahagian Bawah Bonet' => [
+                                            'minyak_enjin' => 'Minyak Enjin',
+                                            'bendalir_brek' => 'Bendalir Brek',
+                                            'bendalir_stereng' => 'Bendalir Stereng Kuasa',
+                                            'bendalir_pencuci' => 'Bendalir Pencuci Cermin',
+                                            'tali_sawat_hos' => 'Tali Sawat & Hos',
+                                            'antibeku_penyejuk' => 'Anti-Beku / Penyejuk',
+                                            'penapis_udara' => 'Penapis Udara',
+                                            'penapis_kabin' => 'Penapis Kabin',
+                                            'penapis_bahan_api' => 'Penapis Bahan Api',
+                                            'palam_pencucuh' => 'Palam Pencucuh / Wayar',
+                                            'bendalir_transmisi' => 'Bendalir Transmisi dan Perumah',
+                                            'sistem_gantung' => 'Sistem Gantung / Ampaian',
+                                        ],
+                                        'Bateri' => [
+                                            'caj_bateri' => 'Caj Bateri',
+                                            'bendalir_bateri' => 'Bendalir Bateri',
+                                            'kabel_sambungan' => 'Kabel & Sambungan',
+                                        ],
+                                        'Tayar - Kondisi & Tekanan' => [
+                                            'bunga_kiri_hadapan' => 'Kedalaman Bunga (Kiri Hadapan)',
+                                            'bunga_kiri_belakang' => 'Kedalaman Bunga (Kiri Belakang)',
+                                            'bunga_kanan_hadapan' => 'Kedalaman Bunga (Kanan Hadapan)',
+                                            'bunga_kanan_belakang' => 'Kedalaman Bunga (Kanan Belakang)',
+                                            'udara_kiri_hadapan' => 'Tekanan Udara (Kiri Hadapan)',
+                                            'udara_kiri_belakang' => 'Tekanan Udara (Kiri Belakang)',
+                                            'udara_kanan_hadapan' => 'Tekanan Udara (Kanan Hadapan)',
+                                            'udara_kanan_belakang' => 'Tekanan Udara (Kanan Belakang)',
+                                        ],
+                                        'Penyelenggaraan Tayar' => [
+                                            'penjajaran' => 'Penjajaran (Alignment)',
+                                            'pengimbangan' => 'Pengimbangan (Balancing)',
+                                            'putaran' => 'Putaran (Rotation)',
+                                            'tayar_baru' => 'Tayar Baru (Ganti)',
+                                        ],
+                                    ];
             @endphp
 
             @foreach($sections as $sectionName => $components)
@@ -197,10 +181,11 @@
                 $adaMasalah = false;
             @endphp
 
-            @foreach($components as $label)
+            @foreach($components as $key => $label)
 
                 @php
-                    $pmItem = $pemeriksaan->firstWhere('nama_komponen', $label);
+                    // Match using the KEY, not the label
+                    $pmItem = $pemeriksaan->firstWhere('nama_komponen', $key);
                     $status = $pmItem->status ?? null;
                     $ulasan = $pmItem->ulasan ?? '-';
 
@@ -210,7 +195,6 @@
                 @endphp
 
                 @if($status == 2 || $status == 3)
-
                     <div class="border border-gray-300 rounded-lg p-4 mb-4 bg-white shadow-sm">
 
                         <p class="font-semibold text-gray-800 mb-2">{{ $label }}</p>
@@ -240,7 +224,6 @@
                         </div>
 
                     </div>
-
                 @endif
 
             @endforeach
