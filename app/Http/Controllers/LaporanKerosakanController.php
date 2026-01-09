@@ -72,6 +72,13 @@ class LaporanKerosakanController extends Controller
 
         $laporan->save();
 
+         $kenderaan = Kenderaan::where('no_pendaftaran', $laporan->no_pendaftaran)->first();
+
+        if ($kenderaan) {
+            $kenderaan->status_kenderaan = 'Available';
+            $kenderaan->save();
+        }
+
         return redirect()->route('admin_site.kerosakkan_kenderaan')
             ->with('success', 'Laporan kerosakan ditandai Selesai.');
     }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\MaklumatPermohonan;
 use App\Models\MaklumatPemeriksaan;
 use App\Models\LaporanKerosakan;
+use App\Models\Kenderaan;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
@@ -85,6 +86,14 @@ class KelulusanController extends Controller
             'jenis_kerosakan' => 'Kerosakan pada bahagian kenderaan',
             'ulasan' => $ulasanDariJS, // Simpan ayat penuh dari JS
         ]);
+
+        // Tukar status kenderaan ke Maintenance
+        $kenderaan = Kenderaan::where('no_pendaftaran', $permohonan->no_pendaftaran)->first();
+
+        if ($kenderaan) {
+            $kenderaan->status_kenderaan = 'Maintenance';
+            $kenderaan->save();
+        }
 
         return redirect()->route('admin_site.halaman_utama')
             ->with('success', 'Permohonan ditolak & laporan kerosakan direkodkan.');
