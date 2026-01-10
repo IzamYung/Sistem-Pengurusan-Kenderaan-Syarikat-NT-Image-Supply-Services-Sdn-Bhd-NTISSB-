@@ -11,11 +11,9 @@ class LaporanKerosakanController extends Controller
 {
     public function index(Request $request)
     {
-        // ambil semua kenderaan untuk select box
         $kenderaan = Kenderaan::all();
 
         if ($request->get('action') === 'add') {
-            // show form tambah laporan
             return view('admin_site.kerosakkan_kenderaan', [
                 'action' => 'add',
                 'kenderaan' => $kenderaan,
@@ -23,9 +21,8 @@ class LaporanKerosakanController extends Controller
             ]);
         }
 
-        // default senarai laporan
         $senarai = LaporanKerosakan::with('kenderaan')
-            ->where(function($query) {
+            ->where(function ($query) {
                 $query->whereNull('ulasan')
                     ->orWhere('ulasan', 'not like', '%[[SELESAI]]%');
             })
@@ -65,14 +62,14 @@ class LaporanKerosakanController extends Controller
         $laporan = LaporanKerosakan::findOrFail($id);
 
         if ($laporan->ulasan) {
-            $laporan->ulasan .= ' [[SELESAI]]'; // tambah tag khas
+            $laporan->ulasan .= ' [[SELESAI]]';
         } else {
             $laporan->ulasan = '[[SELESAI]]';
         }
 
         $laporan->save();
 
-         $kenderaan = Kenderaan::where('no_pendaftaran', $laporan->no_pendaftaran)->first();
+        $kenderaan = Kenderaan::where('no_pendaftaran', $laporan->no_pendaftaran)->first();
 
         if ($kenderaan) {
             $kenderaan->status_kenderaan = 'Available';

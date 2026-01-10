@@ -15,10 +15,10 @@ class UserController extends Controller
         $users = User::where('role', 'user')
             ->when($query, function ($q) use ($query) {
                 $q->where('nama', 'like', "%{$query}%")
-                ->orWhere('email', 'like', "%{$query}%");
+                    ->orWhere('email', 'like', "%{$query}%");
             })
             ->orderBy('nama', 'asc')
-            ->paginate(10); // paginate 10 users per page
+            ->paginate(10);
 
         return view('admin_site.senarai_pengguna', [
             'users' => $users,
@@ -32,7 +32,7 @@ class UserController extends Controller
         $query = $request->input('q');
 
         $users = User::where('role', 'user')
-            ->when($query, function($q) use ($query) {
+            ->when($query, function ($q) use ($query) {
                 $q->where('nama', 'like', "%{$query}%");
             })
             ->get();
@@ -53,6 +53,7 @@ class UserController extends Controller
     {
         $users = User::where('role', 'user')->get();
         $editUser = User::findOrFail($id);
+
         return view('admin_site.senarai_pengguna', [
             'users' => $users,
             'editUser' => $editUser,
@@ -60,7 +61,6 @@ class UserController extends Controller
         ]);
     }
 
-    // ADD
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -78,10 +78,9 @@ class UserController extends Controller
         $validated['password'] = Hash::make($validated['password']);
         $validated['role'] = 'user';
 
-        // Handle image upload
         if ($request->hasFile('gambar_profil')) {
             $file = $request->file('gambar_profil');
-            $filename = time().'_'.$file->getClientOriginalName();
+            $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('images/profile_picture'), $filename);
             $validated['gambar_profil'] = 'images/profile_picture/' . $filename;
         } else {
@@ -94,22 +93,20 @@ class UserController extends Controller
             ->with('success', 'Pengguna baru berjaya ditambah!');
     }
 
-    // EDIT
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
 
         $validated = $request->validate([
             'id_pekerja' => 'required|string|unique:users,id_pekerja,' . $user->id_pekerja . ',id_pekerja',
-            'nama'       => 'required|string|max:255',
-            'email'      => 'required|email|unique:users,email,' . $user->id_pekerja . ',id_pekerja',
-            'jawatan'    => 'nullable|string|max:255',
-            'no_tel'     => 'nullable|string|max:20',
-            'password'   => 'nullable|min:6',
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id_pekerja . ',id_pekerja',
+            'jawatan' => 'nullable|string|max:255',
+            'no_tel' => 'nullable|string|max:20',
+            'password' => 'nullable|min:6',
             'gambar_profil' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:20480',
         ]);
 
-        // Handle password change
         if ($request->filled('password')) {
             if (Hash::check($request->password, $user->password)) {
                 return back()->withErrors([
@@ -121,10 +118,11 @@ class UserController extends Controller
             unset($validated['password']);
         }
 
-        // Handle new image upload
         if ($request->hasFile('gambar_profil')) {
-            if ($user->gambar_profil && file_exists(public_path($user->gambar_profil)) &&
-                $user->gambar_profil != 'images/profile_picture/default-profile.png') {
+            if (
+                $user->gambar_profil && file_exists(public_path($user->gambar_profil)) &&
+                $user->gambar_profil != 'images/profile_picture/default-profile.png'
+            ) {
                 unlink(public_path($user->gambar_profil));
             }
             $file = $request->file('gambar_profil');
@@ -133,25 +131,24 @@ class UserController extends Controller
             $validated['gambar_profil'] = 'images/profile_picture/' . $filename;
         }
 
-        // Update fields except id_pekerja
         $newId = $validated['id_pekerja'];
         unset($validated['id_pekerja']);
 
         $user->update($validated);
 
-        // Update the primary key if changed
         if ($user->id_pekerja !== $newId) {
             $user->id_pekerja = $newId;
             $user->save();
         }
 
         return redirect()->route('admin_site.senarai_pengguna')
-                        ->with('success', 'Maklumat pengguna dikemas kini!');
+            ->with('success', 'Maklumat pengguna dikemas kini!');
     }
 
     public function destroy(Request $request)
     {
-        $ids = $request->ids; // array of user IDs from checkboxes
+        $ids = $request->ids;
+
         if (!$ids || !is_array($ids)) {
             return response()->json(['message' => 'Tiada pengguna dipilih'], 400);
         }

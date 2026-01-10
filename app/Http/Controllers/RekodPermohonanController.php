@@ -15,7 +15,6 @@ class RekodPermohonanController extends Controller
             ])
             ->orderBy('tarikh_mohon', 'desc');
 
-        // Kalau bukan admin → filter ikut user login
         if (session('role') !== 'admin') {
             $query->where('id_user', session('loginId'));
         }

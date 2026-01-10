@@ -11,9 +11,6 @@ use Carbon\Carbon;
 
 class PermohonanController extends Controller
 {
-    // ============================================
-    // PAGE 1 : SENARAI KENDERAAN (LIST + FILTER)
-    // ============================================
     public function index(Request $request)
     {
         $kategori = $request->kategori;
@@ -27,22 +24,16 @@ class PermohonanController extends Controller
             ->toArray();
 
         $kenderaan = Kenderaan::query()
-            ->when($kategori, fn($q) =>
-                $q->where('jenis_kenderaan', $kategori)
-            )
-            ->when($search, fn($q) =>
+            ->when($kategori, fn($q) => $q->where('jenis_kenderaan', $kategori))
+            ->when($search, fn($q) => 
                 $q->where(function ($x) use ($search) {
                     $x->where('model', 'LIKE', "%$search%")
-                    ->orWhere('no_pendaftaran', 'LIKE', "%$search%")
-                    ->orWhere('jenis_kenderaan', 'LIKE', "%$search%");
+                        ->orWhere('no_pendaftaran', 'LIKE', "%$search%")
+                        ->orWhere('jenis_kenderaan', 'LIKE', "%$search%");
                 })
             )
-            ->when($jenama, fn($q) =>
-                $q->whereRaw("LOWER(jenama) = ?", [strtolower($jenama)])
-            )
-            ->when($kapasiti, fn($q) =>
-                $q->where('kapasiti_penumpang', '>=', $kapasiti)
-            )
+            ->when($jenama, fn($q) => $q->whereRaw("LOWER(jenama) = ?", [strtolower($jenama)]))
+            ->when($kapasiti, fn($q) => $q->where('kapasiti_penumpang', '>=', $kapasiti))
             ->orderBy('model', 'asc')
             ->get();
 
@@ -55,9 +46,6 @@ class PermohonanController extends Controller
         ]);
     }
 
-    // ============================================
-    // PAGE 2 : BORANG PERMOHONAN
-    // ============================================
     public function borang($no_pendaftaran)
     {
         $kenderaan = Kenderaan::findOrFail($no_pendaftaran);
@@ -75,9 +63,6 @@ class PermohonanController extends Controller
         ]);
     }
 
-    // ============================================
-    // STORE PERMOHONAN (❌ NO MILEAGE HERE)
-    // ============================================
     public function store(Request $request)
     {
         $request->validate([
@@ -117,16 +102,16 @@ class PermohonanController extends Controller
         }
 
         MaklumatPermohonan::create([
-            'id_user'           => session('loginId'),
-            'no_pendaftaran'    => $request->no_pendaftaran,
-            'tarikh_mohon'      => now(),
-            'tarikh_pelepasan'  => $request->tarikh_pelepasan,
-            'lokasi'            => $request->lokasi,
-            'bil_penumpang'     => $request->bil_penumpang,
-            'kod_projek'        => $request->kod_projek,
-            'hak_milik'         => $request->hak_milik,
-            'lampiran'          => $files,
-            'status_pengesahan' => 'Buat Pemeriksaan',
+            'id_user'             => session('loginId'),
+            'no_pendaftaran'      => $request->no_pendaftaran,
+            'tarikh_mohon'        => now(),
+            'tarikh_pelepasan'    => $request->tarikh_pelepasan,
+            'lokasi'              => $request->lokasi,
+            'bil_penumpang'       => $request->bil_penumpang,
+            'kod_projek'          => $request->kod_projek,
+            'hak_milik'           => $request->hak_milik,
+            'lampiran'            => $files,
+            'status_pengesahan'   => 'Buat Pemeriksaan',
             'speedometer_sebelum' => null,
             'speedometer_selepas' => null,
         ]);
@@ -136,23 +121,16 @@ class PermohonanController extends Controller
             ->with('success', 'Permohonan berjaya dihantar!');
     }
 
-    // ============================================
-    // STATUS PERMOHONAN
-    // ============================================
     public function status()
     {
         $hideAfterDays = 2;
 
         $permohonan = MaklumatPermohonan::where('id_user', session('loginId'))
             ->where(function ($query) use ($hideAfterDays) {
-
-                // Show all except old "Tidak Lulus / Tolak"
                 $query->whereNotIn('status_pengesahan', ['Tidak Lulus', 'Selesai Perjalanan'])
-
-                    // OR still show if within 2 days after admin update
                     ->orWhere(function ($q) use ($hideAfterDays) {
                         $q->whereIn('status_pengesahan', ['Tidak Lulus', 'Tolak'])
-                        ->where('updated_at', '>=', Carbon::now()->subDays($hideAfterDays));
+                            ->where('updated_at', '>=', Carbon::now()->subDays($hideAfterDays));
                     });
             })
             ->orderBy('updated_at', 'desc')
@@ -163,9 +141,6 @@ class PermohonanController extends Controller
         ]);
     }
 
-    // ============================================
-    // BORANG PEMERIKSAAN
-    // ============================================
     public function pemeriksaan($id_permohonan)
     {
         $permohonan = MaklumatPermohonan::where('id_permohonan', $id_permohonan)
@@ -183,52 +158,46 @@ class PermohonanController extends Controller
         ]);
     }
 
-    // ============================================
-    // SIMPAN PEMERIKSAAN (✅ MILEAGE = SEBELUM)
-    // ============================================
     public function simpanPemeriksaan(Request $request)
-{
-    $request->validate([
-        'id_permohonan'         => 'required|exists:maklumat_permohonan,id_permohonan',
-        'mileage'               => 'required|image|mimes:jpg,jpeg,png,webp|max:20480',
-        'pemeriksaan.*.status'  => 'required|in:1,2,3',
-        'pemeriksaan.*.ulasan'  => 'nullable|string|max:500',
-    ]);
+    {
+        $request->validate([
+            'id_permohonan'        => 'required|exists:maklumat_permohonan,id_permohonan',
+            'mileage'              => 'required|image|mimes:jpg,jpeg,png,webp|max:20480',
+            'pemeriksaan.*.status' => 'required|in:1,2,3',
+            'pemeriksaan.*.ulasan' => 'nullable|string|max:500',
+        ]);
 
-    $permohonan = MaklumatPermohonan::where('id_permohonan', $request->id_permohonan)
-        ->where('id_user', session('loginId'))
-        ->firstOrFail();
+        $permohonan = MaklumatPermohonan::where('id_permohonan', $request->id_permohonan)
+            ->where('id_user', session('loginId'))
+            ->firstOrFail();
 
-    $pathSebelum = null;
-    if ($request->hasFile('mileage')) {
-        $pathSebelum = $request->file('mileage')
-            ->store('speedometer/sebelum', 'public');
+        $pathSebelum = null;
+        if ($request->hasFile('mileage')) {
+            $pathSebelum = $request->file('mileage')->store('speedometer/sebelum', 'public');
+        }
+
+        $permohonan->speedometer_sebelum = $pathSebelum;
+        $permohonan->status_pengesahan   = 'Menunggu Kelulusan';
+        $permohonan->save();
+
+        MaklumatPemeriksaan::where('id_permohonan', $request->id_permohonan)->delete();
+
+        $dataInsert = [];
+        foreach ($request->pemeriksaan as $key => $data) {
+            $dataInsert[] = [
+                'id_permohonan' => $request->id_permohonan,
+                'kategori'      => 'Pemeriksaan Sebelum',
+                'nama_komponen' => $key,
+                'status'        => $data['status'],
+                'ulasan'        => $data['ulasan'] ?? null,
+                'created_at'    => now(),
+                'updated_at'    => now(),
+            ];
+        }
+
+        MaklumatPemeriksaan::insert($dataInsert);
+
+        return redirect()->route('user_site.status_permohonan')
+            ->with('success', 'Pemeriksaan berjaya dihantar. Permohonan kini Menunggu Kelulusan.');
     }
-
-    $permohonan->speedometer_sebelum = $pathSebelum;
-    $permohonan->status_pengesahan   = 'Menunggu Kelulusan';
-    $permohonan->save();
-
-    // Clear old pemeriksaan
-    MaklumatPemeriksaan::where('id_permohonan', $request->id_permohonan)->delete();
-
-    $dataInsert = [];
-
-    foreach ($request->pemeriksaan as $key => $data) {
-        $dataInsert[] = [
-            'id_permohonan' => $request->id_permohonan,
-            'kategori'      => 'Pemeriksaan Sebelum',
-            'nama_komponen' => $key, // just use the key directly
-            'status'        => $data['status'],
-            'ulasan'        => $data['ulasan'] ?? null,
-            'created_at'    => now(),
-            'updated_at'    => now(),
-        ];
-    }
-
-    MaklumatPemeriksaan::insert($dataInsert);
-
-    return redirect()->route('user_site.status_permohonan')
-        ->with('success', 'Pemeriksaan berjaya dihantar. Permohonan kini Menunggu Kelulusan.');
-}
 }

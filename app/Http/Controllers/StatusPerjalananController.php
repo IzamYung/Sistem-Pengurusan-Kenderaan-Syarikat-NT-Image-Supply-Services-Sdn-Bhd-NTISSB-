@@ -35,7 +35,6 @@ class StatusPerjalananController extends Controller
 
         $adaUpload = false;
 
-        // 🔥 upload only if user choose file
         if ($request->hasFile('speedometer_sebelum')) {
             $permohonan->speedometer_sebelum = $request->file('speedometer_sebelum')
                 ->store('speedometer/sebelum', 'public');
@@ -50,27 +49,14 @@ class StatusPerjalananController extends Controller
 
         $permohonan->ulasan = $request->ulasan;
 
-        // 🔥 status permohonan (kekal logic asal)
-        if (
-            $permohonan->speedometer_sebelum &&
-            $permohonan->speedometer_selepas
-        ) {
+        if ($permohonan->speedometer_sebelum && $permohonan->speedometer_selepas) {
             $permohonan->status_pengesahan = 'Selesai Perjalanan';
         }
 
-        // 🔥 status kenderaan (EDIT SIKIT JE)
         if ($permohonan->kenderaan) {
-
-            // dua-dua speedometer dah ada → Available
-            if (
-                $permohonan->speedometer_sebelum &&
-                $permohonan->speedometer_selepas
-            ) {
+            if ($permohonan->speedometer_sebelum && $permohonan->speedometer_selepas) {
                 $permohonan->kenderaan->status_kenderaan = 'Available';
-            }
-
-            // upload salah satu je → In Use
-            elseif ($adaUpload) {
+            } elseif ($adaUpload) {
                 $permohonan->kenderaan->status_kenderaan = 'In Use';
             }
 

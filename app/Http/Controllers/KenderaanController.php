@@ -12,10 +12,10 @@ class KenderaanController extends Controller
         $query = $request->input('search');
 
         $kenderaan = Kenderaan::when($query, function ($q) use ($query) {
-                $q->where('no_pendaftaran', 'like', "%{$query}%")
-                  ->orWhere('jenama', 'like', "%{$query}%")
-                  ->orWhere('model', 'like', "%{$query}%");
-            })
+            $q->where('no_pendaftaran', 'like', "%{$query}%")
+                ->orWhere('jenama', 'like', "%{$query}%")
+                ->orWhere('model', 'like', "%{$query}%");
+        })
             ->orderBy('no_pendaftaran', 'asc')
             ->paginate(10);
 
@@ -31,10 +31,10 @@ class KenderaanController extends Controller
         $query = $request->input('q');
 
         $kenderaan = Kenderaan::when($query, function ($q) use ($query) {
-                $q->where('no_pendaftaran', 'like', "%{$query}%")
-                  ->orWhere('jenama', 'like', "%{$query}%")
-                  ->orWhere('model', 'like', "%{$query}%");
-            })
+            $q->where('no_pendaftaran', 'like', "%{$query}%")
+                ->orWhere('jenama', 'like', "%{$query}%")
+                ->orWhere('model', 'like', "%{$query}%");
+        })
             ->get();
 
         return response()->json($kenderaan);
@@ -76,10 +76,9 @@ class KenderaanController extends Controller
             'status_kenderaan' => 'required|string|max:20',
         ]);
 
-        // Upload gambar
         if ($request->hasFile('gambar_kenderaan')) {
             $file = $request->file('gambar_kenderaan');
-            $filename = time().'_'.$file->getClientOriginalName();
+            $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('images/kenderaan'), $filename);
             $validated['gambar_kenderaan'] = 'images/kenderaan/' . $filename;
         } else {
@@ -109,29 +108,26 @@ class KenderaanController extends Controller
             'status_kenderaan' => 'required|string|max:20',
         ]);
 
-        // Tukar gambar baru
         if ($request->hasFile('gambar_kenderaan')) {
-            // buang gambar lama
-            if ($kend->gambar_kenderaan &&
+            if (
+                $kend->gambar_kenderaan &&
                 file_exists(public_path($kend->gambar_kenderaan)) &&
-                $kend->gambar_kenderaan != 'images/kenderaan/default-vehicle.png') {
-
+                $kend->gambar_kenderaan != 'images/kenderaan/default-vehicle.png'
+            ) {
                 unlink(public_path($kend->gambar_kenderaan));
             }
 
             $file = $request->file('gambar_kenderaan');
-            $filename = time().'_'.$file->getClientOriginalName();
+            $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('images/kenderaan'), $filename);
             $validated['gambar_kenderaan'] = 'images/kenderaan/' . $filename;
         }
 
-        // Handle tukar ID (no pendaftaran)
         $newId = $validated['no_pendaftaran'];
         unset($validated['no_pendaftaran']);
 
         $kend->update($validated);
 
-        // update primary key
         $kend->no_pendaftaran = $newId;
         $kend->save();
 

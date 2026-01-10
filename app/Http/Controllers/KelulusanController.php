@@ -15,8 +15,8 @@ class KelulusanController extends Controller
     public function halamanUtama(Request $request)
     {
         if ($request->has('id_permohonan')) {
-
             $permohonan = MaklumatPermohonan::find($request->id_permohonan);
+
             if (!$permohonan) {
                 return redirect()->route('admin_site.halaman_utama')
                     ->with('error', 'Permohonan tidak dijumpai.');
@@ -46,8 +46,7 @@ class KelulusanController extends Controller
     {
         $permohonan = MaklumatPermohonan::findOrFail($id_permohonan);
 
-        if ($permohonan->speedometer_sebelum &&
-            Storage::disk('public')->exists($permohonan->speedometer_sebelum)) {
+        if ($permohonan->speedometer_sebelum && Storage::disk('public')->exists($permohonan->speedometer_sebelum)) {
             Storage::disk('public')->delete($permohonan->speedometer_sebelum);
         }
 
@@ -69,25 +68,22 @@ class KelulusanController extends Controller
             ->with('success', 'Permohonan ditolak.');
     }
 
-    public function tidakLulusRosak(Request $request, $id_permohonan) // Tambah Request $request
+    public function tidakLulusRosak(Request $request, $id_permohonan)
     {
         $permohonan = MaklumatPermohonan::findOrFail($id_permohonan);
 
         $permohonan->status_pengesahan = 'Tidak Lulus';
         $permohonan->save();
 
-        // Terima ayat yang dah siap dibuat oleh JS tadi
-        // Kalau JS tak hantar (misalnya admin tak klik apa-apa), kita letak default
         $ulasanDariJS = $request->input('ulasan_auto') ?: 'Terdapat kerosakan pada komponen kenderaan.';
 
         LaporanKerosakan::create([
             'no_pendaftaran' => $permohonan->no_pendaftaran,
             'tarikh_laporan' => Carbon::today(),
             'jenis_kerosakan' => 'Kerosakan pada bahagian kenderaan',
-            'ulasan' => $ulasanDariJS, // Simpan ayat penuh dari JS
+            'ulasan' => $ulasanDariJS,
         ]);
 
-        // Tukar status kenderaan ke Maintenance
         $kenderaan = Kenderaan::where('no_pendaftaran', $permohonan->no_pendaftaran)->first();
 
         if ($kenderaan) {
