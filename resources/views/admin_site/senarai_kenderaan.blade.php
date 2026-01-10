@@ -5,7 +5,6 @@
 @section('content')
 <div class="max-w-6xl mx-auto mt-10 mb-24 px-4 sm:px-6">
 
-    {{-- TAJUK HALAMAN --}}
     <div class="mb-12 text-center">
         <h1 class="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] tracking-tight mb-1">
             {{ $tambahMode ? 'Tambah Kenderaan' : ($editKenderaan ? 'Edit Kenderaan' : 'Pengurusan Kenderaan') }}
@@ -16,7 +15,6 @@
     </div>
 
     @if($tambahMode || $editKenderaan)
-        {{-- =================== FORM (TAMBAH / EDIT) =================== --}}
         <div class="max-w-4xl mx-auto bg-white shadow-[0_20px_50px_rgba(0,0,0,0.05)] rounded-[2.5rem] overflow-hidden border border-gray-100">
             <div class="bg-gradient-to-r from-[#1e3a8a] to-blue-800 px-8 py-6 text-center">
                 <h2 class="text-white font-bold text-xl tracking-wide uppercase">
@@ -38,7 +36,6 @@
                 @if($editKenderaan) <input type="hidden" name="no_pendaftaran" value="{{ $editKenderaan->no_pendaftaran }}"> @endif
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {{-- No Pendaftaran --}}
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">No. Pendaftaran</label>
                         <input type="text" name="no_pendaftaran" 
@@ -46,7 +43,6 @@
                                value="{{ old('no_pendaftaran', $editKenderaan->no_pendaftaran ?? '') }}" required>
                     </div>
 
-                    {{-- Jenis Kenderaan --}}
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">Jenis Kenderaan</label>
                         <input type="text" name="jenis_kenderaan" 
@@ -54,7 +50,6 @@
                                value="{{ old('jenis_kenderaan', $editKenderaan->jenis_kenderaan ?? '') }}" required>
                     </div>
 
-                    {{-- Jenama --}}
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">Jenama</label>
                         <input type="text" name="jenama" 
@@ -62,7 +57,6 @@
                                value="{{ old('jenama', $editKenderaan->jenama ?? '') }}" required>
                     </div>
 
-                    {{-- Model --}}
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">Model</label>
                         <input type="text" name="model" 
@@ -70,7 +64,6 @@
                                value="{{ old('model', $editKenderaan->model ?? '') }}" required>
                     </div>
 
-                    {{-- Warna --}}
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">Warna</label>
                         <input type="text" name="warna" 
@@ -78,7 +71,6 @@
                                value="{{ old('warna', $editKenderaan->warna ?? '') }}" required>
                     </div>
 
-                    {{-- Kapasiti Penumpang --}}
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">Kapasiti Penumpang</label>
                         <input type="number" name="kapasiti_penumpang" 
@@ -86,7 +78,6 @@
                                value="{{ old('kapasiti_penumpang', $editKenderaan->kapasiti_penumpang ?? '') }}" required>
                     </div>
 
-                    {{-- Tarikh Mula Roadtax --}}
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">Tarikh Mula Roadtax</label>
                         <input type="text" id="tarikhMulaRoadtax" name="tarikh_mula_roadtax" 
@@ -94,7 +85,6 @@
                                value="{{ old('tarikh_mula_roadtax', $editKenderaan->tarikh_mula_roadtax ?? '') }}" required>
                     </div>
 
-                    {{-- Tarikh Tamat Roadtax --}}
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">Tarikh Tamat Roadtax</label>
                         <input type="text" id="tarikhTamatRoadtax" name="tarikh_tamat_roadtax" 
@@ -102,7 +92,6 @@
                                value="{{ old('tarikh_tamat_roadtax', $editKenderaan->tarikh_tamat_roadtax ?? '') }}" required>
                     </div>
 
-                    {{-- Status --}}
                     <div class="md:col-span-2 space-y-2">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">Status Kenderaan</label>
                         <select name="status_kenderaan" class="w-full border-2 border-gray-100 rounded-2xl px-5 py-4 text-sm focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all outline-none bg-gray-50/50 font-bold appearance-none">
@@ -112,12 +101,9 @@
                         </select>
                     </div>
 
-                    {{-- Gambar Kenderaan --}}
                     <div class="md:col-span-2 space-y-4">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">Gambar Kenderaan</label>
-                        
                         <div class="flex flex-col sm:flex-row items-center gap-6 p-6 bg-gray-50 rounded-[2rem] border-2 border-dashed border-gray-200">
-                            {{-- Preview Box --}}
                             <div class="relative group">
                                 <div class="w-40 h-32 rounded-2xl overflow-hidden bg-white shadow-md border-4 border-white">
                                     <img id="image-preview" 
@@ -169,7 +155,6 @@
         </div>
 
     @else
-        {{-- ================== LIST VIEW ================== --}}
         <div class="max-w-6xl mx-auto">
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8 bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100">
                 <div class="relative flex-1">
@@ -204,9 +189,8 @@
             <div class="space-y-4" id="kendContainer">
                 @forelse($kenderaan as $kend)
                     <div class="vehicle-card group bg-white p-4 md:p-6 rounded-[2rem] shadow-[0_10px_30px_rgba(0,0,0,0.02)] border border-gray-100 hover:border-blue-400 hover:shadow-[0_20px_40px_rgba(30,58,138,0.08)] transition-all duration-300 flex items-center"
-                        data-no_pendaftaran="{{ $kend->no_pendaftaran }}">
+                         data-no_pendaftaran="{{ $kend->no_pendaftaran }}">
 
-                        {{-- VEHICLE IMAGE --}}
                         <button data-modal-open="preview-img-{{ $kend->no_pendaftaran }}" class="relative shrink-0">
                             <img src="{{ asset($kend->gambar_kenderaan ?? 'images/profile_picture/default-profile.png') }}"
                                  class="w-20 h-16 rounded-2xl object-cover shadow-md group-hover:scale-105 transition-transform duration-300">
@@ -215,7 +199,6 @@
                             </div>
                         </button>
 
-                        {{-- INFO - KLIK KE EDIT --}}
                         <a href="{{ route('admin_site.tambah_kenderaan.edit', $kend->no_pendaftaran) }}" 
                            class="flex-1 grid grid-cols-12 gap-4 px-6 items-center">
                             <div class="col-span-12 md:col-span-4">
@@ -236,14 +219,12 @@
                             </div>
                         </a>
 
-                        {{-- CHECKBOX --}}
                         <div class="pl-4 border-l border-gray-100">
                             <input type="checkbox" 
                                    class="vehicleCheckbox h-6 w-6 text-red-600 rounded-xl border-2 border-gray-200 focus:ring-red-500 transition-all cursor-pointer"
                                    data-id="{{ $kend->no_pendaftaran }}">
                         </div>
 
-                        {{-- MODAL PREVIEW GAMBAR --}}
                         <div id="preview-img-{{ $kend->no_pendaftaran }}" data-modal
                              class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
                             <div data-modal-card class="bg-white rounded-[2.5rem] shadow-2xl p-4 w-full max-w-sm transform scale-95 opacity-0 transition-all duration-300">
@@ -266,7 +247,6 @@
                 @endforelse
             </div>
 
-            {{-- PAGINATION --}}
             <div class="mt-12 flex justify-center">
                 <nav class="inline-flex gap-2 p-2 bg-white rounded-2xl shadow-sm border border-gray-100" role="navigation">
                     @if ($kenderaan->onFirstPage())

@@ -5,9 +5,6 @@
 @section('content')
 
 @if(isset($page) && $page === 'pemeriksaan')
-    {{-- ========================================== --}}
-    {{-- PAGE: LAPORAN PEMERIKSAAN KENDERAAN        --}}
-    {{-- ========================================== --}}
     <div class="max-w-4xl mx-auto p-4 mb-10">
         <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-200">
             
@@ -21,7 +18,6 @@
                     @csrf
                     <input type="hidden" name="id_permohonan" value="{{ $permohonan->id_permohonan }}">
 
-                    {{-- Mileage Section --}}
                     <div class="mb-8 bg-gray-50 p-6 rounded-xl border border-gray-200">
                         <label for="mileage" class="block font-bold text-gray-800 mb-2 uppercase text-xs tracking-wider">
                             Gambar Mileage Semasa
@@ -38,7 +34,6 @@
                         @enderror
                     </div>
 
-                    {{-- Legend --}}
                     <div class="flex flex-wrap gap-4 mb-4 text-[10px] font-bold uppercase text-gray-500 px-2">
                         <div class="flex items-center gap-2 px-2 py-1 bg-green-50 rounded border border-green-200"><span class="w-2 h-2 bg-green-500 rounded-full"></span> 1: Semak & Sahkan</div>
                         <div class="flex items-center gap-2 px-2 py-1 bg-yellow-50 rounded border border-yellow-200"><span class="w-2 h-2 bg-yellow-500 rounded-full"></span> 2: Perlu Perhatian</div>
@@ -143,7 +138,6 @@
                                             @endfor
                                         </tr>
 
-                                        {{-- Row Ulasan (ID dipelihara untuk JS) --}}
                                         <tr id="ulasan-row-{{ $key }}" class="hidden bg-orange-50 border-b">
                                             <td colspan="4" class="p-4">
                                                 <label class="font-bold text-orange-800 block mb-2 text-[10px] uppercase">
@@ -180,9 +174,6 @@
     </div>
 
 @else
-    {{-- ========================================== --}}
-    {{-- PAGE: SENARAI STATUS PERMOHONAN            --}}
-    {{-- ========================================== --}}
     <div class="max-w-6xl mx-auto mt-10 mb-20 px-4">
         <h1 class="text-3xl md:text-4xl font-extrabold text-center mb-10 text-[#1e3a8a] tracking-tight">Status Permohonan Kenderaan</h1>
 
@@ -201,7 +192,6 @@
                             $status = strtolower($status_raw);
                             $pemeriksaan_url = route('user_site.permohonan.pemeriksaan', $item->id_permohonan);
 
-                            // Settings for Colors and Icons
                             if ($status === 'menunggu kelulusan' || $status === 'menunggu') {
                                 $bg_color = 'bg-yellow-500';
                                 $icon = '<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>';
@@ -224,7 +214,6 @@
                         @endphp
 
                         <tr class="hover:bg-gray-50 transition-colors group">
-                            {{-- MAKLUMAT KIRI --}}
                             <td class="px-6 py-6">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
                                     <div class="flex flex-col">
@@ -250,12 +239,10 @@
                                 </div>
                             </td>
 
-                            {{-- STATUS KANAN (FULL HEIGHT & CENTERED) --}}
                             <td class="p-0 align-stretch">
                                 <div class="h-full min-h-[160px] flex items-center justify-center
                                     {{ $bg_color }} text-white font-bold text-center px-4 py-6
                                     cursor-pointer hover:brightness-110 transition-all uppercase tracking-widest text-sm shadow-inner"
-                                    
                                     @if(strtolower($status_raw) !== 'buat pemeriksaan')
                                         data-modal-open="modalPermohonan"
                                         data-no="{{ $item->no_pendaftaran }}"
@@ -272,14 +259,12 @@
                                     @endif
                                 >
                                     <div class="flex flex-col items-center gap-3">
-                                        {{-- Ikon Automatik --}}
                                         {!! $icon !!}
                                         
                                         <span class="block leading-tight px-2">
                                             {{ strtolower($status_raw) === 'tidak lulus - kerosakan' ? 'Tidak Lulus' : ucfirst($status_raw) }}
                                         </span>
 
-                                        {{-- Teks Dinamik --}}
                                         @if(strtolower($status_raw) === 'buat pemeriksaan')
                                             <span class="text-[9px] font-normal opacity-90 mt-1 uppercase tracking-tighter bg-black/20 px-2 py-1 rounded">Klik untuk pemeriksaan</span>
                                         @else
@@ -300,7 +285,6 @@
             </table>
         </div>
 
-        {{-- MODAL MAKLUMAT PERMOHONAN (ID dan Field dikekalkan untuk JS) --}}
         <div id="modalPermohonan" 
              data-modal
              class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">

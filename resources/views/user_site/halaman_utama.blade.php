@@ -5,7 +5,6 @@
 @section('content')
 
 <style>
-    /* Kontena utama yang menyatukan tempat upload & list */
     .upload-container {
         background: #f8fafc;
         border: 2px solid #f1f5f9;
@@ -14,7 +13,6 @@
         transition: all 0.3s ease;
     }
 
-    /* Design untuk setiap baris fail yang dipilih */
     .file-item {
         display: flex;
         align-items: center;
@@ -27,12 +25,11 @@
         box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
 
-    /* Memastikan nama fail tidak lebih kotak & nampak extension */
     .file-name-wrapper {
         display: flex;
         align-items: center;
         gap: 0.75rem;
-        min-width: 0; /* Penting untuk truncate berfungsi */
+        min-width: 0;
         flex: 1;
     }
 
@@ -42,13 +39,13 @@
         color: #334155;
         white-space: nowrap;
         overflow: hidden;
-        text-overflow: ellipsis; /* Akan jadi nama_fail... */
+        text-overflow: ellipsis;
     }
 
     .file-ext-text {
         font-size: 0.875rem;
         font-weight: 700;
-        color: #1e3a8a; /* Warna biru untuk highlight extension */
+        color: #1e3a8a;
     }
 
     .remove-btn {
@@ -80,8 +77,7 @@
                 <p class="text-blue-200 text-center text-xs mt-3 uppercase tracking-[0.3em] font-bold relative z-10">Sistem Pengurusan Kenderaan</p>
             </div>
 
-            <form method="POST" action="{{ route('user_site.permohonan.store') }}"
-                  enctype="multipart/form-data" class="p-8 md:p-14 space-y-10">
+            <form method="POST" action="{{ route('user_site.permohonan.store') }}" enctype="multipart/form-data" class="p-8 md:p-14 space-y-10">
                 @csrf
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-gray-50 p-8 rounded-[2.5rem] border border-gray-100">
@@ -104,47 +100,33 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
                     <div class="md:col-span-2">
                         <label class="block text-xs font-black text-gray-700 mb-3 ml-2 uppercase tracking-widest">Tarikh & Masa Pelepasan <span class="text-red-500">*</span></label>
-                        <input type="text" name="tarikh_pelepasan" id="tarikhPelepasan" value="{{ old('tarikh_pelepasan') }}"
-                               class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-6 py-4 focus:ring-4 focus:ring-blue-50 focus:border-[#1e3a8a] focus:bg-white transition-all outline-none font-bold text-gray-700"
-                               required autocomplete="off" placeholder="Pilih tarikh..."/>
+                        <input type="text" name="tarikh_pelepasan" id="tarikhPelepasan" value="{{ old('tarikh_pelepasan') }}" class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-6 py-4 focus:ring-4 focus:ring-blue-50 focus:border-[#1e3a8a] focus:bg-white transition-all outline-none font-bold text-gray-700" required autocomplete="off" placeholder="Pilih tarikh..."/>
                     </div>
 
                     <div class="md:col-span-2">
                         <label class="block text-xs font-black text-gray-700 mb-3 ml-2 uppercase tracking-widest">Lokasi / Tujuan <span class="text-red-500">*</span></label>
-                        <input type="text" name="lokasi" required value="{{ old('lokasi') }}"
-                               class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-6 py-4 focus:ring-4 focus:ring-blue-50 focus:border-[#1e3a8a] focus:bg-white transition-all outline-none font-bold text-gray-700"
-                               placeholder="Contoh: Mesyuarat Tapak di Melaka" />
+                        <input type="text" name="lokasi" required value="{{ old('lokasi') }}" class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-6 py-4 focus:ring-4 focus:ring-blue-50 focus:border-[#1e3a8a] focus:bg-white transition-all outline-none font-bold text-gray-700" placeholder="Contoh: Mesyuarat Tapak di Melaka" />
                     </div>
 
                     <div>
                         <label class="block text-xs font-black text-gray-700 mb-3 ml-2 uppercase tracking-widest">Bilangan Penumpang <span class="text-red-500">*</span></label>
-                        <input type="number" min="1" name="bil_penumpang" value="{{ old('bil_penumpang') }}"
-                               class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-6 py-4 focus:ring-4 focus:ring-blue-50 focus:border-[#1e3a8a] focus:bg-white @error('bil_penumpang') border-red-500 @enderror transition-all outline-none font-bold text-gray-700"
-                               required placeholder="0" />
+                        <input type="number" min="1" name="bil_penumpang" value="{{ old('bil_penumpang') }}" class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-6 py-4 focus:ring-4 focus:ring-blue-50 focus:border-[#1e3a8a] focus:bg-white @error('bil_penumpang') border-red-500 @enderror transition-all outline-none font-bold text-gray-700" required placeholder="0" />
                     </div>
 
                     <div>
                         <label class="block text-xs font-black text-gray-700 mb-3 ml-2 uppercase tracking-widest">Kod Projek <span class="text-red-500">*</span></label>
-                        <input type="text" name="kod_projek" required value="{{ old('kod_projek') }}"
-                               class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-6 py-4 focus:ring-4 focus:ring-blue-50 focus:border-[#1e3a8a] focus:bg-white transition-all outline-none font-bold text-gray-700"
-                               placeholder="Masukkan kod projek" />
+                        <input type="text" name="kod_projek" required value="{{ old('kod_projek') }}" class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-6 py-4 focus:ring-4 focus:ring-blue-50 focus:border-[#1e3a8a] focus:bg-white transition-all outline-none font-bold text-gray-700" placeholder="Masukkan kod projek" />
                     </div>
 
                     <div>
                         <label class="block text-xs font-black text-gray-700 mb-3 ml-2 uppercase tracking-widest">Hak Milik <span class="text-red-500">*</span></label>
-                        <input type="text" name="hak_milik" required value="{{ old('hak_milik') }}"
-                               class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-6 py-4 focus:ring-4 focus:ring-blue-50 focus:border-[#1e3a8a] focus:bg-white transition-all outline-none font-bold text-gray-700"
-                               placeholder="Nama pemilik/jabatan" />
+                        <input type="text" name="hak_milik" required value="{{ old('hak_milik') }}" class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-6 py-4 focus:ring-4 focus:ring-blue-50 focus:border-[#1e3a8a] focus:bg-white transition-all outline-none font-bold text-gray-700" placeholder="Nama pemilik/jabatan" />
                     </div>
 
-                    {{-- BAGIAN LAMPIRAN TERPADU --}}
                     <div>
                         <label class="block text-xs font-black text-gray-700 mb-3 ml-2 uppercase tracking-widest">Lampiran Dokumen</label>
-                        
                         <div class="upload-container">
                             <input type="file" id="lampiranInput" name="lampiran[]" multiple class="hidden" />
-                            
-                            {{-- Area Klik Muat Naik --}}
                             <label for="lampiranInput" class="flex items-center gap-4 p-4 border-2 border-dashed border-gray-200 rounded-[1.5rem] cursor-pointer hover:border-[#1e3a8a] hover:bg-white transition-all group">
                                 <div class="bg-blue-50 group-hover:bg-[#1e3a8a] p-3 rounded-xl transition-all">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#1e3a8a] group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -156,11 +138,7 @@
                                     <p class="text-[9px] text-gray-400 font-bold uppercase">Klik untuk pilih dokumen</p>
                                 </div>
                             </label>
-
-                            {{-- Senarai fail yang dipilih (di dalam kotak yang sama) --}}
-                            <div id="lampiranList" class="mt-2 empty:hidden">
-                                {{-- Fail akan muncul di sini via JS --}}
-                            </div>
+                            <div id="lampiranList" class="mt-2 empty:hidden"></div>
                         </div>
                     </div>
                 </div>
@@ -175,23 +153,17 @@
     </div>
 
 @else
-    {{-- ================= SENARAI KENDERAAN (REDESIGNED VERTICAL) ================= --}}
     <div class="max-w-4xl mx-auto mt-10 px-4 mb-20">
-
-        {{-- FILTER BAR: Kemas & Minimalis --}}
         <form method="GET" class="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 mb-12">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
                 <div class="md:col-span-6">
                     <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block ml-2">Carian Model / No. Plat</label>
-                    <input type="text" id="searchKenderaan" name="search" value="{{ request('search') }}"
-                        class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-5 py-3.5 focus:border-[#1e3a8a] focus:bg-white transition-all outline-none text-sm font-bold"
-                        placeholder="Cari kenderaan..." />
+                    <input type="text" id="searchKenderaan" name="search" value="{{ request('search') }}" class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-5 py-3.5 focus:border-[#1e3a8a] focus:bg-white transition-all outline-none text-sm font-bold" placeholder="Cari kenderaan..." />
                 </div>
 
                 <div class="md:col-span-3">
                     <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block ml-2">Jenama</label>
-                    <select name="jenama" onchange="this.form.submit()"
-                        class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-4 py-3.5 focus:border-[#1e3a8a] outline-none cursor-pointer text-sm font-bold">
+                    <select name="jenama" onchange="this.form.submit()" class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-4 py-3.5 focus:border-[#1e3a8a] outline-none cursor-pointer text-sm font-bold">
                         <option value="">Semua</option>
                         @foreach($jenamaList as $brand)
                             <option value="{{ $brand }}" {{ strtolower(request('jenama')) == strtolower($brand) ? 'selected' : '' }}>
@@ -203,9 +175,7 @@
 
                 <div class="md:col-span-3">
                     <label class="text-[10px] font-bold text-gray-400 uppercase mb-2 block ml-2">Kapasiti</label>
-                    <input type="number" name="kapasiti" value="{{ request('kapasiti') }}"
-                        class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-4 py-3.5 focus:border-[#1e3a8a] outline-none text-sm font-bold"
-                        placeholder="Min: 1" />
+                    <input type="number" name="kapasiti" value="{{ request('kapasiti') }}" class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-4 py-3.5 focus:border-[#1e3a8a] outline-none text-sm font-bold" placeholder="Min: 1" />
                 </div>
             </div>
         </form>
@@ -242,12 +212,8 @@
                     data-kapasiti="{{ $car->kapasiti_penumpang ?? 0 }}"
                     data-kategori="{{ strtolower($car->jenis_kenderaan) }}"
                 >
-                    {{-- BAHAGIAN GAMBAR --}}
                     <div class="w-full md:w-80 h-64 md:h-auto overflow-hidden relative bg-gray-50">
-                        <img src="{{ asset($car->gambar_kenderaan) }}"
-                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                        
-                        {{-- Kategori Badge --}}
+                        <img src="{{ asset($car->gambar_kenderaan) }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                         <div class="absolute top-6 left-6">
                             <span class="bg-white/90 backdrop-blur-md text-[#1e3a8a] text-[10px] font-black px-4 py-2 rounded-full uppercase tracking-tighter shadow-sm border border-white/50">
                                 {{ $car->jenis_kenderaan }}
@@ -255,7 +221,6 @@
                         </div>
                     </div>
 
-                    {{-- BAHAGIAN INFO --}}
                     <div class="p-8 md:p-10 flex-1 flex flex-col">
                         <div class="flex justify-between items-start">
                             <div>
@@ -264,14 +229,11 @@
                                 </h3>
                                 <p class="text-gray-400 font-bold text-sm tracking-widest mt-1">{{ $car->no_pendaftaran }}</p>
                             </div>
-                            
-                            {{-- Brand Logo/Text --}}
                             <div class="text-right">
                                 <span class="text-[10px] font-black text-gray-300 uppercase tracking-[0.2em]">{{ $car->jenama }}</span>
                             </div>
                         </div>
 
-                        {{-- Grid Info Smart --}}
                         <div class="grid grid-cols-2 gap-6 mt-10 pt-8 border-t border-gray-50">
                             <div class="flex items-center space-x-3">
                                 <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-[#1e3a8a]">
@@ -298,7 +260,6 @@
                             </div>
                         </div>
 
-                        {{-- Floating Action Icon --}}
                         <div class="absolute bottom-8 right-8">
                             <div class="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-300 transition-all duration-300 group-hover:bg-[#1e3a8a] group-hover:text-white group-hover:rotate-[-45deg] shadow-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -320,7 +281,6 @@
             @endforelse
         </div>
 
-        {{-- EMPTY STATES FOR JS --}}
         <p id="noMatchVehicle" class="hidden text-center py-20 text-gray-400 font-bold uppercase tracking-widest text-xs">
             😔 Tiada padanan ditemui. Cuba kata kunci lain.
         </p>

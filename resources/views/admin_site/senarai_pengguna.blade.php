@@ -5,7 +5,6 @@
 @section('content')
 <div class="max-w-6xl mx-auto mt-10 mb-24 px-4 sm:px-6">
 
-    {{-- TAJUK HALAMAN --}}
     <div class="mb-12 text-center">
         <h1 class="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] tracking-tight mb-1">
             {{ $tambahMode ? 'Tambah Pengguna' : ($editUser ? 'Edit Pengguna' : 'Pengurusan Pengguna') }}
@@ -16,7 +15,6 @@
     </div>
 
     @if($tambahMode || $editUser)
-        {{-- =================== FORM (TAMBAH / EDIT) =================== --}}
         <div class="max-w-4xl mx-auto bg-white shadow-[0_20px_50px_rgba(0,0,0,0.05)] rounded-[2.5rem] overflow-hidden border border-gray-100">
             <div class="bg-gradient-to-r from-[#1e3a8a] to-blue-800 px-8 py-6 text-center">
                 <h2 class="text-white font-bold text-xl tracking-wide uppercase">
@@ -35,10 +33,11 @@
                   enctype="multipart/form-data" 
                   class="p-8 md:p-10">
                 @csrf
-                @if($editUser) <input type="hidden" name="id" value="{{ $editUser->id }}"> @endif
+                @if($editUser) 
+                    <input type="hidden" name="id" value="{{ $editUser->id }}"> 
+                @endif
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {{-- ID Pekerja --}}
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">ID Pekerja</label>
                         <input type="text" name="id_pekerja" 
@@ -46,7 +45,6 @@
                                maxlength="50" required value="{{ old('id_pekerja', $editUser->id_pekerja ?? '') }}">
                     </div>
 
-                    {{-- Nama --}}
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">Nama Penuh</label>
                         <input type="text" name="nama" 
@@ -54,7 +52,6 @@
                                maxlength="255" value="{{ old('nama', $editUser->nama ?? '') }}">
                     </div>
 
-                    {{-- Jawatan --}}
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">Jawatan</label>
                         <input type="text" name="jawatan" 
@@ -62,7 +59,6 @@
                                maxlength="255" value="{{ old('jawatan', $editUser->jawatan ?? '') }}">
                     </div>
 
-                    {{-- Email --}}
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">Alamat Email</label>
                         <input type="email" name="email" 
@@ -70,7 +66,6 @@
                                value="{{ old('email', $editUser->email ?? '') }}">
                     </div>
 
-                    {{-- No Tel --}}
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">No. Telefon</label>
                         <input type="tel" name="no_tel" 
@@ -78,7 +73,6 @@
                                maxlength="20" value="{{ old('no_tel', $editUser->no_tel ?? '') }}">
                     </div>
 
-                    {{-- Password --}}
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">
                             {{ $editUser ? 'Tukar Kata Laluan (Optional)' : 'Kata Laluan' }}
@@ -87,12 +81,9 @@
                                class="w-full border-2 border-gray-100 rounded-2xl px-5 py-4 text-sm focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all outline-none bg-gray-50/50">
                     </div>
 
-                    {{-- Gambar Profil --}}
                     <div class="md:col-span-2 space-y-4">
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">Gambar Profil</label>
-                        
                         <div class="flex flex-col sm:flex-row items-center gap-6 p-6 bg-gray-50 rounded-[2rem] border-2 border-dashed border-gray-200">
-                            {{-- Preview Box --}}
                             <div class="relative group">
                                 <div class="w-32 h-32 rounded-2xl overflow-hidden bg-white shadow-md border-4 border-white">
                                     <img id="image-preview" 
@@ -100,7 +91,9 @@
                                          class="w-full h-full object-cover">
                                 </div>
                                 <div class="absolute -top-2 -right-2 bg-blue-600 text-white p-1.5 rounded-lg shadow-lg">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
                                 </div>
                             </div>
 
@@ -108,7 +101,9 @@
                                 <button type="button" 
                                         onclick="this.nextElementSibling.click()"
                                         class="px-6 py-3 bg-white border border-gray-200 rounded-xl text-sm font-black text-blue-600 shadow-sm hover:bg-blue-50 transition-all active:scale-95 flex items-center gap-2 mx-auto sm:mx-0 uppercase tracking-tighter">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                                    </svg>
                                     Pilih Fail Gambar
                                 </button>
                                 <input type="file" name="gambar_profil" accept="image/*" class="hidden" 
@@ -136,7 +131,9 @@
                     </a>
                     <button type="submit" 
                             class="w-full sm:w-auto px-12 py-4 bg-[#1e3a8a] text-white rounded-2xl hover:bg-black font-black transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2 text-sm uppercase tracking-wider">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+                        </svg>
                         {{ $tambahMode ? 'Tambah Pengguna' : 'Simpan Perubahan' }}
                     </button>
                 </div>
@@ -144,12 +141,13 @@
         </div>
 
     @else
-        {{-- ================== LIST VIEW ================== --}}
         <div class="max-w-6xl mx-auto">
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8 bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100">
                 <div class="relative flex-1">
                     <span class="absolute inset-y-0 left-4 flex items-center text-gray-400">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
                     </span>
                     <input type="text" id="searchUser" placeholder="Cari ID, Nama, atau Jawatan..." 
                            class="w-full pl-12 pr-4 py-4 bg-gray-50 border-none rounded-2xl focus:ring-4 focus:ring-blue-500/10 transition-all font-medium text-sm">
@@ -158,12 +156,16 @@
                 <div class="flex items-center gap-3">
                     <a href="{{ route('admin_site.tambah_pengguna.create') }}" 
                        class="px-6 py-4 bg-[#1e3a8a] text-white rounded-2xl font-black text-sm uppercase tracking-tighter hover:bg-black transition-all shadow-lg flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path></svg>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path>
+                        </svg>
                         Tambah
                     </a>
                     <button id="deleteSelected" disabled 
                             class="px-6 py-4 bg-red-100 text-red-600 rounded-2xl font-black text-sm uppercase tracking-tighter transition-all opacity-50 cursor-not-allowed flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-4v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-4v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                        </svg>
                         Padam
                     </button>
                 </div>
@@ -171,7 +173,9 @@
 
             @if(session('success'))
                 <div class="mb-6 bg-green-50 border-l-4 border-green-500 text-green-800 p-4 rounded-xl font-bold flex items-center gap-3 animate-bounce">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
                     {{ session('success') }}
                 </div>
             @endif
@@ -185,16 +189,16 @@
                         data-jawatan="{{ strtolower($user->jawatan) }}"
                         data-no_tel="{{ strtolower($user->no_tel) }}">
 
-                        {{-- PROFILE IMAGE --}}
                         <button data-modal-open="preview-img-{{ $user->id_pekerja }}" class="relative shrink-0">
                             <img src="{{ asset($user->gambar_profil ?? 'images/profile_picture/default-profile.png') }}"
                                  class="w-16 h-16 rounded-2xl object-cover shadow-md group-hover:scale-105 transition-transform duration-300">
                             <div class="absolute -bottom-1 -right-1 bg-blue-600 text-white p-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
-                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
                             </div>
                         </button>
 
-                        {{-- INFO - KLIK KE EDIT --}}
                         <a href="{{ route('admin_site.tambah_pengguna.edit', $user->id_pekerja) }}" 
                            class="flex-1 grid grid-cols-12 gap-4 px-6 items-center">
                             <div class="col-span-12 md:col-span-4">
@@ -212,14 +216,12 @@
                             </div>
                         </a>
 
-                        {{-- CHECKBOX --}}
                         <div class="pl-4 border-l border-gray-100">
                             <input type="checkbox" 
                                    class="userCheckbox h-6 w-6 text-red-600 rounded-xl border-2 border-gray-200 focus:ring-red-500 transition-all cursor-pointer"
                                    data-id="{{ $user->id_pekerja }}">
                         </div>
 
-                        {{-- MODAL PREVIEW GAMBAR --}}
                         <div id="preview-img-{{ $user->id_pekerja }}" data-modal
                              class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
                             <div data-modal-card class="bg-white rounded-[2.5rem] shadow-2xl p-4 w-full max-w-sm transform scale-95 opacity-0 transition-all duration-300">
@@ -234,7 +236,9 @@
                 @empty
                     <div class="bg-white border-2 border-dashed border-gray-200 rounded-[3rem] py-20 px-6 text-center shadow-sm" id="noUser">
                         <div class="bg-gray-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                            <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
                         </div>
                         <h3 class="text-xl font-black text-gray-800 mb-2">Tiada Pengguna Dijumpai</h3>
                         <p class="text-gray-400 font-medium max-w-xs mx-auto text-sm">Sila tambah pengguna baharu untuk mula menguruskan sistem.</p>
@@ -246,10 +250,8 @@
                 </p>
             </div>
 
-            {{-- PAGINATION --}}
             <div class="mt-12 flex justify-center">
                 <nav class="inline-flex gap-2 p-2 bg-white rounded-2xl shadow-sm border border-gray-100" role="navigation">
-                    {{-- Previous --}}
                     @if ($users->onFirstPage())
                         <span class="px-4 py-2 text-gray-300 cursor-not-allowed font-black">&larr;</span>
                     @else
@@ -264,7 +266,6 @@
                         @endif
                     @endforeach
 
-                    {{-- Next --}}
                     @if ($users->hasMorePages())
                         <a href="{{ $users->nextPageUrl() }}" class="px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-all font-black">&rarr;</a>
                     @else
