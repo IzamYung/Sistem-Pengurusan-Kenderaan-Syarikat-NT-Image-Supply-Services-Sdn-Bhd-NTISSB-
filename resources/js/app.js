@@ -1,25 +1,27 @@
 import "./bootstrap";
 import initPasswordToggle from "./passwordToggle";
-import initModal from "./modal";
-import initLiveSearch from "./liveSearch";
-import initVehicleFilter, { initPermohonanFilter } from "./filter";
-import initDelete from "./deleteSelected";
-import initVehicleBooking from "./vehicleBooking";
-import initPemeriksaanToggle from "./vehicleInspection";
-import initPermohonanModal from "./permohonanModal";
-import { initKerosakanModal } from "./kerosakanModal";
-import initMultiFilePicker from "./multiFilePicker";
-import initSpeedometerPreview from "./speedometerPreview";
+import { initModal, initPermohonanModal, initKerosakanModal } from "./modal";
+import {
+    initLiveSearch,
+    initVehicleFilter,
+    initPermohonanFilter,
+} from "./searchFilter";
+import { initDelete, initMultiFilePicker } from "./multiSelected";
+import {
+    initVehicleBooking,
+    initSpeedometerPreview,
+    initPemeriksaanToggle,
+} from "./vehicleProcess";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
 document.addEventListener("DOMContentLoaded", () => {
     initPasswordToggle();
     initModal();
-    initPemeriksaanToggle();
     initPermohonanModal();
-    initPermohonanFilter();
     initKerosakanModal();
+    initPemeriksaanToggle();
+    initPermohonanFilter();
     initSpeedometerPreview();
 
     if (document.querySelector("#lampiranInput")) {
@@ -29,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // USERS
     if (document.querySelector("#searchUser")) {
         initLiveSearch({
             inputId: "searchUser",
@@ -39,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // VEHICLES
     if (document.querySelector("#searchKenderaan")) {
         initLiveSearch({
             inputId: "searchKenderaan",
@@ -58,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // PERMOHONAN PAGE (if combined)
     if (document.querySelector("#searchPermohonan")) {
         initLiveSearch({
             inputId: "searchPermohonan",
@@ -66,20 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
             noMatchId: "noMatchPermohonan",
             noItemId: "noPermohonan",
         });
-
-        if (document.querySelector("#searchKenderaan")) {
-            initVehicleFilter({
-                searchId: "searchKenderaan",
-                cardClass: "vehicle-card",
-                jenamaSelectName: "jenama",
-                kapasitiInputName: "kapasiti",
-                noMatchId: "noMatchVehicle",
-                noItemId: "noVehicle",
-            });
-        }
     }
 
-    // DELETE
     if (document.querySelector("#deleteSelected")) {
         initDelete({
             buttonId: "deleteSelected",
@@ -87,6 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
             apiUrl: "/admin/senarai-pengguna/delete",
         });
     }
+
     if (document.querySelector("#deleteSelectedVehicle")) {
         initDelete({
             buttonId: "deleteSelectedVehicle",
@@ -102,7 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ROADTAX DATES FLATPICKR
     const startInput = document.querySelector("#tarikhMulaRoadtax");
     const endInput = document.querySelector("#tarikhTamatRoadtax");
 
@@ -111,8 +98,8 @@ document.addEventListener("DOMContentLoaded", () => {
             dateFormat: "Y-m-d",
             allowInput: true,
             clickOpens: true,
-            onChange: function (selectedDates) {
-                endPicker.redraw(); // refresh gray styling when start changes
+            onChange() {
+                endPicker.redraw();
             },
         });
 
@@ -120,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
             dateFormat: "Y-m-d",
             allowInput: true,
             clickOpens: true,
-            onDayCreate: function (dObj, dStr, fp, dayElem) {
+            onDayCreate(dObj, dStr, fp, dayElem) {
                 const startDate = startPicker.selectedDates[0];
                 if (startDate && dayElem.dateObj < startDate) {
                     dayElem.classList.add(
@@ -129,16 +116,15 @@ document.addEventListener("DOMContentLoaded", () => {
                         "cursor-not-allowed",
                         "opacity-60"
                     );
-                    // prevent selection
                     dayElem.addEventListener("click", (e) =>
                         e.preventDefault()
                     );
                 }
             },
-            onChange: function (selectedDates, dateStr, instance) {
+            onChange(selectedDates, dateStr, instance) {
                 const startDate = startPicker.selectedDates[0];
                 if (startDate && selectedDates[0] < startDate) {
-                    instance.clear(); // auto-clear if user types or pastes invalid date
+                    instance.clear();
                 }
             },
         });
@@ -147,15 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".speedometer-preview").forEach((img) => {
         img.addEventListener("click", () => {
             const modalImg = document.getElementById("modalSpeedometerImg");
-            modalImg.src = img.dataset.modalImg;
-        });
-    });
-    document.querySelectorAll(".speedometer-preview").forEach((img) => {
-        img.addEventListener("click", () => {
-            const modalImg = document.getElementById("modalSpeedometerImg");
-            if (modalImg) {
-                modalImg.src = img.dataset.modalImg;
-            }
+            if (modalImg) modalImg.src = img.dataset.modalImg;
         });
     });
 });

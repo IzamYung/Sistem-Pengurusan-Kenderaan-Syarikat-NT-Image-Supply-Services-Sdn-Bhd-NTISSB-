@@ -1,4 +1,4 @@
-export default function initPasswordToggle() {
+function initPasswordToggle() {
     const togglePassword = document.getElementById("togglePassword");
     const passwordInput = document.getElementById("password");
     const toggleIcon = document.getElementById("toggleIcon");
@@ -15,3 +15,5 @@ export default function initPasswordToggle() {
         });
     }
 }
+
+export default initPasswordToggle;
