@@ -24,7 +24,6 @@
 
     <div class="w-full max-w-md relative z-20">
         <div class="bg-white rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100 overflow-hidden">
-            
             <div class="h-2 bg-[#1e3a8a]"></div>
 
             <div class="p-10 md:p-12">
@@ -45,7 +44,6 @@
 
                 <form action="{{ route('loginUser') }}" method="POST" class="space-y-6">
                     @csrf
-                    
                     <div class="space-y-2">
                         <label class="block text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1">Alamat Email</label>
                         <div class="relative group">

@@ -8,6 +8,7 @@ use App\Http\Controllers\PermohonanController;
 use App\Http\Controllers\RekodPermohonanController;
 use App\Http\Controllers\KelulusanController;
 use App\Http\Controllers\LaporanKerosakanController;
+use App\Http\Controllers\StatusPerjalananController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,7 +20,6 @@ Route::post('/login-user', [AuthController::class, 'loginUser'])->name('loginUse
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['authcheck'])->group(function () {
-    // Admin routes
     Route::prefix('admin')->name('admin_site.')->group(function () {
         Route::get('/halaman-utama', [KelulusanController::class, 'halamanUtama'])
             ->name('halaman_utama');
@@ -30,8 +30,7 @@ Route::middleware(['authcheck'])->group(function () {
         Route::post('/tidak-lulus/{id_permohonan}', [KelulusanController::class, 'tidakLulus'])
             ->name('permohonan.tidak_lulus');
 
-        Route::post('/tidak-lulus-kerosakan/{id_permohonan}',
-        [KelulusanController::class, 'tidakLulusRosak'])
+        Route::post('/tidak-lulus-kerosakan/{id_permohonan}', [KelulusanController::class, 'tidakLulusRosak'])
             ->name('permohonan.tidak_lulus_rosak');
 
         Route::get('/status-perjalanan', function () {
@@ -39,22 +38,28 @@ Route::middleware(['authcheck'])->group(function () {
         })->name('status_perjalanan');
 
         Route::get('/rekod-permohonan', [RekodPermohonanController::class, 'index'])
-        ->name('rekod_permohonan');
+            ->name('rekod_permohonan');
 
-        // Senarai kenderaan routes
-        Route::get('/senarai-kenderaan', [KenderaanController::class, 'index'])->name('senarai_kenderaan');
-        Route::get('/senarai-kenderaan/search', [KenderaanController::class, 'search'])->name('senarai_kenderaan.search');
+        Route::get('/senarai-kenderaan', [KenderaanController::class, 'index'])
+            ->name('senarai_kenderaan');
 
-        // ADD
-        Route::get('/tambah-kenderaan', [KenderaanController::class, 'create'])->name('tambah_kenderaan.create');
-        Route::post('/tambah-kenderaan', [KenderaanController::class, 'store'])->name('tambah_kenderaan.store');
+        Route::get('/senarai-kenderaan/search', [KenderaanController::class, 'search'])
+            ->name('senarai_kenderaan.search');
 
-        // EDIT
-        Route::get('/tambah-kenderaan/{no_pendaftaran}/edit', [KenderaanController::class, 'edit'])->name('tambah_kenderaan.edit');
-        Route::post('/tambah-kenderaan/{no_pendaftaran}/update', [KenderaanController::class, 'update'])->name('tambah_kenderaan.update');
+        Route::get('/tambah-kenderaan', [KenderaanController::class, 'create'])
+            ->name('tambah_kenderaan.create');
 
-        // DELETE
-        Route::delete('/senarai-kenderaan/delete', [KenderaanController::class, 'destroy'])->name('senarai_kenderaan.delete');
+        Route::post('/tambah-kenderaan', [KenderaanController::class, 'store'])
+            ->name('tambah_kenderaan.store');
+
+        Route::get('/tambah-kenderaan/{no_pendaftaran}/edit', [KenderaanController::class, 'edit'])
+            ->name('tambah_kenderaan.edit');
+
+        Route::post('/tambah-kenderaan/{no_pendaftaran}/update', [KenderaanController::class, 'update'])
+            ->name('tambah_kenderaan.update');
+
+        Route::delete('/senarai-kenderaan/delete', [KenderaanController::class, 'destroy'])
+            ->name('senarai_kenderaan.delete');
 
         Route::get('/kerosakan', [LaporanKerosakanController::class, 'index'])
             ->name('kerosakkan_kenderaan');
@@ -65,25 +70,29 @@ Route::middleware(['authcheck'])->group(function () {
         Route::post('/kerosakan/selesai/{id}', [LaporanKerosakanController::class, 'selesai'])
             ->name('kerosakkan_kenderaan.selesai');
 
-        // Senarai pengguna routes
-        Route::get('/senarai-pengguna', [UserController::class, 'index'])->name('senarai_pengguna');
-        Route::get('/senarai-pengguna/search', [UserController::class, 'search'])->name('senarai_pengguna.search');
+        Route::get('/senarai-pengguna', [UserController::class, 'index'])
+            ->name('senarai_pengguna');
 
-        // ADD
-        Route::get('/tambah-pengguna', [UserController::class, 'create'])->name('tambah_pengguna.create');
-        Route::post('/tambah-pengguna', [UserController::class, 'store'])->name('tambah_pengguna.store');
+        Route::get('/senarai-pengguna/search', [UserController::class, 'search'])
+            ->name('senarai_pengguna.search');
 
-        // EDIT
-        Route::get('/tambah-pengguna/{id}/edit', [UserController::class, 'edit'])->name('tambah_pengguna.edit');
-        Route::post('/tambah-pengguna/{id}/update', [UserController::class, 'update'])->name('tambah_pengguna.update');
+        Route::get('/tambah-pengguna', [UserController::class, 'create'])
+            ->name('tambah_pengguna.create');
 
-        Route::delete('/senarai-pengguna/delete', [UserController::class, 'destroy'])->name('senarai_pengguna.delete');
+        Route::post('/tambah-pengguna', [UserController::class, 'store'])
+            ->name('tambah_pengguna.store');
 
+        Route::get('/tambah-pengguna/{id}/edit', [UserController::class, 'edit'])
+            ->name('tambah_pengguna.edit');
+
+        Route::post('/tambah-pengguna/{id}/update', [UserController::class, 'update'])
+            ->name('tambah_pengguna.update');
+
+        Route::delete('/senarai-pengguna/delete', [UserController::class, 'destroy'])
+            ->name('senarai_pengguna.delete');
     });
 
-    // User routes
     Route::prefix('user')->name('user_site.')->group(function () {
-        // ✅ ONLY controller route for halaman_utama
         Route::get('/halaman_utama', [PermohonanController::class, 'index'])
             ->name('permohonan.index');
 
@@ -94,26 +103,23 @@ Route::middleware(['authcheck'])->group(function () {
             ->name('permohonan.store');
 
         Route::get('/status-permohonan', [PermohonanController::class, 'status'])
-        ->name('status_permohonan');
+            ->name('status_permohonan');
 
         Route::get('/pemeriksaan/{id_permohonan}', [PermohonanController::class, 'pemeriksaan'])
             ->name('permohonan.pemeriksaan');
-            
-        Route::post('/pemeriksaan/simpan', [PermohonanController::class, 'simpanPemeriksaan'])
-            ->name('permohonan.simpan_pemeriksaan');
 
-        Route::get('/status-perjalanan', [\App\Http\Controllers\StatusPerjalananController::class, 'index'])
+        Route::post('/pemeriksaan/simpan', [PermohonanController::class, 'simpanPemeriksaan'])
+            ->name('permohonan.simpan_permohonan');
+
+        Route::get('/status-perjalanan', [StatusPerjalananController::class, 'index'])
             ->name('status_perjalanan');
 
-        Route::post('/status-perjalanan/simpan', [\App\Http\Controllers\StatusPerjalananController::class, 'simpan'])
+        Route::post('/status-perjalanan/simpan', [StatusPerjalananController::class, 'simpan'])
             ->name('status_perjalanan.simpan');
 
-        Route::get('/rekod-permohonan', [
-        \App\Http\Controllers\RekodPermohonanController::class,'index'])
+        Route::get('/rekod-permohonan', [RekodPermohonanController::class, 'index'])
             ->name('rekod_permohonan');
-
     });
 
-    // Profile controller
     Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile');
 });
