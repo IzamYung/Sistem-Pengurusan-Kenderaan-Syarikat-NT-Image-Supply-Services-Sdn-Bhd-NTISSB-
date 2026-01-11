@@ -109,7 +109,7 @@ Route::middleware(['authcheck'])->group(function () {
             ->name('permohonan.pemeriksaan');
 
         Route::post('/pemeriksaan/simpan', [PermohonanController::class, 'simpanPemeriksaan'])
-            ->name('permohonan.simpan_permohonan');
+            ->name('permohonan.simpan_pemeriksaan');
 
         Route::get('/status-perjalanan', [StatusPerjalananController::class, 'index'])
             ->name('status_perjalanan');

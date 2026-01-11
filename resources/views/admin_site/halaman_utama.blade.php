@@ -111,7 +111,7 @@
 
         <div class="flex items-center gap-4 mb-8">
             <div class="h-[2px] flex-1 bg-gray-100"></div>
-            <h2 class="text-2xl font-black text-gray-800 uppercase tracking-tighter">Laporan <span class="text-[#1e3a8a]">Pemeriksaan</span></h2>
+            <h2 class="text-2xl font-black text-[#1e3a8a] uppercase tracking-tighter">Laporan Pemeriksaan</h2>
             <div class="h-[2px] flex-1 bg-gray-100"></div>
         </div>
 
