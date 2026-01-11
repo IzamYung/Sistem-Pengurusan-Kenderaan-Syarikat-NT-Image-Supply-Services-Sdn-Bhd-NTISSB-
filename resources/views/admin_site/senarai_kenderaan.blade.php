@@ -96,7 +96,6 @@
                         <label class="block text-[10px] font-black text-blue-400 uppercase tracking-[0.2em] ml-1">Status Kenderaan</label>
                         <select name="status_kenderaan" class="w-full border-2 border-gray-100 rounded-2xl px-5 py-4 text-sm focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all outline-none bg-gray-50/50 font-bold appearance-none">
                             <option value="available" {{ old('status_kenderaan', $editKenderaan->status_kenderaan ?? '') == 'available' ? 'selected' : '' }}>Available</option>
-                            <option value="in_use" {{ old('status_kenderaan', $editKenderaan->status_kenderaan ?? '') == 'in_use' ? 'selected' : '' }}>In Use</option>
                             <option value="maintenance" {{ old('status_kenderaan', $editKenderaan->status_kenderaan ?? '') == 'maintenance' ? 'selected' : '' }}>Maintenance</option>
                         </select>
                     </div>
@@ -212,7 +211,6 @@
                             <div class="hidden md:block col-span-5 text-right">
                                 <span class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm
                                     {{ $kend->status_kenderaan == 'available' ? 'bg-green-100 text-green-600 border border-green-200' : '' }}
-                                    {{ $kend->status_kenderaan == 'in_use' ? 'bg-blue-100 text-blue-600 border border-blue-200' : '' }}
                                     {{ $kend->status_kenderaan == 'maintenance' ? 'bg-red-100 text-red-600 border border-red-200' : '' }}">
                                     {{ $kend->status_kenderaan }}
                                 </span>
