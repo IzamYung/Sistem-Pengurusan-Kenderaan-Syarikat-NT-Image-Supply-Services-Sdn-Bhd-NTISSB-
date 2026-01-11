@@ -34,6 +34,7 @@ class PermohonanController extends Controller
             )
             ->when($jenama, fn($q) => $q->whereRaw("LOWER(jenama) = ?", [strtolower($jenama)]))
             ->when($kapasiti, fn($q) => $q->where('kapasiti_penumpang', '>=', $kapasiti))
+            ->orderBy('status_kenderaan', 'asc')
             ->orderBy('model', 'asc')
             ->get();
 
