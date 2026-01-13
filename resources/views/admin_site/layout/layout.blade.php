@@ -38,7 +38,6 @@
             @php
                 $menu = [
                     ['name' => 'Halaman Utama', 'route' => 'admin_site.halaman_utama', 'icon' => 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'],
-                    ['name' => 'Status Perjalanan', 'route' => 'admin_site.status_perjalanan', 'icon' => 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L16 4m0 13V4m0 0L9 7'],
                     ['name' => 'Rekod Permohonan', 'route' => 'admin_site.rekod_permohonan', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'],
                     ['name' => 'Senarai Kenderaan', 'route' => 'admin_site.senarai_kenderaan', 'icon' => 'M5 17a2 2 0 1 0 4 0 2 2 0 0 0-4 0zm10 0a2 2 0 1 0 4 0 2 2 0 0 0-4 0zm-9-4h8m-8-5h5a4 4 0 0 1 3.8 2.8l.7 2.2H3.5l.7-2.2A4 4 0 0 1 6 8z'],
                     ['name' => 'Kerosakan Kenderaan', 'route' => 'admin_site.kerosakkan_kenderaan', 'icon' => 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z'],

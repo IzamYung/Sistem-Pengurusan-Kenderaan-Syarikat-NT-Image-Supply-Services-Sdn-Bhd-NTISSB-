@@ -33,10 +33,6 @@ Route::middleware(['authcheck'])->group(function () {
         Route::post('/tidak-lulus-kerosakan/{id_permohonan}', [KelulusanController::class, 'tidakLulusRosak'])
             ->name('permohonan.tidak_lulus_rosak');
 
-        Route::get('/status-perjalanan', function () {
-            return view('admin_site.status_perjalanan');
-        })->name('status_perjalanan');
-
         Route::get('/rekod-permohonan', [RekodPermohonanController::class, 'index'])
             ->name('rekod_permohonan');
 
