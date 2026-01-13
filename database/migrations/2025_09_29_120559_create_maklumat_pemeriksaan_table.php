@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('id_permohonan'); 
             
             // Kolum Pemeriksaan
-            $table->string('kategori', 50);
             $table->string('nama_komponen', 100);
             $table->string('status', 20);
             $table->text('ulasan')->nullable();

@@ -189,7 +189,6 @@ class PermohonanController extends Controller
                 'id_permohonan' => $request->id_permohonan,
                 'kategori'      => 'Pemeriksaan Sebelum',
                 'nama_komponen' => $key,
-                'status'        => $data['status'],
                 'ulasan'        => $data['ulasan'] ?? null,
                 'created_at'    => now(),
                 'updated_at'    => now(),
