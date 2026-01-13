@@ -187,7 +187,7 @@ class PermohonanController extends Controller
         foreach ($request->pemeriksaan as $key => $data) {
             $dataInsert[] = [
                 'id_permohonan' => $request->id_permohonan,
-                'kategori'      => 'Pemeriksaan Sebelum',
+                'status'        => $data['status'],
                 'nama_komponen' => $key,
                 'ulasan'        => $data['ulasan'] ?? null,
                 'created_at'    => now(),
