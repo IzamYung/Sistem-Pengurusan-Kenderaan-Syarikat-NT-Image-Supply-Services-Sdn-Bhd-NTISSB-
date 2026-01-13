@@ -289,7 +289,6 @@
 
             <form action="{{ route('admin_site.permohonan.tidak_lulus_rosak', $permohonan->id_permohonan) }}" method="POST">
                 @csrf
-                <input type="hidden" name="ulasan_auto" id="ulasan_kerosakan_auto" value="{{ $ayatFinalAuto }}">
                 <button class="px-8 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-2xl font-black uppercase text-[10px] tracking-[0.2em] transition-all shadow-lg shadow-orange-100 active:scale-95">
                     Kerosakan & Gagal
                 </button>

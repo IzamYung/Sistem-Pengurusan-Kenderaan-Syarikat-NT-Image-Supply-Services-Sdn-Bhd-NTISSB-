@@ -7,11 +7,7 @@ import {
     initPermohonanFilter,
 } from "./searchFilter";
 import { initDelete, initMultiFilePicker } from "./multiSelected";
-import {
-    initVehicleBooking,
-    initSpeedometerPreview,
-    initPemeriksaanToggle,
-} from "./vehicleProcess";
+import { initVehicleBooking, initSpeedometerPreview } from "./vehicleProcess";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
@@ -20,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
     initModal();
     initPermohonanModal();
     initKerosakanModal();
-    initPemeriksaanToggle();
     initPermohonanFilter();
     initSpeedometerPreview();
 

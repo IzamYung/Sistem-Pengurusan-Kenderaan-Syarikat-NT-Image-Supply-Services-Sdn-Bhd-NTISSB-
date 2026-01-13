@@ -75,13 +75,11 @@ class KelulusanController extends Controller
         $permohonan->status_pengesahan = 'Tidak Lulus';
         $permohonan->save();
 
-        $ulasanDariJS = $request->input('ulasan_auto') ?: 'Terdapat kerosakan pada komponen kenderaan.';
-
         LaporanKerosakan::create([
             'no_pendaftaran' => $permohonan->no_pendaftaran,
             'tarikh_laporan' => Carbon::today(),
             'jenis_kerosakan' => 'Kerosakan pada bahagian kenderaan',
-            'ulasan' => $ulasanDariJS,
+            'ulasan' => 'Sila rujuk borang pemeriksaan permohonan',
         ]);
 
         $kenderaan = Kenderaan::where('no_pendaftaran', $permohonan->no_pendaftaran)->first();
