@@ -15,7 +15,7 @@ return new class extends Migration
             // PK: id_laporan
             $table->id('id_laporan'); 
 
-            // Foreign Key placeholder to vehicles.no_pendaftaran
+            $table->unsignedBigInteger('id_permohonan');
             $table->string('no_pendaftaran', 20);
             
             $table->dateTime('tarikh_laporan');

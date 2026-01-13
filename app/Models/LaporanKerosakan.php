@@ -14,6 +14,7 @@ class LaporanKerosakan extends Model
     public $timestamps = true;
 
     protected $fillable = [
+        'id_permohonan',
         'no_pendaftaran',
         'tarikh_laporan',
         'jenis_kerosakan',
