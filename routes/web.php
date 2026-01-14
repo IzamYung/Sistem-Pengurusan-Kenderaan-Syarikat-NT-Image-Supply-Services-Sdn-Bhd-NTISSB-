@@ -57,13 +57,16 @@ Route::middleware(['authcheck'])->group(function () {
         Route::delete('/senarai-kenderaan/delete', [KenderaanController::class, 'destroy'])
             ->name('senarai_kenderaan.delete');
 
-        Route::get('/kerosakan', [LaporanKerosakanController::class, 'index'])
+         // Page utama laporan kerosakan (list + add form)
+        Route::get('/kerosakkan_kenderaan', [LaporanKerosakanController::class, 'index'])
             ->name('kerosakkan_kenderaan');
 
-        Route::post('/kerosakan/store', [LaporanKerosakanController::class, 'store'])
+        // Store laporan baru
+        Route::post('/kerosakkan_kenderaan/store', [LaporanKerosakanController::class, 'store'])
             ->name('kerosakkan_kenderaan.store');
 
-        Route::post('/kerosakan/selesai/{id}', [LaporanKerosakanController::class, 'selesai'])
+        // Tandakan selesai
+        Route::post('/kerosakkan_kenderaan/selesai/{id}', [LaporanKerosakanController::class, 'selesai'])
             ->name('kerosakkan_kenderaan.selesai');
 
         Route::get('/senarai-pengguna', [UserController::class, 'index'])

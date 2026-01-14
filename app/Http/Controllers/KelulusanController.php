@@ -76,6 +76,7 @@ class KelulusanController extends Controller
         $permohonan->save();
 
         LaporanKerosakan::create([
+            'id_permohonan' => $permohonan->id_permohonan,
             'no_permohonan' => $permohonan->id_permohonan, 
             'no_pendaftaran' => $permohonan->no_pendaftaran,
             'tarikh_laporan' => Carbon::today(),

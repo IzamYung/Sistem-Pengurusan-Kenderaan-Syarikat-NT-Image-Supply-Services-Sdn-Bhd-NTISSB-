@@ -1,6 +1,6 @@
 import "./bootstrap";
 import initPasswordToggle from "./passwordToggle";
-import { initModal, initPermohonanModal, initKerosakanModal } from "./modal";
+import { initModal, initPermohonanModal } from "./modal";
 import {
     initLiveSearch,
     initVehicleFilter,
@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
     initModal();
     initPemeriksaanToggle();
     initPermohonanModal();
-    initKerosakanModal();
     initPermohonanFilter();
     initSpeedometerPreview();
 

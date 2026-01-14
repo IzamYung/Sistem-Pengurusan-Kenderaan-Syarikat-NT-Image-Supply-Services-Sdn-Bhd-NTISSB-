@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\LaporanKerosakan;
 use App\Models\Kenderaan;
+use App\Models\MaklumatPemeriksaan;
 use Carbon\Carbon;
 
 class LaporanKerosakanController extends Controller
@@ -13,14 +14,16 @@ class LaporanKerosakanController extends Controller
     {
         $kenderaan = Kenderaan::all();
 
+        // Kalau nak tambah laporan
         if ($request->get('action') === 'add') {
             return view('admin_site.kerosakkan_kenderaan', [
                 'action' => 'add',
                 'kenderaan' => $kenderaan,
-                'senarai' => null
+                'senarai' => null,
             ]);
         }
 
+        // List utama
         $senarai = LaporanKerosakan::with('kenderaan')
             ->where(function ($query) {
                 $query->whereNull('ulasan')
@@ -29,47 +32,53 @@ class LaporanKerosakanController extends Controller
             ->orderBy('tarikh_laporan', 'desc')
             ->get();
 
-        $pemeriksaan = MaklumatPemeriksaan::where('id_permohonan', $request->id_permohonan)->get();
+        $kerosakan = null;
+        $pemeriksaan = collect();
+
+        // Kalau ada query param ?id_kerosakan=xxx
+        if ($request->has('id_kerosakan')) {
+            $kerosakan = LaporanKerosakan::with('kenderaan')->find($request->id_kerosakan);
+
+            if ($kerosakan) {
+                $pemeriksaan = MaklumatPemeriksaan::where('id_permohonan', $kerosakan->id_permohonan)->get();
+            }
+        }
 
         return view('admin_site.kerosakkan_kenderaan', [
             'senarai' => $senarai,
             'kenderaan' => $kenderaan,
+            'kerosakan' => $kerosakan,
             'pemeriksaan' => $pemeriksaan,
-            'action' => null
+            'action' => null,
         ]);
     }
 
     public function store(Request $request)
     {
+        // tetap sama macam awak ada
         $request->validate([
-            'no_pendaftaran' => 'required|exists:kenderaan,no_pendaftaran',
+            'no_pendaftaran' => 'required|string',
             'jenis_kerosakan' => 'required|string',
             'ulasan' => 'nullable|string',
         ]);
 
-        $kenderaan = Kenderaan::where('no_pendaftaran', $request->no_pendaftaran)->first();
-
         LaporanKerosakan::create([
-            'no_pendaftaran' => $kenderaan->no_pendaftaran,
-            'tarikh_laporan' => Carbon::today(),
+            'id_permohonan' => '0',
+            'no_pendaftaran' => $request->no_pendaftaran,
             'jenis_kerosakan' => $request->jenis_kerosakan,
-            'ulasan' => $request->ulasan ?? '',
+            'ulasan' => $request->ulasan,
+            'tarikh_laporan' => Carbon::now(),
         ]);
 
-        return redirect()->route('admin_site.kerosakkan_kenderaan')
-            ->with('success', 'Laporan kerosakan berjaya ditambah.');
+        return redirect()->route('admin_site.kerosakkan_kenderaan')->with('success', 'Laporan kerosakan berjaya ditambah.');
     }
 
-    public function selesai($id)
+    public function selesai(Request $request, $id)
     {
         $laporan = LaporanKerosakan::findOrFail($id);
 
-        if ($laporan->ulasan) {
-            $laporan->ulasan .= ' [[SELESAI]]';
-        } else {
-            $laporan->ulasan = '[[SELESAI]]';
-        }
-
+        // Tambah [[SELESAI]] pada ulasan sedia ada
+        $laporan->ulasan = ($laporan->ulasan ?? '') . ' [[SELESAI]]';
         $laporan->save();
 
         $kenderaan = Kenderaan::where('no_pendaftaran', $laporan->no_pendaftaran)->first();
@@ -80,6 +89,6 @@ class LaporanKerosakanController extends Controller
         }
 
         return redirect()->route('admin_site.kerosakkan_kenderaan')
-            ->with('success', 'Laporan kerosakan ditandai Selesai.');
+                        ->with('success', 'Laporan ditandakan selesai.');
     }
 }
