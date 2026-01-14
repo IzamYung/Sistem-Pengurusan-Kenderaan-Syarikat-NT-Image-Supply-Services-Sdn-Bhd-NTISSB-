@@ -29,9 +29,12 @@ class LaporanKerosakanController extends Controller
             ->orderBy('tarikh_laporan', 'desc')
             ->get();
 
+        $pemeriksaan = MaklumatPemeriksaan::where('id_permohonan', $request->id_permohonan)->get();
+
         return view('admin_site.kerosakkan_kenderaan', [
             'senarai' => $senarai,
             'kenderaan' => $kenderaan,
+            'pemeriksaan' => $pemeriksaan,
             'action' => null
         ]);
     }

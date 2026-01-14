@@ -25,6 +25,7 @@ class LaporanKerosakan extends Model
     {
         return $this->belongsTo(
             \App\Models\Kenderaan::class,
+            'no_pendaftaran',
             'no_pendaftaran'
         );
     }
