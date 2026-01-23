@@ -7,15 +7,17 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="icon" type="image/png" href="{{ asset('images/logo_syarikat.png') }}">
 </head>
-<body class="min-h-screen bg-gray-50 font-sans flex flex-col justify-center items-center p-6 relative overflow-hidden">
+<body
+    class="min-h-screen font-sans flex flex-col justify-center items-center p-6 relative overflow-hidden bg-no-repeat bg-center bg-cover"
+    style="background-image: url('{{ asset('images/bangunan_ntissb.svg') }}');"
+>
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-950/80 via-slate-900/75 to-black/80 z-0"></div>
 
     <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-100/50 rounded-full blur-[120px] pointer-events-none"></div>
     <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-50/50 rounded-full blur-[120px] pointer-events-none"></div>
 
-    <div class="fixed top-8 left-8 flex items-center gap-4 z-10 hidden md:flex">
-        <div class="bg-white p-2 rounded-2xl shadow-sm border border-gray-100">
-            <img src="{{ asset('images/logo_syarikat.png') }}" alt="Company Logo" class="w-12 h-12 object-contain">
-        </div>
+    <div class="fixed top-8 left-8 flex items-center gap-4 z-10 hidden md:flex bg-white p-2 rounded-2xl shadow-sm border border-gray-100">
+        <img src="{{ asset('images/logo_syarikat.png') }}" alt="Company Logo" class="w-12 h-12 object-contain">
         <span class="font-black text-[#1e3a8a] leading-tight text-xs uppercase tracking-tighter">
             NT Image Supply & Services<br>
             <span class="text-gray-400 font-bold text-[10px]">Sdn Bhd</span>
