@@ -296,10 +296,10 @@
         </div>
 
         <p id="noMatchVehicle" class="hidden text-center py-20 text-gray-400 font-bold uppercase tracking-widest text-xs">
-            😔 Tiada padanan ditemui. Cuba kata kunci lain.
+            Tiada padanan ditemui. Cuba kata kunci lain.
         </p>
         <p id="noVehicle" class="hidden text-center py-20 text-gray-400 font-bold uppercase tracking-widest text-xs">
-            🚗 Tiada kenderaan buat masa ini.
+            Tiada kenderaan buat masa ini.
         </p>
     </div>
 @endif
