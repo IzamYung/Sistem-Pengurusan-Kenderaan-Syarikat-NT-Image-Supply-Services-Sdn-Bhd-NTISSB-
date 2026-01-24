@@ -153,6 +153,14 @@
     </div>
 
 @else
+
+    <div class="mb-12 text-center">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-center mb-1 text-[#1e3a8a] tracking-tight">
+            Senarai Kenderaan Syarikat
+        </h1>
+        <p class="text-gray-500 mb-5 font-medium">Sila pilih kenderaan di bawah untuk melakukan permohonan.</p>
+    </div>
+
     <div class="max-w-4xl mx-auto mt-10 px-4 mb-20">
         <form method="GET" class="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100 mb-12">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
