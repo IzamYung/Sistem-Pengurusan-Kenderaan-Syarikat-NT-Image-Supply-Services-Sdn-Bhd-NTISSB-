@@ -1,6 +1,14 @@
 @extends('admin_site.layout.layout')
 
-@section('title', 'Kerosakan Kenderaan')
+@section('title')
+    @if($action === 'add')
+        Borang Laporan Kerosakan
+    @elseif(request()->has('id_kerosakan') && isset($kerosakan))
+        Maklumat Laporan Kerosakan
+    @else
+        Kerosakan Kenderaan
+    @endif
+@endsection
 
 @section('content')
 <div class="max-w-6xl mx-auto mt-10 mb-24 px-4 sm:px-6">

@@ -1,6 +1,12 @@
 @extends('admin_site.layout.layout')
 
-@section('title', 'Halaman Utama Admin')
+@section('title')
+    @if(request()->has('id_permohonan') && isset($permohonan))
+        Maklumat Permohonan
+    @else
+        Halaman Utama
+    @endif
+@endsection
 
 @section('content')
 <div class="max-w-6xl mx-auto mt-12 mb-24 px-4 sm:px-6">

@@ -1,6 +1,12 @@
 @extends('user_site.layout.layout')
 
-@section('title', 'Halaman Utama')
+@section('title')
+    @if(isset($page) && $page === 'borang')
+        Borang Permohonan
+    @else
+        Halaman Utama
+    @endif
+@endsection
 
 @section('content')
 
