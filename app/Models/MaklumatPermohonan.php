@@ -14,6 +14,7 @@ class MaklumatPermohonan extends Model
         'no_pendaftaran',
         'tarikh_mohon',
         'tarikh_pelepasan',
+        'tarikh_pulang',
         'lokasi',
         'bil_penumpang',
         'kod_projek',

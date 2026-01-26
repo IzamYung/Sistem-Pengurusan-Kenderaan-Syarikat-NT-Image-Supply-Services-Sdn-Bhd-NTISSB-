@@ -16,6 +16,7 @@ return new class extends Migration
 
             $table->dateTime('tarikh_mohon');
             $table->dateTime('tarikh_pelepasan')->nullable();
+            $table->dateTime('tarikh_pulang')->nullable();
 
             $table->string('lokasi', 150);
             $table->unsignedSmallInteger('bil_penumpang');

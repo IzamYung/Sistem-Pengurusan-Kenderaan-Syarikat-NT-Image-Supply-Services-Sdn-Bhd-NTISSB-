@@ -5,7 +5,7 @@
 @section('content')
 <div class="max-w-6xl mx-auto mt-10 mb-20 px-4">
     <h1 class="text-3xl md:text-4xl font-extrabold text-center mb-10 text-[#1e3a8a] tracking-tight">
-        Rekod Permohonan Kenderaan (Admin)
+        Rekod Permohonan Kenderaan
     </h1>
 
     <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4 w-full">
