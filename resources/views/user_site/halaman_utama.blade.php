@@ -104,9 +104,26 @@
                 <input type="hidden" name="no_pendaftaran" value="{{ $kenderaan->no_pendaftaran ?? '' }}">
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
-                    <div class="md:col-span-2">
-                        <label class="block text-xs font-black text-gray-700 mb-3 ml-2 uppercase tracking-widest">Tarikh & Masa Pelepasan <span class="text-red-500">*</span></label>
-                        <input type="text" name="tarikh_pelepasan" id="tarikhPelepasan" value="{{ old('tarikh_pelepasan') }}" class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-6 py-4 focus:ring-4 focus:ring-blue-50 focus:border-[#1e3a8a] focus:bg-white transition-all outline-none font-bold text-gray-700" required autocomplete="off" placeholder="Pilih tarikh..."/>
+                    <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <label class="block text-xs font-black text-gray-700 mb-3 ml-2 uppercase tracking-widest">
+                                Tarikh & Masa Pelepasan <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" name="tarikh_pelepasan" id="tarikhPelepasan" 
+                                value="{{ old('tarikh_pelepasan') }}" 
+                                class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-6 py-4 focus:ring-4 focus:ring-blue-50 focus:border-[#1e3a8a] transition-all outline-none font-bold text-gray-700" 
+                                required autocomplete="off" placeholder="Mula..."/>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-black text-gray-700 mb-3 ml-2 uppercase tracking-widest">
+                                Tarikh Pulang <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" name="tarikh_pulang" id="tarikhPulang" 
+                                value="{{ old('tarikh_pulang') }}" 
+                                class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-6 py-4 focus:ring-4 focus:ring-blue-50 focus:border-[#1e3a8a] transition-all outline-none font-bold text-gray-700" 
+                                required autocomplete="off" placeholder="Tamat..."/>
+                        </div>
                     </div>
 
                     <div class="md:col-span-2">
