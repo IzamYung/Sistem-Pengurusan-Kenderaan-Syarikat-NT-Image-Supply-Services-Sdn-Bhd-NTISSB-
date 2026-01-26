@@ -48,7 +48,7 @@
                 <a href="{{ route($item['route']) }}" 
                     class="flex items-center gap-3 py-3 px-4 rounded-xl transition-all duration-200 group
                     @if(request()->routeIs($item['route'])) 
-                        bg-blue-600 text-white shadow-lg shadow-blue-200 font-bold
+                        bg-[#1e3a8a] text-white shadow-lg shadow-blue-100 font-bold
                     @else 
                         text-gray-500 hover:text-blue-600 hover:bg-blue-50
                     @endif">
