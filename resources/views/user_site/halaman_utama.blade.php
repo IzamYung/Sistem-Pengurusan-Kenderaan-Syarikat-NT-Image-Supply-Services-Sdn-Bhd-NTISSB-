@@ -112,7 +112,7 @@
                             <input type="text" name="tarikh_pelepasan" id="tarikhPelepasan" 
                                 value="{{ old('tarikh_pelepasan') }}" 
                                 class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-6 py-4 focus:ring-4 focus:ring-blue-50 focus:border-[#1e3a8a] transition-all outline-none font-bold text-gray-700" 
-                                required autocomplete="off" placeholder="Mula..."/>
+                                required autocomplete="off" placeholder="YYYY-MM-DD HH:MM"/>
                         </div>
 
                         <div>
@@ -122,7 +122,7 @@
                             <input type="text" name="tarikh_pulang" id="tarikhPulang" 
                                 value="{{ old('tarikh_pulang') }}" 
                                 class="w-full border-2 border-gray-100 bg-gray-50 rounded-2xl px-6 py-4 focus:ring-4 focus:ring-blue-50 focus:border-[#1e3a8a] transition-all outline-none font-bold text-gray-700" 
-                                required autocomplete="off" placeholder="Tamat..."/>
+                                required autocomplete="off" placeholder="YYYY-MM-DD"/>
                         </div>
                     </div>
 

@@ -129,7 +129,7 @@
                     </div>
                 </div>
                 <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
-                    <p class="font-bold text-[#1e3a8a] mb-2 text-xs uppercase tracking-widest">Ulasan Admin / Pemeriksa:</p>
+                    <p class="font-bold text-[#1e3a8a] mb-2 text-xs uppercase tracking-widest">Ulasan Pengguna:</p>
                     <p id="m-ulasan" class="text-gray-700 text-sm italic font-medium leading-relaxed"></p>
                 </div>
             </div>

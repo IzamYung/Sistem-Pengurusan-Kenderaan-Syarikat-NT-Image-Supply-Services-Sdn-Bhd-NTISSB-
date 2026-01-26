@@ -42,7 +42,6 @@
                 data-bil="{{ $item->bil_penumpang }}"
                 data-kod="{{ $item->kod_projek }}"
                 data-hak="{{ $item->hak_milik }}"
-                data-ulasan="{{ $item->ulasan_admin ?? 'Tiada ulasan disediakan.' }}"
                 data-lampiran="{{ json_encode($item->lampiran ?? []) }}"
                 class="permohonan-card bg-white shadow-md hover:shadow-xl rounded-2xl p-6 border border-gray-100 border-l-[6px] {{ $statusColor }} transition-all cursor-pointer group flex flex-col md:flex-row justify-between items-start md:items-center"
             >
@@ -127,11 +126,6 @@
                         <p id="m-hak" class="text-base font-bold text-gray-800"></p>
                     </div>
                 </div>
-            </div>
-
-            <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
-                <p class="font-bold text-[#1e3a8a] mb-2 text-xs uppercase tracking-widest">Ulasan Admin / Maklum Balas:</p>
-                <p id="m-ulasan" class="text-gray-700 text-sm italic font-medium leading-relaxed"></p>
             </div>
 
             <div>

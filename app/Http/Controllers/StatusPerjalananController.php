@@ -53,16 +53,6 @@ class StatusPerjalananController extends Controller
             $permohonan->status_pengesahan = 'Selesai Perjalanan';
         }
 
-        if ($permohonan->kenderaan) {
-            if ($permohonan->speedometer_sebelum && $permohonan->speedometer_selepas) {
-                $permohonan->kenderaan->status_kenderaan = 'Available';
-            } elseif ($adaUpload) {
-                $permohonan->kenderaan->status_kenderaan = 'In Use';
-            }
-
-            $permohonan->kenderaan->save();
-        }
-
         $permohonan->save();
 
         return back()->with('success', 'Maklumat perjalanan berjaya disimpan.');
