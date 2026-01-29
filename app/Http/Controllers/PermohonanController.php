@@ -95,12 +95,16 @@ class PermohonanController extends Controller
         }
 
         $mula   = Carbon::parse($request->tarikh_pelepasan);
-        $pulang = Carbon::parse($request->tarikh_pulang)->endOfDay();
+        $pulang = Carbon::parse($request->tarikh_pulang);
+
+        if ($mula->equalTo($pulang)) {
+            $pulang = $mula->copy()->addMinutes(30);
+        }
 
         $exists = MaklumatPermohonan::where('no_pendaftaran', $request->no_pendaftaran)
             ->where(function ($query) use ($mula, $pulang) {
-                $query->where('tarikh_pelepasan', '<=', $pulang)
-                      ->where('tarikh_pulang', '>=', $mula);
+                $query->where('tarikh_pelepasan', '<', $pulang)
+                      ->where('tarikh_pulang', '>', $mula);
             })->exists();
 
         if ($exists) {

@@ -108,22 +108,43 @@ document.addEventListener("DOMContentLoaded", () => {
             clickOpens: true,
             onDayCreate(dObj, dStr, fp, dayElem) {
                 const startDate = startPicker.selectedDates[0];
-                if (startDate && dayElem.dateObj < startDate) {
-                    dayElem.classList.add(
-                        "bg-gray-200",
-                        "text-gray-400",
-                        "cursor-not-allowed",
-                        "opacity-60"
+                if (startDate) {
+                    const sDate = new Date(startDate).setHours(0, 0, 0, 0);
+                    const dDate = new Date(dayElem.dateObj).setHours(
+                        0,
+                        0,
+                        0,
+                        0,
                     );
-                    dayElem.addEventListener("click", (e) =>
-                        e.preventDefault()
-                    );
+
+                    if (dDate < sDate) {
+                        dayElem.classList.add(
+                            "bg-gray-200",
+                            "text-gray-400",
+                            "cursor-not-allowed",
+                            "opacity-60",
+                        );
+                        dayElem.style.pointerEvents = "none";
+                    }
                 }
             },
             onChange(selectedDates, dateStr, instance) {
                 const startDate = startPicker.selectedDates[0];
-                if (startDate && selectedDates[0] < startDate) {
-                    instance.clear();
+                if (startDate && selectedDates.length > 0) {
+                    const sDate = new Date(startDate).setHours(0, 0, 0, 0);
+                    const eDate = new Date(selectedDates[0]).setHours(
+                        0,
+                        0,
+                        0,
+                        0,
+                    );
+
+                    if (eDate < sDate) {
+                        instance.clear();
+                        window.showError(
+                            "Tarikh tamat tidak boleh sebelum tarikh mula.",
+                        );
+                    }
                 }
             },
         });

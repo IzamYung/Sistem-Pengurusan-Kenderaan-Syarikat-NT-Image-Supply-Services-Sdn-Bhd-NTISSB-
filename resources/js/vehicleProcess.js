@@ -6,9 +6,10 @@ function initVehicleBooking({ inputId, bookedDates }) {
 
     if (!pelepasanInput || !pulangInput) return;
 
-    const disabledDates = bookedDates.map((d) =>
-        new Date(d).toISOString().slice(0, 10),
-    );
+    const disabledDates = (bookedDates || []).map((d) => {
+        const date = new Date(d);
+        return date.toISOString().slice(0, 10);
+    });
 
     const fpPelepasan = flatpickr(pelepasanInput, {
         enableTime: true,
@@ -18,23 +19,41 @@ function initVehicleBooking({ inputId, bookedDates }) {
         disable: disabledDates,
         onChange: function (selectedDates) {
             if (selectedDates.length > 0) {
-                fpPulang.set("minDate", selectedDates[0]);
+                const tarikhPelepasan = selectedDates[0];
+
+                const waktuPulangAuto = new Date(
+                    tarikhPelepasan.getTime() + 30 * 60000,
+                );
+
+                let minDateLimit = new Date(tarikhPelepasan);
+                minDateLimit.setHours(0, 0, 0, 0);
+
+                fpPulang.set("minDate", minDateLimit);
+                fpPulang.setDate(waktuPulangAuto);
             }
         },
     });
 
     const fpPulang = flatpickr(pulangInput, {
-        enableTime: false,
-        dateFormat: "Y-m-d",
+        enableTime: true,
+        noCalendar: false,
+        dateFormat: "Y-m-d H:i",
+        altInput: true,
+        altFormat: "Y-m-d",
         minDate: "today",
         disable: disabledDates,
+        onReady: function (selectedDates, dateStr, instance) {
+            const timePicker =
+                instance.calendarContainer.querySelector(".flatpickr-time");
+            if (timePicker) timePicker.style.display = "none";
+        },
         onChange: function (selectedDates) {
             const picked = selectedDates[0]?.toISOString().slice(0, 10);
             if (disabledDates.includes(picked)) {
                 alert(
                     "Maaf, kenderaan ini telah ditempah pada tarikh tersebut.",
                 );
-                this.clear();
+                instance.clear();
             }
         },
     });

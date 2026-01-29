@@ -9,7 +9,6 @@
 @endsection
 
 @section('content')
-
 <style>
     .upload-container {
         background: #f8fafc;
