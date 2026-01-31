@@ -11,186 +11,205 @@
 @section('content')
 
 @if(isset($page) && $page === 'pemeriksaan')
-    <div class="max-w-4xl mx-auto p-4 mb-10">
-        <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-200">
-            
-            <div class="bg-[#1e3a8a] text-white text-center py-8">
-                <h3 class="text-2xl md:text-3xl font-bold tracking-wide">Laporan Pemeriksaan Kenderaan</h3>
-                <p class="text-blue-100 mt-2 text-sm">Sila lengkapkan status pemeriksaan di bawah sebelum memulakan perjalanan.</p>
-            </div>
+<div class="max-w-4xl mx-auto p-4 mb-10">
+    <div class="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-200">
 
-            <div class="p-6 md:p-8">
-                <form action="{{ route('user_site.permohonan.simpan_pemeriksaan') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="id_permohonan" value="{{ $permohonan->id_permohonan }}">
+        <div class="bg-[#1e3a8a] text-white text-center py-6 md:py-8 px-4">
+            <h3 class="text-xl md:text-3xl font-bold tracking-wide">
+                Laporan Pemeriksaan Kenderaan
+            </h3>
+            <p class="text-blue-100 mt-2 text-xs md:text-sm">
+                Sila lengkapkan status pemeriksaan di bawah sebelum memulakan perjalanan.
+            </p>
+        </div>
 
-                    <div class="mb-8 bg-gray-50 p-6 rounded-xl border border-gray-200">
-                        <label for="mileage" class="block font-bold text-gray-800 mb-2 uppercase text-xs tracking-wider">
-                            Gambar Mileage Semasa
-                        </label>
-                        <input type="file" 
-                            class="w-full bg-white border border-gray-300 rounded-lg p-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('mileage') border-red-500 @enderror" 
-                            id="mileage" 
-                            name="mileage" 
-                            accept=".jpg,.jpeg,.png,.webp" 
-                            required>
-                        <p class="text-[11px] text-gray-500 mt-2 italic font-medium">*Sila muat naik gambar paparan speedometer (jarak perbatuan) kenderaan.</p>
-                        @error('mileage')
-                            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                        @enderror
+        <div class="p-4 md:p-8">
+            <form action="{{ route('user_site.permohonan.simpan_pemeriksaan') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="id_permohonan" value="{{ $permohonan->id_permohonan }}">
+
+                <div class="mb-8 bg-gray-50 p-4 md:p-6 rounded-xl border border-gray-200">
+                    <label for="mileage" class="block font-bold text-gray-800 mb-2 uppercase text-xs tracking-wider">
+                        Gambar Mileage Semasa
+                    </label>
+                    <input type="file"
+                        class="w-full bg-white border border-gray-300 rounded-lg p-2 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 @error('mileage') border-red-500 @enderror"
+                        id="mileage"
+                        name="mileage"
+                        accept=".jpg,.jpeg,.png,.webp"
+                        required>
+
+                    <p class="text-[11px] text-gray-500 mt-2 italic font-medium">
+                        *Sila muat naik gambar paparan speedometer (jarak perbatuan) kenderaan.
+                    </p>
+
+                    @error('mileage')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="flex flex-wrap gap-2 md:gap-4 mb-4 text-[9px] md:text-[10px] font-bold uppercase text-gray-500 px-1 md:px-2">
+                    <div class="flex items-center gap-2 px-2 py-1 bg-green-50 rounded border border-green-200">
+                        <span class="w-2 h-2 bg-green-500 rounded-full"></span> 1: Semak & Sahkan
                     </div>
-
-                    <div class="flex flex-wrap gap-4 mb-4 text-[10px] font-bold uppercase text-gray-500 px-2">
-                        <div class="flex items-center gap-2 px-2 py-1 bg-green-50 rounded border border-green-200"><span class="w-2 h-2 bg-green-500 rounded-full"></span> 1: Semak & Sahkan</div>
-                        <div class="flex items-center gap-2 px-2 py-1 bg-yellow-50 rounded border border-yellow-200"><span class="w-2 h-2 bg-yellow-500 rounded-full"></span> 2: Perlu Perhatian</div>
-                        <div class="flex items-center gap-2 px-2 py-1 bg-red-50 rounded border border-red-200"><span class="w-2 h-2 bg-red-500 rounded-full"></span> 3: Tindakan Segera</div>
+                    <div class="flex items-center gap-2 px-2 py-1 bg-yellow-50 rounded border border-yellow-200">
+                        <span class="w-2 h-2 bg-yellow-500 rounded-full"></span> 2: Perlu Perhatian
                     </div>
+                    <div class="flex items-center gap-2 px-2 py-1 bg-red-50 rounded border border-red-200">
+                        <span class="w-2 h-2 bg-red-500 rounded-full"></span> 3: Tindakan Segera
+                    </div>
+                </div>
 
-                    <div class="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
-                        <table class="w-full text-sm border-collapse">
-                            <thead class="bg-gray-100 text-gray-700 uppercase text-[11px] tracking-wider">
+                <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                    <table class="min-w-[640px] w-full text-sm border-collapse">
+                        <thead class="bg-gray-100 text-gray-700 uppercase text-[10px] md:text-[11px] tracking-wider">
+                            <tr>
+                                <th class="p-3 md:p-4 border-b text-left font-bold w-1/2">
+                                    Item / Bahagian Pemeriksaan
+                                </th>
+                                <th class="p-3 md:p-4 border-b text-center font-bold">1</th>
+                                <th class="p-3 md:p-4 border-b text-center font-bold">2</th>
+                                <th class="p-3 md:p-4 border-b text-center font-bold">3</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @php
+                                $sections = [
+                                    'Bahagian Dalaman / Luaran' => [
+                                        'badan_luaran' => 'Badan Luaran Kenderaan',
+                                        'cermin_hadapan' => 'Cermin Hadapan / Kaca',
+                                        'pengelap_cermin' => 'Pengelap Cermin',
+                                        'lampu' => 'Lampu (Hadapan, Brek, Isyarat Belok)',
+                                        'lampu_dalaman' => 'Lampu Dalaman',
+                                        'penghawa_dingin' => 'Operasi Penghawa Dingin',
+                                        'pemanasan' => 'Pemanasan',
+                                        'lain_dalaman_luaran' => 'Lain-lain',
+                                    ],
+                                    'Bahagian Bawah Kenderaan' => [
+                                        'brek' => 'Brek (Pad / Kasut Brek)',
+                                        'salur_hos_brek' => 'Salur & Hos Brek',
+                                        'sistem_stereng' => 'Sistem Stereng',
+                                        'penyerap_kejutan' => 'Penyerap Kejutan & Topang',
+                                        'sistem_ekzos' => 'Sistem Ekzos',
+                                        'salur_hos_bahan_api' => 'Salur & Hos Bahan Api',
+                                        'lain_bawah' => 'Lain-lain',
+                                    ],
+                                    'Bahagian Bawah Bonet' => [
+                                        'minyak_enjin' => 'Minyak Enjin',
+                                        'bendalir_brek' => 'Bendalir Brek',
+                                        'bendalir_stereng' => 'Bendalir Stereng Kuasa',
+                                        'bendalir_pencuci' => 'Bendalir Pencuci Cermin',
+                                        'tali_sawat_hos' => 'Tali Sawat & Hos',
+                                        'antibeku_penyejuk' => 'Anti-Beku / Penyejuk',
+                                        'penapis_udara' => 'Penapis Udara',
+                                        'penapis_kabin' => 'Penapis Kabin',
+                                        'penapis_bahan_api' => 'Penapis Bahan Api',
+                                        'palam_pencucuh' => 'Palam Pencucuh / Wayar',
+                                        'bendalir_transmisi' => 'Bendalir Transmisi dan Perumah',
+                                        'sistem_gantung' => 'Sistem Gantung / Ampaian',
+                                    ],
+                                    'Bateri' => [
+                                        'caj_bateri' => 'Caj Bateri',
+                                        'bendalir_bateri' => 'Bendalir Bateri',
+                                        'kabel_sambungan' => 'Kabel & Sambungan',
+                                    ],
+                                    'Tayar - Kondisi & Tekanan' => [
+                                        'bunga_kiri_hadapan' => 'Kedalaman Bunga (Kiri Hadapan)',
+                                        'bunga_kiri_belakang' => 'Kedalaman Bunga (Kiri Belakang)',
+                                        'bunga_kanan_hadapan' => 'Kedalaman Bunga (Kanan Hadapan)',
+                                        'bunga_kanan_belakang' => 'Kedalaman Bunga (Kanan Belakang)',
+                                        'udara_kiri_hadapan' => 'Tekanan Udara (Kiri Hadapan)',
+                                        'udara_kiri_belakang' => 'Tekanan Udara (Kiri Belakang)',
+                                        'udara_kanan_hadapan' => 'Tekanan Udara (Kanan Hadapan)',
+                                        'udara_kanan_belakang' => 'Tekanan Udara (Kanan Belakang)',
+                                    ],
+                                    'Penyelenggaraan Tayar' => [
+                                        'penjajaran' => 'Penjajaran (Alignment)',
+                                        'pengimbangan' => 'Pengimbangan (Balancing)',
+                                        'putaran' => 'Putaran (Rotation)',
+                                        'tayar_baru' => 'Tayar Baru (Ganti)',
+                                    ],
+                                ];
+                            @endphp
+
+                            @foreach($sections as $sectionName => $items)
                                 <tr>
-                                    <th class="p-4 border-b text-left font-bold w-1/2">Item / Bahagian Pemeriksaan</th>
-                                    <th class="p-4 border-b text-center font-bold">1</th>
-                                    <th class="p-4 border-b text-center font-bold">2</th>
-                                    <th class="p-4 border-b text-center font-bold">3</th>
+                                    <td colspan="4" class="bg-blue-50 text-[#1e3a8a] font-bold p-3 text-sm border-y border-blue-100">
+                                        {{ $sectionName }}
+                                    </td>
                                 </tr>
-                            </thead>
 
-                            <tbody>
-                                @php
-                                    $sections = [
-                                        'Bahagian Dalaman / Luaran' => [
-                                            'badan_luaran' => 'Badan Luaran Kenderaan',
-                                            'cermin_hadapan' => 'Cermin Hadapan / Kaca',
-                                            'pengelap_cermin' => 'Pengelap Cermin',
-                                            'lampu' => 'Lampu (Hadapan, Brek, Isyarat Belok)',
-                                            'lampu_dalaman' => 'Lampu Dalaman',
-                                            'penghawa_dingin' => 'Operasi Penghawa Dingin',
-                                            'pemanasan' => 'Pemanasan',
-                                            'lain_dalaman_luaran' => 'Lain-lain',
-                                        ],
-                                        'Bahagian Bawah Kenderaan' => [
-                                            'brek' => 'Brek (Pad / Kasut Brek)',
-                                            'salur_hos_brek' => 'Salur & Hos Brek',
-                                            'sistem_stereng' => 'Sistem Stereng',
-                                            'penyerap_kejutan' => 'Penyerap Kejutan & Topang',
-                                            'sistem_ekzos' => 'Sistem Ekzos',
-                                            'salur_hos_bahan_api' => 'Salur & Hos Bahan Api',
-                                            'lain_bawah' => 'Lain-lain',
-                                        ],
-                                        'Bahagian Bawah Bonet' => [
-                                            'minyak_enjin' => 'Minyak Enjin',
-                                            'bendalir_brek' => 'Bendalir Brek',
-                                            'bendalir_stereng' => 'Bendalir Stereng Kuasa',
-                                            'bendalir_pencuci' => 'Bendalir Pencuci Cermin',
-                                            'tali_sawat_hos' => 'Tali Sawat & Hos',
-                                            'antibeku_penyejuk' => 'Anti-Beku / Penyejuk',
-                                            'penapis_udara' => 'Penapis Udara',
-                                            'penapis_kabin' => 'Penapis Kabin',
-                                            'penapis_bahan_api' => 'Penapis Bahan Api',
-                                            'palam_pencucuh' => 'Palam Pencucuh / Wayar',
-                                            'bendalir_transmisi' => 'Bendalir Transmisi dan Perumah',
-                                            'sistem_gantung' => 'Sistem Gantung / Ampaian',
-                                        ],
-                                        'Bateri' => [
-                                            'caj_bateri' => 'Caj Bateri',
-                                            'bendalir_bateri' => 'Bendalir Bateri',
-                                            'kabel_sambungan' => 'Kabel & Sambungan',
-                                        ],
-                                        'Tayar - Kondisi & Tekanan' => [
-                                            'bunga_kiri_hadapan' => 'Kedalaman Bunga (Kiri Hadapan)',
-                                            'bunga_kiri_belakang' => 'Kedalaman Bunga (Kiri Belakang)',
-                                            'bunga_kanan_hadapan' => 'Kedalaman Bunga (Kanan Hadapan)',
-                                            'bunga_kanan_belakang' => 'Kedalaman Bunga (Kanan Belakang)',
-                                            'udara_kiri_hadapan' => 'Tekanan Udara (Kiri Hadapan)',
-                                            'udara_kiri_belakang' => 'Tekanan Udara (Kiri Belakang)',
-                                            'udara_kanan_hadapan' => 'Tekanan Udara (Kanan Hadapan)',
-                                            'udara_kanan_belakang' => 'Tekanan Udara (Kanan Belakang)',
-                                        ],
-                                        'Penyelenggaraan Tayar' => [
-                                            'penjajaran' => 'Penjajaran (Alignment)',
-                                            'pengimbangan' => 'Pengimbangan (Balancing)',
-                                            'putaran' => 'Putaran (Rotation)',
-                                            'tayar_baru' => 'Tayar Baru (Ganti)',
-                                        ],
-                                    ];
-                                @endphp
-
-                                @foreach($sections as $sectionName => $items)
-                                    <tr>
-                                        <td colspan="4" class="bg-blue-50 text-[#1e3a8a] font-bold p-3 text-sm border-y border-blue-100">
-                                            {{ $sectionName }}
+                                @foreach($items as $key => $label)
+                                    <tr class="inspection-item border-b hover:bg-gray-50 transition" data-key="{{ $key }}">
+                                        <td class="p-3 md:p-4 font-medium text-gray-700">
+                                            {{ $label }}
                                         </td>
+
+                                        @for($i = 1; $i <= 3; $i++)
+                                            <td class="text-center p-3 md:p-4">
+                                                <input type="radio"
+                                                    name="pemeriksaan[{{ $key }}][status]"
+                                                    value="{{ $i }}"
+                                                    required
+                                                    class="status-radio w-5 h-5 cursor-pointer accent-blue-600"
+                                                    data-key="{{ $key }}"
+                                                    data-status="{{ $i }}"
+                                                    {{ old("pemeriksaan.$key.status") == $i ? 'checked' : '' }}>
+                                            </td>
+                                        @endfor
                                     </tr>
 
-                                    @foreach($items as $key => $label)
-                                        <tr class="inspection-item border-b hover:bg-gray-50 transition" data-key="{{ $key }}">
-                                            <td class="p-4 font-medium text-gray-700">
-                                                {{ $label }}
-                                            </td>
+                                    <tr id="ulasan-row-{{ $key }}" class="hidden bg-orange-50 border-b">
+                                        <td colspan="4" class="p-4">
+                                            <label class="font-bold text-orange-800 block mb-2 text-[10px] uppercase">
+                                                Penjelasan / Ulasan Kerosakan
+                                            </label>
+                                            <textarea
+                                                name="pemeriksaan[{{ $key }}][ulasan]"
+                                                id="ulasan-{{ $key }}"
+                                                rows="2"
+                                                placeholder="Sila berikan butiran kerosakan..."
+                                                class="w-full border-orange-200 rounded-lg shadow-sm focus:ring-orange-500 focus:border-orange-500 overflow-auto resize-none p-3 @error("pemeriksaan.$key.ulasan") border-red-500 @enderror">{{ old("pemeriksaan.$key.ulasan") }}</textarea>
 
-                                            @for($i = 1; $i <= 3; $i++)
-                                                <td class="text-center p-4">
-                                                    <input type="radio" 
-                                                        name="pemeriksaan[{{ $key }}][status]" 
-                                                        value="{{ $i }}" 
-                                                        required
-                                                        class="status-radio w-5 h-5 cursor-pointer accent-blue-600"
-                                                        data-key="{{ $key }}"
-                                                        data-status="{{ $i }}"
-                                                        {{ old("pemeriksaan.$key.status") == $i ? 'checked' : '' }}>
-                                                </td>
-                                            @endfor
-                                        </tr>
-
-                                        <tr id="ulasan-row-{{ $key }}" class="hidden bg-orange-50 border-b">
-                                            <td colspan="4" class="p-4">
-                                                <label class="font-bold text-orange-800 block mb-2 text-[10px] uppercase">
-                                                    Penjelasan / Ulasan Kerosakan
-                                                </label>
-                                                <textarea 
-                                                    name="pemeriksaan[{{ $key }}][ulasan]" 
-                                                    id="ulasan-{{ $key }}" 
-                                                    rows="2" 
-                                                    placeholder="Sila berikan butiran kerosakan..."
-                                                    class="w-full border-orange-200 rounded-lg shadow-sm focus:ring-orange-500 focus:border-orange-500 overflow-auto resize-none p-3 @error("pemeriksaan.$key.ulasan") border-red-500 @enderror">{{ old("pemeriksaan.$key.ulasan") }}</textarea>
-                                                
-                                                @error("pemeriksaan.$key.ulasan")
-                                                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                                                @enderror
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                            @error("pemeriksaan.$key.ulasan")
+                                                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                                            @enderror
+                                        </td>
+                                    </tr>
                                 @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
-                    <div class="mt-10">
-                        <button type="submit" 
-                            class="w-full bg-[#1e3a8a] hover:bg-blue-800 text-white py-4 rounded-xl shadow-lg font-bold text-lg transition-all transform hover:-translate-y-1">
-                            Hantar Laporan Pemeriksaan
-                        </button>
-                    </div>
+                <div class="mt-10">
+                    <button type="submit"
+                        class="w-full bg-[#1e3a8a] hover:bg-blue-800 text-white py-3 md:py-4 rounded-xl shadow-lg font-bold text-base md:text-lg transition-all transform hover:-translate-y-1">
+                        Hantar Laporan Pemeriksaan
+                    </button>
+                </div>
 
-                </form>
-            </div>
+            </form>
         </div>
     </div>
+</div>
 
 @else
     <div class="max-w-6xl mx-auto mt-10 mb-20 px-4">
-        <h1 class="text-3xl md:text-4xl font-extrabold text-center mb-10 text-[#1e3a8a] tracking-tight">Status Permohonan Kenderaan</h1>
+        <h1 class="text-3xl md:text-4xl font-extrabold text-center mb-10 text-[#1e3a8a] tracking-tight">
+            Status Permohonan Kenderaan
+        </h1>
 
         <div class="shadow-2xl rounded-2xl overflow-hidden border border-gray-200 bg-white">
             <table class="w-full border-collapse">
-                <thead class="bg-gray-100 text-gray-600 uppercase text-[11px] tracking-widest">
+                <thead class="hidden md:table-header-group bg-gray-100 text-gray-600 uppercase text-[11px] tracking-widest">
                     <tr>
                         <th class="px-6 py-4 text-left font-bold">Butiran Permohonan</th>
                         <th class="px-6 py-4 w-56 text-center font-bold">Status & Tindakan</th>
                     </tr>
                 </thead>
+
                 <tbody class="divide-y divide-gray-200">
                     @forelse($permohonan ?? [] as $item)
                         @php
@@ -219,8 +238,8 @@
                             }
                         @endphp
 
-                        <tr class="hover:bg-gray-50 transition-colors group">
-                            <td class="px-6 py-6">
+                        <tr class="block md:table-row hover:bg-gray-50 transition-colors group border-b md:border-0">
+                            <td class="block md:table-cell px-4 md:px-6 py-4 md:py-6">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
                                     <div class="flex flex-col">
                                         <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">ID Permohonan</span>
@@ -245,10 +264,13 @@
                                 </div>
                             </td>
 
-                            <td class="p-0 align-stretch">
-                                <div class="h-full min-h-[160px] flex items-center justify-center
-                                    {{ $bg_color }} text-white font-bold text-center px-4 py-6
-                                    cursor-pointer hover:brightness-110 transition-all uppercase tracking-widest text-sm shadow-inner"
+                            <td class="block md:table-cell p-0 md:align-stretch">
+                                <div class="h-full min-h-[64px] md:min-h-[160px]
+                                    flex items-center justify-center
+                                    {{ $bg_color }} text-white font-bold text-center
+                                    px-4 py-4 md:py-6
+                                    cursor-pointer hover:brightness-110 transition-all
+                                    uppercase tracking-widest text-xs md:text-sm shadow-inner"
                                     @if(strtolower($status_raw) !== 'buat pemeriksaan')
                                         data-modal-open="modalPermohonan"
                                         data-no="{{ $item->no_pendaftaran }}"
@@ -264,18 +286,15 @@
                                         onclick="window.location='{{ $pemeriksaan_url }}'"
                                     @endif
                                 >
-                                    <div class="flex flex-col items-center gap-3">
+                                    <div class="flex flex-col items-center gap-2 md:gap-3">
                                         {!! $icon !!}
-                                        
                                         <span class="block leading-tight px-2">
                                             {{ strtolower($status_raw) === 'tidak lulus - kerosakan' ? 'Tidak Lulus' : ucfirst($status_raw) }}
                                         </span>
 
-                                        @if(strtolower($status_raw) === 'buat pemeriksaan')
-                                            <span class="text-[9px] font-normal opacity-90 mt-1 uppercase tracking-tighter bg-black/20 px-2 py-1 rounded">Klik untuk pemeriksaan</span>
-                                        @else
-                                            <span class="text-[9px] font-normal opacity-90 mt-1 uppercase tracking-tighter bg-black/20 px-2 py-1 rounded">Klik untuk butiran</span>
-                                        @endif
+                                        <span class="text-[9px] font-normal opacity-90 uppercase tracking-tighter bg-black/20 px-2 py-1 rounded">
+                                            {{ strtolower($status_raw) === 'buat pemeriksaan' ? 'Klik untuk pemeriksaan' : 'Klik untuk butiran' }}
+                                        </span>
                                     </div>
                                 </div>
                             </td>
@@ -290,7 +309,6 @@
                 </tbody>
             </table>
         </div>
-
         <div id="modalPermohonan" 
              data-modal
              class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
@@ -336,5 +354,6 @@
         </div>
     </div>
 @endif
+
 
 @endsection

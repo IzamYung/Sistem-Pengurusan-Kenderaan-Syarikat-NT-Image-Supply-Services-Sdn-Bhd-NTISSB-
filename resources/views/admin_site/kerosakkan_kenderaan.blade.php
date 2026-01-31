@@ -68,15 +68,15 @@
         </div>
 
     @elseif(request()->has('id_kerosakan') && isset($kerosakan))
-        {{-- DETAIL PAGE --}}
-        <div class="mb-12 text-center">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] tracking-tight">Maklumat Laporan Kerosakan</h1>
-            <p class="text-gray-500 mb-5 font-medium">Maklumat penuh laporan kerosakan kenderaan.</p>
-        </div>
+    {{-- DETAIL PAGE --}}
+    <div class="mb-12 text-center px-4 sm:px-6">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-[#1e3a8a] tracking-tight">Maklumat Laporan Kerosakan</h1>
+        <p class="text-gray-500 mb-5 font-medium">Maklumat penuh laporan kerosakan kenderaan.</p>
+    </div>
 
-        <div class=" flex flex-col items-center max-w-5xl mx-auto space-y-8">
-            {{-- INFO LAPORAN --}}
-            <div class="bg-white w-2xl p-8 rounded-[2rem] shadow-lg border border-gray-100 space-y-4">
+    <div class="flex flex-col items-center space-y-8 px-4 sm:px-6 max-w-full mx-auto">
+        {{-- INFO LAPORAN --}}
+        <div class="bg-white w-full max-w-5xl p-6 sm:p-8 rounded-[2rem] shadow-lg border border-gray-100 space-y-4">
             {{-- No Pendaftaran --}}
             <div class="flex flex-col">
                 <span class="font-black text-gray-400 uppercase text-[10px] tracking-widest mb-1">No Pendaftaran</span>
@@ -104,176 +104,176 @@
             {{-- Ulasan / Catatan --}}
             <div class="flex flex-col">
                 <span class="font-black text-gray-400 uppercase text-[10px] tracking-widest mb-1">Ulasan / Catatan</span>
-                <p class="text-sm text-gray-600 bg-gray-50 p-4 rounded-xl border border-gray-200">{{ $kerosakan->ulasan ?? '-' }}</p>
+                <p class="text-sm text-gray-600 bg-gray-50 p-4 rounded-xl border border-gray-200 break-words">{{ $kerosakan->ulasan ?? '-' }}</p>
             </div>
         </div>
 
-            @if($kerosakan->id_permohonan != 0)
-                <div class="flex items-center gap-4 mb-8">
-                    <div class="h-[2px] flex-1 bg-gray-100"></div>
-                    <h2 class="text-2xl font-black text-[#1e3a8a] uppercase tracking-tighter">Laporan Pemeriksaan</h2>
-                    <div class="h-[2px] flex-1 bg-gray-100"></div>
-                </div>
+        @if($kerosakan->id_permohonan != 0)
+            <div class="flex items-center gap-4 mb-8 px-4 sm:px-0">
+                <div class="h-[2px] flex-1 bg-gray-100"></div>
+                <h2 class="text-2xl font-black text-[#1e3a8a] uppercase tracking-tighter">Laporan Pemeriksaan</h2>
+                <div class="h-[2px] flex-1 bg-gray-100"></div>
+            </div>
 
-                {{-- LAPORAN PEMERIKSAAN --}}
-                @php
-                    $kamusLabels = [
-                        'badan_luaran' => 'Badan Luaran Kenderaan',
-                        'cermin_hadapan' => 'Cermin Hadapan / Kaca',
-                        'pengelap_cermin' => 'Pengelap Cermin',
-                        'lampu' => 'Lampu (Hadapan, Brek, Isyarat Belok)',
-                        'lampu_dalaman' => 'Lampu Dalaman',
-                        'penghawa_dingin' => 'Operasi Penghawa Dingin',
-                        'pemanasan' => 'Pemanasan',
-                        'brek' => 'Brek (Pad / Kasut Brek)',
-                        'salur_hos_brek' => 'Salur & Hos Brek',
-                        'sistem_stereng' => 'Sistem Stereng',
-                        'penyerap_kejutan' => 'Penyerap Kejutan & Topang',
-                        'sistem_ekzos' => 'Sistem Ekzos',
-                        'salur_hos_bahan_api' => 'Salur & Hos Bahan Api',
-                        'minyak_enjin' => 'Minyak Enjin',
-                        'bendalir_brek' => 'Bendalir Brek',
-                        'bendalir_stereng' => 'Bendalir Stereng Kuasa',
-                        'bendalir_pencuci' => 'Bendalir Pencuci Cermin',
-                        'tali_sawat_hos' => 'Tali Sawat & Hos',
-                        'antibeku_penyejuk' => 'Anti-Beku / Penyejuk',
-                        'penapis_udara' => 'Penapis Udara',
-                        'penapis_kabin' => 'Penapis Kabin',
-                        'penapis_bahan_api' => 'Penapis Bahan Api',
-                        'palam_pencucuh' => 'Palam Pencucuh / Wayar',
-                        'bendalir_transmisi' => 'Bendalir Transmisi dan Perumah',
-                        'sistem_gantung' => 'Sistem Gantung / Ampaian',
-                        'caj_bateri' => 'Caj Bateri',
-                        'bendalir_bateri' => 'Bendalir Bateri',
-                        'kabel_sambungan' => 'Kabel & Sambungan',
-                        'bunga_kiri_hadapan' => 'Kedalaman Bunga (Kiri Hadapan)',
-                        'bunga_kiri_belakang' => 'Kedalaman Bunga (Kiri Belakang)',
-                        'bunga_kanan_hadapan' => 'Kedalaman Bunga (Kanan Hadapan)',
-                        'bunga_kanan_belakang' => 'Kedalaman Bunga (Kanan Belakang)',
-                        'udara_kiri_hadapan' => 'Tekanan Udara (Kiri Hadapan)',
-                        'udara_kiri_belakang' => 'Tekanan Udara (Kiri Belakang)',
-                        'udara_kanan_hadapan' => 'Tekanan Udara (Kanan Hadapan)',
-                        'udara_kanan_belakang' => 'Tekanan Udara (Kanan Belakang)',
-                        'penjajaran' => 'Penjajaran (Alignment)',
-                        'pengimbangan' => 'Pengimbangan (Balancing)',
-                        'putaran' => 'Putaran (Rotation)',
-                        'tayar_baru' => 'Tayar Baru (Ganti)',
-                    ];
+            {{-- LAPORAN PEMERIKSAAN --}}
+            @php
+                $kamusLabels = [
+                    'badan_luaran' => 'Badan Luaran Kenderaan',
+                    'cermin_hadapan' => 'Cermin Hadapan / Kaca',
+                    'pengelap_cermin' => 'Pengelap Cermin',
+                    'lampu' => 'Lampu (Hadapan, Brek, Isyarat Belok)',
+                    'lampu_dalaman' => 'Lampu Dalaman',
+                    'penghawa_dingin' => 'Operasi Penghawa Dingin',
+                    'pemanasan' => 'Pemanasan',
+                    'brek' => 'Brek (Pad / Kasut Brek)',
+                    'salur_hos_brek' => 'Salur & Hos Brek',
+                    'sistem_stereng' => 'Sistem Stereng',
+                    'penyerap_kejutan' => 'Penyerap Kejutan & Topang',
+                    'sistem_ekzos' => 'Sistem Ekzos',
+                    'salur_hos_bahan_api' => 'Salur & Hos Bahan Api',
+                    'minyak_enjin' => 'Minyak Enjin',
+                    'bendalir_brek' => 'Bendalir Brek',
+                    'bendalir_stereng' => 'Bendalir Stereng Kuasa',
+                    'bendalir_pencuci' => 'Bendalir Pencuci Cermin',
+                    'tali_sawat_hos' => 'Tali Sawat & Hos',
+                    'antibeku_penyejuk' => 'Anti-Beku / Penyejuk',
+                    'penapis_udara' => 'Penapis Udara',
+                    'penapis_kabin' => 'Penapis Kabin',
+                    'penapis_bahan_api' => 'Penapis Bahan Api',
+                    'palam_pencucuh' => 'Palam Pencucuh / Wayar',
+                    'bendalir_transmisi' => 'Bendalir Transmisi dan Perumah',
+                    'sistem_gantung' => 'Sistem Gantung / Ampaian',
+                    'caj_bateri' => 'Caj Bateri',
+                    'bendalir_bateri' => 'Bendalir Bateri',
+                    'kabel_sambungan' => 'Kabel & Sambungan',
+                    'bunga_kiri_hadapan' => 'Kedalaman Bunga (Kiri Hadapan)',
+                    'bunga_kiri_belakang' => 'Kedalaman Bunga (Kiri Belakang)',
+                    'bunga_kanan_hadapan' => 'Kedalaman Bunga (Kanan Hadapan)',
+                    'bunga_kanan_belakang' => 'Kedalaman Bunga (Kanan Belakang)',
+                    'udara_kiri_hadapan' => 'Tekanan Udara (Kiri Hadapan)',
+                    'udara_kiri_belakang' => 'Tekanan Udara (Kiri Belakang)',
+                    'udara_kanan_hadapan' => 'Tekanan Udara (Kanan Hadapan)',
+                    'udara_kanan_belakang' => 'Tekanan Udara (Kanan Belakang)',
+                    'penjajaran' => 'Penjajaran (Alignment)',
+                    'pengimbangan' => 'Pengimbangan (Balancing)',
+                    'putaran' => 'Putaran (Rotation)',
+                    'tayar_baru' => 'Tayar Baru (Ganti)',
+                ];
 
-                    $sections = [
-                        'Bahagian Dalaman / Luaran' => [
-                            'badan_luaran' => $kamusLabels['badan_luaran'],
-                            'cermin_hadapan' => $kamusLabels['cermin_hadapan'],
-                            'pengelap_cermin' => $kamusLabels['pengelap_cermin'],
-                            'lampu' => $kamusLabels['lampu'],
-                            'lampu_dalaman' => $kamusLabels['lampu_dalaman'],
-                            'penghawa_dingin' => $kamusLabels['penghawa_dingin'],
-                            'pemanasan' => $kamusLabels['pemanasan'],
-                        ],
-                        'Bahagian Bawah Kenderaan' => [
-                            'brek' => $kamusLabels['brek'],
-                            'salur_hos_brek' => $kamusLabels['salur_hos_brek'],
-                            'sistem_stereng' => $kamusLabels['sistem_stereng'],
-                            'penyerap_kejutan' => $kamusLabels['penyerap_kejutan'],
-                            'sistem_ekzos' => $kamusLabels['sistem_ekzos'],
-                            'salur_hos_bahan_api' => $kamusLabels['salur_hos_bahan_api'],
-                        ],
-                        'Bahagian Bawah Bonet' => [
-                            'minyak_enjin' => $kamusLabels['minyak_enjin'],
-                            'bendalir_brek' => $kamusLabels['bendalir_brek'],
-                            'bendalir_stereng' => $kamusLabels['bendalir_stereng'],
-                            'bendalir_pencuci' => $kamusLabels['bendalir_pencuci'],
-                            'tali_sawat_hos' => $kamusLabels['tali_sawat_hos'],
-                            'antibeku_penyejuk' => $kamusLabels['antibeku_penyejuk'],
-                            'penapis_udara' => $kamusLabels['penapis_udara'],
-                            'penapis_kabin' => $kamusLabels['penapis_kabin'],
-                            'penapis_bahan_api' => $kamusLabels['penapis_bahan_api'],
-                            'palam_pencucuh' => $kamusLabels['palam_pencucuh'],
-                            'bendalir_transmisi' => $kamusLabels['bendalir_transmisi'],
-                            'sistem_gantung' => $kamusLabels['sistem_gantung'],
-                        ],
-                        'Bateri' => [
-                            'caj_bateri' => $kamusLabels['caj_bateri'],
-                            'bendalir_bateri' => $kamusLabels['bendalir_bateri'],
-                            'kabel_sambungan' => $kamusLabels['kabel_sambungan'],
-                        ],
-                        'Tayar - Kondisi & Tekanan' => [
-                            'bunga_kiri_hadapan' => $kamusLabels['bunga_kiri_hadapan'],
-                            'bunga_kiri_belakang' => $kamusLabels['bunga_kiri_belakang'],
-                            'bunga_kanan_hadapan' => $kamusLabels['bunga_kanan_hadapan'],
-                            'bunga_kanan_belakang' => $kamusLabels['bunga_kanan_belakang'],
-                            'udara_kiri_hadapan' => $kamusLabels['udara_kiri_hadapan'],
-                            'udara_kiri_belakang' => $kamusLabels['udara_kiri_belakang'],
-                            'udara_kanan_hadapan' => $kamusLabels['udara_kanan_hadapan'],
-                            'udara_kanan_belakang' => $kamusLabels['udara_kanan_belakang'],
-                        ],
-                        'Penyelenggaraan Tayar' => [
-                            'penjajaran' => $kamusLabels['penjajaran'],
-                            'pengimbangan' => $kamusLabels['pengimbangan'],
-                            'putaran' => $kamusLabels['putaran'],
-                            'tayar_baru' => $kamusLabels['tayar_baru'],
-                        ],
-                    ];
-                @endphp
+                $sections = [
+                    'Bahagian Dalaman / Luaran' => [
+                        'badan_luaran' => $kamusLabels['badan_luaran'],
+                        'cermin_hadapan' => $kamusLabels['cermin_hadapan'],
+                        'pengelap_cermin' => $kamusLabels['pengelap_cermin'],
+                        'lampu' => $kamusLabels['lampu'],
+                        'lampu_dalaman' => $kamusLabels['lampu_dalaman'],
+                        'penghawa_dingin' => $kamusLabels['penghawa_dingin'],
+                        'pemanasan' => $kamusLabels['pemanasan'],
+                    ],
+                    'Bahagian Bawah Kenderaan' => [
+                        'brek' => $kamusLabels['brek'],
+                        'salur_hos_brek' => $kamusLabels['salur_hos_brek'],
+                        'sistem_stereng' => $kamusLabels['sistem_stereng'],
+                        'penyerap_kejutan' => $kamusLabels['penyerap_kejutan'],
+                        'sistem_ekzos' => $kamusLabels['sistem_ekzos'],
+                        'salur_hos_bahan_api' => $kamusLabels['salur_hos_bahan_api'],
+                    ],
+                    'Bahagian Bawah Bonet' => [
+                        'minyak_enjin' => $kamusLabels['minyak_enjin'],
+                        'bendalir_brek' => $kamusLabels['bendalir_brek'],
+                        'bendalir_stereng' => $kamusLabels['bendalir_stereng'],
+                        'bendalir_pencuci' => $kamusLabels['bendalir_pencuci'],
+                        'tali_sawat_hos' => $kamusLabels['tali_sawat_hos'],
+                        'antibeku_penyejuk' => $kamusLabels['antibeku_penyejuk'],
+                        'penapis_udara' => $kamusLabels['penapis_udara'],
+                        'penapis_kabin' => $kamusLabels['penapis_kabin'],
+                        'penapis_bahan_api' => $kamusLabels['penapis_bahan_api'],
+                        'palam_pencucuh' => $kamusLabels['palam_pencucuh'],
+                        'bendalir_transmisi' => $kamusLabels['bendalir_transmisi'],
+                        'sistem_gantung' => $kamusLabels['sistem_gantung'],
+                    ],
+                    'Bateri' => [
+                        'caj_bateri' => $kamusLabels['caj_bateri'],
+                        'bendalir_bateri' => $kamusLabels['bendalir_bateri'],
+                        'kabel_sambungan' => $kamusLabels['kabel_sambungan'],
+                    ],
+                    'Tayar - Kondisi & Tekanan' => [
+                        'bunga_kiri_hadapan' => $kamusLabels['bunga_kiri_hadapan'],
+                        'bunga_kiri_belakang' => $kamusLabels['bunga_kiri_belakang'],
+                        'bunga_kanan_hadapan' => $kamusLabels['bunga_kanan_hadapan'],
+                        'bunga_kanan_belakang' => $kamusLabels['bunga_kanan_belakang'],
+                        'udara_kiri_hadapan' => $kamusLabels['udara_kiri_hadapan'],
+                        'udara_kiri_belakang' => $kamusLabels['udara_kiri_belakang'],
+                        'udara_kanan_hadapan' => $kamusLabels['udara_kanan_hadapan'],
+                        'udara_kanan_belakang' => $kamusLabels['udara_kanan_belakang'],
+                    ],
+                    'Penyelenggaraan Tayar' => [
+                        'penjajaran' => $kamusLabels['penjajaran'],
+                        'pengimbangan' => $kamusLabels['pengimbangan'],
+                        'putaran' => $kamusLabels['putaran'],
+                        'tayar_baru' => $kamusLabels['tayar_baru'],
+                    ],
+                ];
+            @endphp
 
-                @foreach($sections as $sectionName => $components)
-                    <div class="bg-white w-5xl rounded-3xl border border-gray-100 overflow-hidden shadow-sm">
-                        <div class="bg-gray-50 px-6 py-3 border-b border-gray-100">
-                            <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">{{ $sectionName }}</p>
-                        </div>
+            @foreach($sections as $sectionName => $components)
+                <div class="bg-white w-full max-w-5xl rounded-3xl border border-gray-100 overflow-hidden shadow-sm">
+                    <div class="bg-gray-50 px-4 sm:px-6 py-3 border-b border-gray-100">
+                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">{{ $sectionName }}</p>
+                    </div>
 
-                        <div class="p-6">
-                            @php $adaMasalah = false; @endphp
-                            <div class="grid grid-cols-1 gap-4">
-                                @foreach($components as $key => $label)
-                                    @php
-                                        $pmItem = $pemeriksaan->firstWhere('nama_komponen', $key);
-                                        $status = $pmItem->status ?? null;
-                                        $ulasan = $pmItem->ulasan ?? '-';
-                                        if ($status == 2 || $status == 3) { $adaMasalah = true; }
-                                    @endphp
+                    <div class="p-4 sm:p-6">
+                        @php $adaMasalah = false; @endphp
+                        <div class="grid grid-cols-1 gap-4">
+                            @foreach($components as $key => $label)
+                                @php
+                                    $pmItem = $pemeriksaan->firstWhere('nama_komponen', $key);
+                                    $status = $pmItem->status ?? null;
+                                    $ulasan = $pmItem->ulasan ?? '-';
+                                    if ($status == 2 || $status == 3) { $adaMasalah = true; }
+                                @endphp
 
-                                    @if($status == 2 || $status == 3)
-                                        <div class="flex flex-col md:flex-row md:items-start justify-between p-4 rounded-2xl border-l-4 {{ $status == 3 ? 'border-red-500 bg-red-50/30' : 'border-orange-400 bg-orange-50/30' }}">
-                                            <div class="flex-1">
-                                                <p class="font-bold text-gray-800">{{ $label }}</p>
-                                                <div class="mt-2 flex items-center gap-3">
-                                                    <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md {{ $status == 3 ? 'bg-red-500 text-white' : 'bg-orange-400 text-white' }}">
-                                                        {{ $status == 3 ? 'Rosak (3)' : 'Perlu Perhatian (2)' }}
-                                                    </span>
-                                                    <span class="text-xs text-gray-500 font-medium">Ulasan: <span class="text-gray-700 italic">{{ $ulasan }}</span></span>
-                                                </div>
+                                @if($status == 2 || $status == 3)
+                                    <div class="flex flex-col md:flex-row md:items-start justify-between p-4 rounded-2xl border-l-4 {{ $status == 3 ? 'border-red-500 bg-red-50/30' : 'border-orange-400 bg-orange-50/30' }}">
+                                        <div class="flex-1">
+                                            <p class="font-bold text-gray-800">{{ $label }}</p>
+                                            <div class="mt-2 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                                <span class="text-[10px] font-black uppercase px-2 py-0.5 rounded-md {{ $status == 3 ? 'bg-red-500 text-white' : 'bg-orange-400 text-white' }}">
+                                                    {{ $status == 3 ? 'Rosak (3)' : 'Perlu Perhatian (2)' }}
+                                                </span>
+                                                <span class="text-xs text-gray-500 font-medium break-words">Ulasan: <span class="text-gray-700 italic">{{ $ulasan }}</span></span>
                                             </div>
                                         </div>
-                                    @endif
-                                @endforeach
-
-                                @if(!$adaMasalah)
-                                    <div class="flex items-center gap-3 py-2 px-2">
-                                        <div class="w-2 h-2 rounded-full bg-green-500"></div>
-                                        <p class="text-sm text-green-700 font-bold italic uppercase tracking-tighter">Bahagian ini dalam keadaan baik.</p>
                                     </div>
                                 @endif
-                            </div>
+                            @endforeach
+
+                            @if(!$adaMasalah)
+                                <div class="flex items-center gap-3 py-2 px-2">
+                                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                    <p class="text-sm text-green-700 font-bold italic uppercase tracking-tighter">Bahagian ini dalam keadaan baik.</p>
+                                </div>
+                            @endif
                         </div>
                     </div>
-                @endforeach
-            @endif
+                </div>
+            @endforeach
+        @endif
 
-            {{-- BUTTON SELESAI / BACK --}}
-            <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-                <form action="{{ route('admin_site.kerosakkan_kenderaan.selesai', ['id' => $kerosakan->id_laporan]) }}" method="POST" class="w-full sm:w-auto">
-                    @csrf
-                    <button class="w-full px-10 py-4 bg-green-600 text-white rounded-2xl font-black shadow-lg hover:bg-green-700 transition-all active:scale-95 text-sm uppercase tracking-wider flex items-center justify-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                        Selesai
-                    </button>
-                </form>
-                <a href="{{ route('admin_site.kerosakkan_kenderaan') }}" class="w-full sm:w-auto px-10 py-4 bg-gray-200 text-gray-600 rounded-2xl font-black hover:bg-gray-300 transition-all text-sm uppercase tracking-wider text-center">
-                    Kembali ke Senarai
-                </a>
-            </div>
+        {{-- BUTTON SELESAI / BACK --}}
+        <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center w-full px-4 sm:px-0">
+            <form action="{{ route('admin_site.kerosakkan_kenderaan.selesai', ['id' => $kerosakan->id_laporan]) }}" method="POST" class="w-full sm:w-auto">
+                @csrf
+                <button class="w-full px-10 py-4 bg-green-600 text-white rounded-2xl font-black shadow-lg hover:bg-green-700 transition-all active:scale-95 text-sm uppercase tracking-wider flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                    Selesai
+                </button>
+            </form>
+            <a href="{{ route('admin_site.kerosakkan_kenderaan') }}" class="w-full sm:w-auto px-10 py-4 bg-gray-200 text-gray-600 rounded-2xl font-black hover:bg-gray-300 transition-all text-sm uppercase tracking-wider text-center">
+                Kembali ke Senarai
+            </a>
         </div>
+    </div>
 
     @else
         {{-- LIST PAGE --}}
