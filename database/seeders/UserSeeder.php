@@ -62,32 +62,6 @@ class UserSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
-            [
-                'id_pekerja' => 'PKR003',
-                'nama' => 'Nur Aina Batrisyia',
-                'jawatan' => 'Admin Executive',
-                'email' => 'aina.batrisyia@ntissb.com',
-                'password' => Hash::make('Aina@123'),
-                'no_tel' => '0179543321',
-                'gambar_profil' => 'images/profile_picture/casual2.jpg',
-                'role' => 'user',
-                'remember_token' => null,
-                'created_at' => $now,
-                'updated_at' => $now,
-            ],
-            [
-                'id_pekerja' => 'PKR004',
-                'nama' => 'Siti Farah Nasuha',
-                'jawatan' => 'HR Assistant',
-                'email' => 'farah.nasuha@ntissb.com',
-                'password' => Hash::make('Farah@123'),
-                'no_tel' => '01162034459',
-                'gambar_profil' => 'images/profile_picture/casual4.jpg',
-                'role' => 'user',
-                'remember_token' => null,
-                'created_at' => $now,
-                'updated_at' => $now,
-            ],
         ]);
     }
 }
