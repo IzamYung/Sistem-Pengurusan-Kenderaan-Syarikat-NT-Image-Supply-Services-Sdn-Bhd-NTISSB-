@@ -8,10 +8,16 @@
     <link rel="icon" type="image/png" href="{{ asset('images/logo_syarikat.png') }}">
 </head>
 <body
-    class="min-h-screen font-sans flex items-center justify-center px-4 sm:px-6 md:px-8 relative overflow-hidden bg-no-repeat bg-center bg-cover"
-    style="background-image: url('{{ asset('images/bangunan_ntissb.svg') }}');"
+    class="min-h-screen font-sans flex items-center justify-center px-4 sm:px-6 md:px-8 relative"
+    style="
+        background-image: url('{{ asset('images/bangunan_ntissb.svg') }}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+    "
 >
-    <div class="absolute inset-0 bg-gradient-to-br from-blue-950/80 via-slate-900/75 to-black/80 z-0"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-950/80 via-slate-900/75 to-black/80 z-0 h-full w-full"></div>
 
     <div class="absolute top-[-20%] left-[-20%] w-[70%] h-[70%] md:w-[40%] md:h-[40%] bg-blue-100/50 rounded-full blur-[140px] pointer-events-none"></div>
     <div class="absolute bottom-[-20%] right-[-20%] w-[70%] h-[70%] md:w-[40%] md:h-[40%] bg-blue-50/50 rounded-full blur-[140px] pointer-events-none"></div>
