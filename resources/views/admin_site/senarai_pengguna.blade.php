@@ -200,8 +200,8 @@
                         </button>
 
                         <a href="{{ route('admin_site.tambah_pengguna.edit', $user->id_pekerja) }}" 
-                           class="flex-1 grid grid-cols-12 gap-4 px-6 items-center">
-                            <div class="col-span-12 md:col-span-4">
+                           class="flex-1 grid grid-col-span-8 md:grid-cols-12 gap-4 px-6 items-center">
+                            <div class="col-span-8 md:col-span-4">
                                 <p class="font-black text-[#1e3a8a] text-lg leading-tight group-hover:text-blue-600 transition-colors">{{ $user->nama }}</p>
                                 <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">ID: {{ $user->id_pekerja }}</p>
                             </div>

@@ -199,8 +199,8 @@
                         </button>
 
                         <a href="{{ route('admin_site.tambah_kenderaan.edit', $kend->no_pendaftaran) }}" 
-                           class="flex-1 grid grid-cols-12 gap-4 px-6 items-center">
-                            <div class="col-span-12 md:col-span-4">
+                           class="flex-1 grid grid-col-span-8 md:grid-cols-12 gap-4 px-6 items-center">
+                            <div class="col-span-8 md:col-span-4">
                                 <p class="font-black text-[#1e3a8a] text-lg leading-tight group-hover:text-blue-600 transition-colors">{{ $kend->no_pendaftaran }}</p>
                                 <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">{{ $kend->jenama }} {{ $kend->model }}</p>
                             </div>
@@ -229,7 +229,7 @@
                                 <img src="{{ asset($kend->gambar_kenderaan ?? 'images/profile_picture/default-profile.png') }}"
                                      class="w-full h-80 rounded-[2rem] object-cover shadow-inner mb-6">
                                 <button data-modal-close class="w-full py-4 bg-gray-100 text-gray-600 rounded-2xl font-black hover:bg-gray-200 transition-all uppercase tracking-widest text-xs">
-                                    Tutup Pratinjau
+                                    Tutup
                                 </button>
                             </div>
                         </div>
